@@ -1,21 +1,20 @@
 ---
-import { AGENTS_SCENE } from "../content/sections";
+import { PROJECTS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
-import { Panel } from "../panel/Panel";
+import { ProjectsCrop } from "../panel/Panel";
 import Section from "./Section.astro";
 ---
 
 <Section
-  id={AGENTS_SCENE.id}
-  eyebrow={AGENTS_SCENE.eyebrow}
-  title={AGENTS_SCENE.title}
-  lede={AGENTS_SCENE.lede}
-  layout="reverse"
+  id={PROJECTS.id}
+  eyebrow={PROJECTS.eyebrow}
+  title={PROJECTS.title}
+  lede={PROJECTS.lede}
   tier="support"
 >
-  <p class="body" slot="aside">{AGENTS_SCENE.body}</p>
+  <p class="body" slot="aside">{PROJECTS.body}</p>
   <div class="stage">
-    <Panel snapshot={DEMO_SNAPSHOT} page={{ kind: "stats" }} label={AGENTS_SCENE.panelLabel} />
+    <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={PROJECTS.panelLabel} />
   </div>
 </Section>
 
@@ -30,18 +29,15 @@ import Section from "./Section.astro";
   }
 
   .stage {
-    --panel-pt: 1.12px;
+    --panel-pt: 1.3px;
 
     display: flex;
     justify-content: center;
-    padding: 8px 0 24px;
   }
 
   @media (max-width: 920px) {
     .stage {
-      --panel-pt: 1px;
-
-      padding: 0 0 8px;
+      --panel-pt: 1.05px;
     }
   }
 </style>

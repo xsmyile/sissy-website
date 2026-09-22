@@ -15,6 +15,13 @@ export type ProviderId = "claude-code" | "codex";
 
 export type ForgeHost = "github" | "gitlab";
 
+/**
+ * `ForgeCounter`: the three figures beside a forge row's contribution total,
+ * each of which `forgeCounters` can switch off. One switched off is not drawn
+ * and, in the app, not fetched either.
+ */
+export type ForgeCounter = "merged" | "issues" | "comments";
+
 export type BarTint = ProviderId | "share";
 
 export type Period = "Today" | "7 days" | "30 days" | "All";

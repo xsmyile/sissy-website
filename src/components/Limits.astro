@@ -2,12 +2,16 @@
 import { LIMITS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
 import { Panel } from "../panel/Panel";
+import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
-const account = DEMO_SNAPSHOT.gaugeRows[0];
-if (account === undefined) {
-  throw new Error("The fixture has no gauge row for the limits section to open");
+const row = DEMO_SNAPSHOT.gaugeRows.find((entry) => entry.id === LIMITS.rowId);
+if (row === undefined) {
+  throw new Error(`The fixture has no gauge row "${LIMITS.rowId}" for the pace band to read`);
 }
+
+const used = Math.round(row.usedFraction * 100);
+const expected = row.expectedFraction * 100;
 ---
 
 <Section
@@ -15,25 +19,128 @@ if (account === undefined) {
   eyebrow={LIMITS.eyebrow}
   title={LIMITS.title}
   lede={LIMITS.lede}
-  tier="support"
+  layout="stack"
+  tier="lead"
 >
-  <p class="body" slot="aside">{LIMITS.body}</p>
-  <div class="stage">
-    <Panel
-      snapshot={DEMO_SNAPSHOT}
-      page={{ kind: "provider", provider: account.provider, account: account.account }}
-      label={LIMITS.panelLabel}
-    />
+  <div class="band" data-pace-band>
+    <p class="figure"><span data-pace-value>{used}</span><span>%</span></p>
+    <p class="said"><Inline text={LIMITS.paceBody} /></p>
+    <div class="gauge">
+      <div class="fill" data-pace-fill style={`width: ${used}%`}></div>
+      <div class="mark" style={`left: ${expected}%`}></div>
+    </div>
+    <p class="legend">
+      <span>{row.name} · {row.window.toLowerCase()} window</span>
+      <span class="paced"><i></i>{LIMITS.paceLabel}</span>
+    </p>
+  </div>
+
+  <div class="page">
+    <p class="body">{LIMITS.body}</p>
+    <div class="stage">
+      <Panel
+        snapshot={DEMO_SNAPSHOT}
+        page={{ kind: "provider", provider: row.provider, account: row.account }}
+        label={LIMITS.panelLabel}
+      />
+    </div>
   </div>
 </Section>
 
 <style>
+  .band {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px 56px;
+    margin-bottom: 56px;
+  }
+
+  .figure {
+    margin: 0;
+    font-size: clamp(76px, 11.5vw, 148px);
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .figure span:last-child {
+    font-size: 0.46em;
+    letter-spacing: -0.02em;
+    vertical-align: 0.42em;
+  }
+
+  .said {
+    margin: 0;
+    max-width: 30em;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .gauge {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 14px;
+    margin-top: 30px;
+    border-radius: 999px;
+    background: var(--surface-2);
+  }
+
+  .fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    border-radius: 999px;
+    transform-origin: left;
+    background: linear-gradient(90deg, var(--accent-deep), var(--accent));
+  }
+
+  .mark {
+    position: absolute;
+    top: -6px;
+    bottom: -6px;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--over-pace);
+  }
+
+  .legend {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    margin: 15px 0 0;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .paced i {
+    display: inline-block;
+    width: 3px;
+    height: 10px;
+    margin-right: 7px;
+    border-radius: 2px;
+    background: var(--over-pace);
+    vertical-align: -1px;
+  }
+
+  .page {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 40px 64px;
+    align-items: start;
+  }
+
   .body {
-    margin: 8px 0 0;
+    margin: 0;
     padding-top: 16px;
     border-top: 1px solid var(--border);
-    font-size: 14.5px;
-    color: var(--muted);
+    font-size: 15px;
+    color: var(--text-2);
     text-wrap: pretty;
   }
 
@@ -42,14 +149,22 @@ if (account === undefined) {
 
     display: flex;
     justify-content: center;
-    padding: 8px 0 24px;
   }
 
   @media (max-width: 920px) {
+    .band {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .page {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+
     .stage {
       --panel-pt: 1px;
-
-      padding: 0 0 8px;
     }
   }
 </style>

@@ -1,7 +1,5 @@
 ---
 import { DETAIL } from "../content/sections";
-import { DEMO_SNAPSHOT } from "../panel/data";
-import { ProjectsCrop } from "../panel/Panel";
 import Disclosure from "./Disclosure.astro";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
@@ -15,88 +13,37 @@ import Section from "./Section.astro";
   layout="stack"
   tier="detail"
 >
-  <div class="two-up">
-    <div class="side">
-      <h3>{DETAIL.projects.title}</h3>
-      <p>{DETAIL.projects.body}</p>
-      <div class="stage">
-        <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={DETAIL.projects.panelLabel} />
-      </div>
-      <p class="note">{DETAIL.projects.note}</p>
-    </div>
-    <div class="side">
-      <dl class="points">
-        {
-          DETAIL.points.map((point) => (
-            <div class="point">
-              <dt>{point.title}</dt>
-              <dd><Inline text={point.body} /></dd>
-            </div>
-          ))
-        }
-      </dl>
-      <Disclosure summary={DETAIL.readsSummary}>
-        <dl class="sources">
-          {
-            DETAIL.sources.map((source) => (
-              <div class="source">
-                <dt>{source.name}</dt>
-                <dd><Inline text={source.where} /></dd>
-              </div>
-            ))
-          }
-        </dl>
-        <p class="note">{DETAIL.readsNote}</p>
-      </Disclosure>
-    </div>
-  </div>
+  <dl class="points">
+    {
+      DETAIL.points.map((point) => (
+        <div class="point">
+          <dt>{point.title}</dt>
+          <dd><Inline text={point.body} /></dd>
+        </div>
+      ))
+    }
+  </dl>
+  <Disclosure summary={DETAIL.readsSummary}>
+    <dl class="sources">
+      {
+        DETAIL.sources.map((source) => (
+          <div class="source">
+            <dt>{source.name}</dt>
+            <dd><Inline text={source.where} /></dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="note">{DETAIL.readsNote}</p>
+  </Disclosure>
 </Section>
 
 <style>
-  .two-up {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 40px 64px;
-    align-items: start;
-  }
-
-  .side {
-    display: grid;
-    gap: 16px;
-    align-content: start;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  p {
-    margin: 0;
-    font-size: 15px;
-    color: var(--text-2);
-    text-wrap: pretty;
-  }
-
-  .note {
-    font-size: 14.5px;
-    color: var(--muted);
-  }
-
-  .stage {
-    --panel-pt: 1.2px;
-
-    display: flex;
-    justify-content: center;
-    padding: 12px 0;
-  }
-
   .points {
     display: grid;
-    gap: 18px;
-    margin: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 48px;
+    margin: 0 0 40px;
   }
 
   .point {
@@ -114,6 +61,13 @@ import Section from "./Section.astro";
     margin: 0;
     font-size: 14.5px;
     color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .note {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
     text-wrap: pretty;
   }
 
@@ -142,13 +96,10 @@ import Section from "./Section.astro";
   }
 
   @media (max-width: 920px) {
-    .two-up {
+    .points {
       grid-template-columns: minmax(0, 1fr);
-      gap: 32px;
-    }
-
-    .stage {
-      --panel-pt: 1px;
+      gap: 24px;
+      margin-bottom: 32px;
     }
   }
 

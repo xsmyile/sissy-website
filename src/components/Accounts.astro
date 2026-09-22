@@ -1,0 +1,87 @@
+---
+import { ACCOUNTS } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { IdentityCrop } from "../panel/Panel";
+import Inline from "./Inline.astro";
+import Section from "./Section.astro";
+
+const switchable = DEMO_SNAPSHOT.providerPages.find(
+  (page) => !page.identity.inCLI && page.identity.switchable,
+);
+if (switchable === undefined) {
+  throw new Error(
+    "The fixture has no account the CLI is not signed in as, so the switch cannot be shown",
+  );
+}
+---
+
+<Section
+  id={ACCOUNTS.id}
+  eyebrow={ACCOUNTS.eyebrow}
+  title={ACCOUNTS.title}
+  lede={ACCOUNTS.lede}
+  layout="stack"
+  tier="lead"
+>
+  <div class="stage">
+    <IdentityCrop identity={switchable.identity} label={ACCOUNTS.panelLabel} />
+  </div>
+  <dl class="points">
+    {
+      ACCOUNTS.points.map((point) => (
+        <div class="point">
+          <dt>{point.title}</dt>
+          <dd><Inline text={point.body} /></dd>
+        </div>
+      ))
+    }
+  </dl>
+</Section>
+
+<style>
+  .stage {
+    --panel-pt: 1.45px;
+
+    display: flex;
+    justify-content: center;
+    padding-bottom: 44px;
+  }
+
+  .points {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 64px;
+    margin: 0;
+  }
+
+  .point {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  dt {
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 920px) {
+    .stage {
+      --panel-pt: 1.15px;
+
+      padding-bottom: 32px;
+    }
+
+    .points {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+    }
+  }
+</style>

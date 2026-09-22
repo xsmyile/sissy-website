@@ -7,14 +7,15 @@ repository and is the reference for everything the site draws.
 ## Repository layout
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
-- `src/components/`: Astro sections and controls. `Hero`, `Pace`, `Limits`,
-  `Agents`, `Privacy`, `Detail`, `Install` and `Footer` are the page in order;
-  `Section` is the frame the middle ones share (eyebrow, title, lede, an
-  `aside` slot under them, a `split`, `reverse` or `stack` layout, and the
-  `tier` that says how it arrives); `Nav`, `MenuBar`, `DownloadButton`,
-  `Command`, `Disclosure` and `Inline` are the pieces. `Nav` is rendered inside
-  `Hero`, not beside it, and `MenuBar` inside `Install`. Each carries its own
-  scoped `<style>`.
+- `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
+  `Agents`, `Projects`, `Yours`, `Privacy`, `Detail`, `Install` and `Footer`
+  are the page in order, which is the order the Overview itself reads in:
+  gauges, accounts, agents, projects, contributions. `Section` is the frame the
+  middle ones share (eyebrow, title, lede, an `aside` slot under them, a
+  `split`, `reverse` or `stack` layout, and the `tier` that says how it
+  arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
+  `Inline` are the pieces. `Nav` is rendered inside `Hero`, not beside it, and
+  `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
   on the page, `page.ts` carries which page that is and how one is opened,
   `pages/` holds one component per page (Overview, Provider, Stats),
@@ -126,7 +127,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the pair the gesture calls for.
 - **One panel is operable, and only along routes the app has.** The hero's is
   the only one; every other panel on the page is the same markup rendered
-  inert. A panel is given `open` or it is not, and that single switch decides
+  inert. `Yours` is not an exception: its switches are the page's own controls
+  and they change what the panel beside them draws, not what it does. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
   line and the back control, and nothing else — the picker, refresh, settings,
   the projects label and the day bars stay drawn and dead. A gauge row is named
@@ -139,6 +141,28 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
   the same Overview with nothing on it that looks pressable.
+- **A switch on the page changes what the panel draws, in CSS.** `Yours` puts
+  the three `forgeCounters` beside the Contributions block and wires them with
+  `:has()` on the checkbox each label owns, so the demonstration costs the page
+  no second island and still works where JavaScript never arrived. The counter
+  is removed rather than dimmed, because that is what the app does with it: a
+  counter switched off is not drawn and, more to the point, not fetched, which
+  is the privacy claim performed instead of repeated. The switch titles and
+  captions are `ForgeCounterCopy`'s own and their ids are `ForgeCounter`, so a
+  counter the app renames fails the build here; the ids the stylesheet selects
+  on are the one place that coupling is spelled twice, and both spellings live
+  in `Yours.astro`. A switch wears the mark of the row it governs, at the size
+  that row draws it: the section sets one `--demo-pt` and hands it to the
+  crop's `--panel-pt` and to the mark's `--pt`, so the glyph is sized by
+  `svg[data-glyph]` like every other and the page names no extent of its own.
+- **The band opens Limits; it is not a section.** The 69% is the Overview's
+  first gauge at page scale and every figure on it comes from that row, which
+  is also the row the hero's panel draws: a screen of its own spent the fold
+  restating the hero. Under the title it is the demonstration the section's
+  claim needs, and the panel below it is where that claim is paid off. The
+  figure still counts up on `[data-pace-band]`, and the blink still does not
+  fire for it, because an unchanged figure re-entering the viewport is not new
+  data.
 - **The fixture stays internally consistent, and it carries every figure
   rather than working one out.** The three accounts sum to the headline, each
   account's projects sum to its day, each project's rows across the accounts
@@ -151,9 +175,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   derivation — the app picks it by projected exhaustion, which is not a figure
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
   three account pages, two vendors.
-- **The rhythm is three tiers, and the motion is the tier.** Pace, Privacy and
-  Install carry the decision and rise on arrival; Limits and Agents support it
-  and barely settle; the merged detail block does not move. A section does not
+- **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
+  Privacy and Install carry the decision and rise on arrival; Agents, Projects
+  and Yours support them and barely settle; How it works does not move. A section does not
   arrive as one object: `reveal.ts` springs its parts in, and the tier is
   whether they land as a sequence or as one settle. That difference is
   categorical rather than a matter of degree, because sections arrive seconds
@@ -171,7 +195,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   never runs leaves the finished page rather than content parked at
   `opacity: 0` waiting for an observer that will not come.
 - **The figure counts and the panel springs, and only the second is a
-  departure.** The pace band's 69 counting up while its bar draws is the app's
+  departure.** The band's 69 counting up while its bar draws is the app's
   own behaviour at page scale: `PanelOverview` puts `.animation(.default,
   value:)` on the headline cost and `.contentTransition(.numericText())` on the
   counts it draws, and `PanelComponents` springs a bar whenever its share
@@ -201,9 +225,14 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   site corrects the README instead of narrowing it: *"The icon is her"* claims
   a likeness the drawing is not, and the licence line under it already calls
   the artwork her face, so the site says *"The silhouette is drawn from her."*
-  The app's README wants the same edit at its own copy of that line. Code and
-  emphasis do not nest in this markup, and `inline.ts` fails the build rather
-  than printing the delimiters.
+  The app's README wants the same edit at its own copy of that line. Where the
+  README says nothing, the app's own copy is the source rather than a sentence
+  invented here: `Accounts` takes the `Use in CLI` warning from
+  `ClaudeAccountSwitchCopy`, because a session already running putting its own
+  account back is the part a reader cannot work out, and a site that sold the
+  switch without it would be selling a footgun. Code and emphasis do not nest
+  in this markup, and `inline.ts` fails the build rather than printing the
+  delimiters.
 - **The page says what the money is, where the money is.** The headline figure
   is Sissy's own count of the tokens priced at the published rates, and
   the app keeps that apart from what a vendor charged everywhere it draws both

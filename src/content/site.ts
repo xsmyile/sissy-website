@@ -18,10 +18,16 @@ export const REQUIREMENTS = [
   { strong: "", rest: "No account, no telemetry" },
 ] as const;
 
+/**
+ * Four destinations, which is what the bar holds before it wraps. `How it
+ * works` gave its place up to `Accounts`: the detail tier is the section
+ * nobody navigates to, and the accounts are the reason a reader with two of
+ * them is still on the page.
+ */
 export const NAV_LINKS = [
   { label: "Limits", href: "#limits" },
+  { label: "Accounts", href: "#accounts" },
   { label: "Privacy", href: "#privacy" },
-  { label: "How it works", href: "#how" },
   { label: "Install", href: "#install" },
 ] as const;
 
