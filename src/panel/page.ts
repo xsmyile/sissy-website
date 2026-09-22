@@ -16,7 +16,7 @@ export const BACK = "back";
 
 /** One string per distinct page, so an account change re-keys the page like a kind change does. */
 export function pageIdentity(page: PanelPage): string {
-  return page.kind === "provider"
+  return page.kind === "provider" || page.kind === "effort"
     ? `${page.kind}:${page.provider}:${page.account ?? ""}`
     : page.kind;
 }

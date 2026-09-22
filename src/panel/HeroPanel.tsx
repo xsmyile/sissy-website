@@ -61,12 +61,12 @@ export function HeroPanel({ label }: { label: string }): ReactElement {
   const [live, setLive] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const driverRef = useRef<BlinkDriver | null>(null);
-  const originRef = useRef<string | null>(null);
+  const originsRef = useRef<string[]>([]);
 
   const open = useCallback<OpenPage>((next, from) => {
     const back = from === BACK;
-    const focus = back ? originRef.current : BACK;
-    originRef.current = back ? null : from;
+    const focus = back ? (originsRef.current.pop() ?? null) : BACK;
+    if (!back) originsRef.current.push(from);
     setView({ page: next, focus });
   }, []);
 
