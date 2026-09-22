@@ -210,11 +210,45 @@ export interface ProviderPage {
   status: StatusLine;
 }
 
+/**
+ * One running agent, as a row. Its band on the chart is its place in the list,
+ * because only the standing rows are carried and the app numbers their bands
+ * in the list's order.
+ */
 export interface AgentProcess {
   id: string;
   provider: ProviderId;
   name: string;
+  /** Cores' worth of CPU since the sweep before, null on the sweep that first saw it. */
+  cpuLoad: number | null;
+  /** Its load at each sample of the chart, null where it was not running yet. */
+  lane: (number | null)[];
   figures: string;
+}
+
+/** `MemoryChart.Band`: one standing row's memory, or the rest's where `process` is null. */
+export interface MemoryBand {
+  process: string | null;
+  /** Megabytes at each sample, oldest first. */
+  values: number[];
+}
+
+/**
+ * `MemoryChart`: the retained hour, stacked by agent, the dearest band at the
+ * axis. `starts` are the samples where a standing agent first appears after
+ * the chart began; `span` and `peak` are the axis's two ends as printed.
+ */
+export interface MemoryChart {
+  bands: MemoryBand[];
+  starts: number[];
+  span: string;
+  peak: string;
+}
+
+/** `CacheReading`, as the page prints it; `share` is null for a window that sent nothing. */
+export interface CacheReading {
+  share: string | null;
+  saved: string;
 }
 
 export interface ProviderCount {
@@ -224,16 +258,21 @@ export interface ProviderCount {
   figures: string;
 }
 
-/** `AgentsBlock`, as `PanelStats` draws it: the live half and the counted one. */
+/** `AgentsBlock`, as `PanelStats` draws it: the counted half and the live one. */
 export interface StatsPage {
   /** `agentsReading`: when the count on screen was taken, under the page's title. */
   reading: string;
   live: {
     line: AgentsLine;
-    samples: number[];
-    peak: string;
+    /** Null until a second sample lands: one point is not a line. */
+    chart: MemoryChart | null;
     caption: string;
+    /** `UsageFormat.agentsLoad`, null for a reading with no counters. */
+    load: string | null;
+    /** `standingProcesses`: the whole list up to six, five past it. */
     processes: AgentProcess[];
+    /** `foldedProcesses`, as what the fold says of them; null where the list is whole. */
+    folded: AgentsLine | null;
   };
   counted: {
     period: Period;
@@ -243,6 +282,9 @@ export interface StatsPage {
     blocks: [number, number][];
     caption: string;
     byProvider: ProviderCount[];
+    cache: CacheReading;
+    /** `ActivityTotals.longestTurnMilliseconds` as `turnDuration` prints it. */
+    longestTurn: string | null;
   };
 }
 

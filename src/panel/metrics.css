@@ -27,7 +27,10 @@
   --panel-caption: calc(10 * var(--pt));
   --panel-plot: calc(52 * var(--pt));
   --panel-day-label: calc(13 * var(--pt));
-  --panel-sparkline: calc(26 * var(--pt));
+  --panel-agent-chart: calc(50 * var(--pt));
+  --panel-agent-axis: calc(9.5 * var(--pt));
+  --panel-lane-width: calc(70 * var(--pt));
+  --panel-lane-height: calc(9 * var(--pt));
   --panel-strip: calc(8 * var(--pt));
   --panel-forge: calc(11 * var(--pt));
   --panel-forge-gap: calc(9 * var(--pt));
