@@ -505,6 +505,16 @@ svg[data-glyph="bubble.left"] {
   white-space: nowrap;
 }
 
+.panel-use-in-cli {
+  flex: none;
+  align-self: flex-start;
+  padding: calc(2 * var(--pt)) calc(7 * var(--pt));
+  border-radius: calc(5 * var(--pt));
+  background: var(--panel-glass);
+  font-size: var(--panel-headline-meta);
+  white-space: nowrap;
+}
+
 .panel-picker {
   display: inline-flex;
   flex: none;

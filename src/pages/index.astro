@@ -1,21 +1,25 @@
 ---
+import Accounts from "../components/Accounts.astro";
 import Agents from "../components/Agents.astro";
 import Detail from "../components/Detail.astro";
 import Footer from "../components/Footer.astro";
 import Hero from "../components/Hero.astro";
 import Install from "../components/Install.astro";
 import Limits from "../components/Limits.astro";
-import Pace from "../components/Pace.astro";
 import Privacy from "../components/Privacy.astro";
+import Projects from "../components/Projects.astro";
+import Yours from "../components/Yours.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../content/site";
 import Base from "../layouts/Base.astro";
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <Hero />
-  <Pace />
   <Limits />
+  <Accounts />
   <Agents />
+  <Projects />
+  <Yours />
   <Privacy />
   <Detail />
   <Install />

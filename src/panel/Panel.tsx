@@ -1,11 +1,13 @@
 import "./panel.css";
-import type { ReactElement } from "react";
+import type { ReactElement, ReactNode } from "react";
+import { ForgeSection } from "./components/ForgeSection";
+import { Identity } from "./components/Identity";
 import { ProjectsSection } from "./components/ProjectRow";
 import { type OpenPage, OVERVIEW, pageIdentity } from "./page";
 import { Overview } from "./pages/Overview";
 import { Provider } from "./pages/Provider";
 import { Stats } from "./pages/Stats";
-import type { PanelPage, PanelSnapshot } from "./types";
+import type { AccountIdentity, PanelPage, PanelSnapshot } from "./types";
 
 interface PanelProps {
   snapshot: PanelSnapshot;
@@ -72,9 +74,61 @@ export function ProjectsCrop({
   label: string;
 }): ReactElement {
   return (
+    <Crop label={label}>
+      <ProjectsSection label="By project · today" rows={snapshot.projects} />
+    </Crop>
+  );
+}
+
+/**
+ * The Overview's contributions block on its own.
+ *
+ * Both connected accounts, because the block draws one row per connection and
+ * the two are never summed: each vendor counts its own thing, so a total
+ * across them would be a third number belonging to neither.
+ */
+export function ForgeCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+    </Crop>
+  );
+}
+
+/**
+ * One account's identity block on its own, which is where both the picker and
+ * the switch live.
+ *
+ * It takes the identity rather than the snapshot, because the block only says
+ * what it is for on an account the CLI is not signed in as, and picking that
+ * one is the caller's business.
+ */
+export function IdentityCrop({
+  identity,
+  label,
+}: {
+  identity: AccountIdentity;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <Identity identity={identity} />
+    </Crop>
+  );
+}
+
+/** One block of a page, drawn in the panel's own frame and never operable. */
+function Crop({ label, children }: { label: string; children: ReactNode }): ReactElement {
+  return (
     <div className="panel-wrap">
       <div className="panel" role="img" aria-label={label}>
-        <ProjectsSection label="By project · today" rows={snapshot.projects} />
+        {children}
       </div>
     </div>
   );

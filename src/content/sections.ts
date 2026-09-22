@@ -1,20 +1,53 @@
+import type { ForgeCounter } from "../panel/types";
 import { GITHUB_URL } from "./site";
 
-/** The Overview's first gauge, drawn at page scale. Every figure comes from that row. */
-export const PACE = {
-  id: "pace",
-  rowId: "claude-xsmyile",
-  body: "The mark on the bar is where even spending would have reached by now, so being ahead of pace is visible instead of calculated.",
-  paceLabel: "Pace at this hour",
-} as const;
-
+/**
+ * The band and the page behind it, as one section.
+ *
+ * The band is the Overview's first gauge drawn at page scale, and every figure
+ * on it comes from that row. It opens the section rather than standing as one
+ * of its own: the figure is already in the hero's panel, and a screen that
+ * restates it is a screen the page spends saying nothing new. Here it is the
+ * demonstration the section's own claim needs, and the panel under it is where
+ * that claim is paid off.
+ */
 export const LIMITS = {
   id: "limits",
   eyebrow: "Rate limits",
   title: "See how close you are before the CLI stops you.",
   lede: "The Overview shows one gauge per account, on the window it is closest to running out of.",
-  body: "The session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects.",
+  rowId: "claude-xsmyile",
+  paceBody:
+    "The mark on the bar is where even spending would have reached by now, so being ahead of pace is visible instead of calculated.",
+  paceLabel: "Pace at this hour",
+  body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects.",
   panelLabel: "Sissy's panel, one account's page",
+} as const;
+
+/**
+ * The accounts, and the one thing the app does rather than shows.
+ *
+ * `Use in CLI` is quoted from `ClaudeAccountSwitchCopy` rather than worded
+ * afresh: the sentence about a running session putting its own account back is
+ * the part a reader cannot work out, and the app already says it before the
+ * write. A site that sold the switch without it would be selling a footgun.
+ */
+export const ACCOUNTS = {
+  id: "accounts",
+  eyebrow: "Accounts",
+  title: "Several accounts, each metered on its own.",
+  lede: "A work account, a personal one, a Codex sign-in beside them: each gets its own row, its own windows and its own plan. The day's cost adds them up. The limits never do, because a window belongs to an account.",
+  points: [
+    {
+      title: "One page each",
+      body: "The picker at the top of a page moves between that vendor's accounts. The plan sits beside the address, because it is the account that is on a plan and not the CLI.",
+    },
+    {
+      title: "Use in CLI",
+      body: "On Claude, the account you are reading is one you can hand the CLI. Sissy asks before it writes anything, keeps the account you are leaving, and says the part you cannot work out for yourself: your next `claude` starts as it, and a session that is already open will switch it back when it next refreshes its token, so quit that one first.",
+    },
+  ],
+  panelLabel: "A Claude account's identity block, with the switch",
 } as const;
 
 export const AGENTS_SCENE = {
@@ -22,17 +55,54 @@ export const AGENTS_SCENE = {
   eyebrow: "Agents",
   title: "What is running right now, and what it holds.",
   lede: "A rate limit and the Mac's memory are the two things that stop work now, so the Overview keeps one line about agents next to the gauges. Click it for the page behind it.",
-  points: [
-    {
-      title: "Now",
-      body: "Every running session with its memory and how long it has been up, named after the repository it is working in. The line above is the footprint over time; the sentence under it is what those processes started alongside themselves.",
-    },
-    {
-      title: "Sessions and agents",
-      body: "How many the day has had, how long it was worked, and when: the strip is the day as blocks of activity, with the sub-agents' share and the cost of an hour in the caption.",
-    },
-  ],
+  body: "Every running session with its memory and how long it has been up, named after the repository it is working in, and under them the day: how many sessions and agents it has had, how long it was worked, and when.",
   panelLabel: "Sissy's Agents page",
+} as const;
+
+/** The Overview's projects block, which was the detail tier's left half. */
+export const PROJECTS = {
+  id: "projects",
+  eyebrow: "By project",
+  title: "Where the day went, by repository.",
+  lede: "Each row is one repository with what it cost today, and the band behind it is that repository's share of the day.",
+  body: "A worktree counts against the repository it was cut from, so one project is one row, whichever CLI did the work. The label is the way to the whole list. Rows carry the forge's mark when the repository has one, and the path stays on the hover.",
+  panelLabel: "The Overview's By project block, enlarged",
+} as const;
+
+/**
+ * The switches, worded as `ForgeCounterCopy` words them, and keyed by the
+ * counter the panel draws: the ids are `ForgeCounter`, so a counter the app
+ * renames is a compile error here rather than a switch that governs nothing.
+ */
+const COUNTER_SECTION = "Shown on each row";
+
+const COUNTER_SWITCHES: readonly { id: ForgeCounter; title: string; caption: string }[] = [
+  {
+    id: "merged",
+    title: "Merged requests",
+    caption: "Pull and merge requests you opened and had merged",
+  },
+  { id: "issues", title: "Opened issues", caption: "Issues you opened" },
+  { id: "comments", title: "Comments", caption: "Comments you wrote on issues and requests" },
+];
+
+/**
+ * The contributions block, and the switches that govern it.
+ *
+ * The two are one section because the switch is what explains the block: the
+ * app's `forgeCounters` do not hide a counter, they stop fetching it, so
+ * turning one off is the privacy claim performed rather than repeated.
+ */
+export const YOURS = {
+  id: "yours",
+  eyebrow: "Yours",
+  title: "What you switch off, Sissy stops asking for.",
+  lede: "Under the day's work the Overview counts what you pushed: the contributions on each forge you connected, over the period you picked, then what you merged, what you opened and what you wrote.",
+  body: "Each of the three has a switch in Settings ▸ Forge, and a counter switched off is not hidden, it is not fetched. The block beside them is the one the panel draws.",
+  switchesTitle: COUNTER_SECTION,
+  counters: COUNTER_SWITCHES,
+  note: "The whole app is built this way. Every reading has a switch of its own, and what is off is never read.",
+  panelLabel: "The Overview's Contributions block",
 } as const;
 
 export const PRIVACY = {
@@ -47,7 +117,7 @@ export const PRIVACY = {
     },
     {
       title: "Every request has a switch",
-      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page. Each one has its own off switch.",
+      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page. Each has an off switch of its own, the way the counters above do.",
     },
     {
       title: "Off until you say so",
@@ -106,21 +176,17 @@ export const PRIVACY = {
 } as const;
 
 /**
- * By project and How it works, as one block: the two are the page's detail
- * tier, and eight sections of the same shape was the complaint that started
- * the redesign.
+ * How it works, alone in the page's detail tier.
+ *
+ * It carried `By project` as its left half until that block was promoted to a
+ * section of its own: where the day went is a reason to install the app, and
+ * the detail tier is the one place on the page that does not move.
  */
 export const DETAIL = {
   id: "how",
   eyebrow: "How it works",
   title: "One process, reading the logs as they land.",
   lede: "No daemon, no socket, no second half to keep in step. Quit Sissy and the counting stops.",
-  projects: {
-    title: "Where the day went, by repository.",
-    body: "Each row is one repository with what it cost today, and the band behind it is that repository's share of the day. A worktree counts against the repository it was cut from, so one project is one row, whichever CLI did the work.",
-    note: "The label is the way to the whole list. Rows carry the forge's mark when the repository has one, and the path stays on the hover.",
-    panelLabel: "The Overview's By project block, enlarged",
-  },
   points: [
     {
       title: "Priced as it lands",
