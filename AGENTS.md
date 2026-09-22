@@ -127,8 +127,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the pair the gesture calls for.
 - **One panel is operable, and only along routes the app has.** The hero's is
   the only one; every other panel on the page is the same markup rendered
-  inert. `Yours` is not an exception: its switches are the page's own controls
-  and they change what the panel beside them draws, not what it does. A panel is given `open` or it is not, and that single switch decides
+  inert. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
   line and the back control, and nothing else — the picker, refresh, settings,
   the projects label and the day bars stay drawn and dead. A gauge row is named
@@ -141,20 +140,17 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
   the same Overview with nothing on it that looks pressable.
-- **A switch on the page changes what the panel draws, in CSS.** `Yours` puts
-  the three `forgeCounters` beside the Contributions block and wires them with
-  `:has()` on the checkbox each label owns, so the demonstration costs the page
-  no second island and still works where JavaScript never arrived. The counter
-  is removed rather than dimmed, because that is what the app does with it: a
-  counter switched off is not drawn and, more to the point, not fetched, which
-  is the privacy claim performed instead of repeated. The switch titles and
-  captions are `ForgeCounterCopy`'s own and their ids are `ForgeCounter`, so a
-  counter the app renames fails the build here; the ids the stylesheet selects
-  on are the one place that coupling is spelled twice, and both spellings live
-  in `Yours.astro`. A switch wears the mark of the row it governs, at the size
-  that row draws it: the section sets one `--demo-pt` and hands it to the
-  crop's `--panel-pt` and to the mark's `--pt`, so the glyph is sized by
-  `svg[data-glyph]` like every other and the page names no extent of its own.
+- **`Yours` draws the block and owns no control.** The section is the
+  Contributions block beside its copy, as `Projects` is its own block, and the
+  body says what a switch does rather than drawing it. It had three switches of
+  its own before, and they were the one thing on the page that mirrored
+  nothing: `ForgeSettings` draws that control as a macOS switch in a grouped
+  `Form` and says why in a comment, *"a window that answered that question two
+  ways would be asking the reader which one meant what"*, so a checkbox on the
+  site was the app contradicted rather than narrowed. A second copy of the
+  block with the counters off replaced them for one pass and was dropped too:
+  removing the switches was meant to give the section its height back, and a
+  second panel spent it again.
 - **The band opens Limits; it is not a section.** The 69% is the Overview's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold

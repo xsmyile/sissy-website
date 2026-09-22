@@ -1,4 +1,3 @@
-import type { ForgeCounter } from "../panel/types";
 import { GITHUB_URL } from "./site";
 
 /**
@@ -70,38 +69,18 @@ export const PROJECTS = {
 } as const;
 
 /**
- * The switches, worded as `ForgeCounterCopy` words them, and keyed by the
- * counter the panel draws: the ids are `ForgeCounter`, so a counter the app
- * renames is a compile error here rather than a switch that governs nothing.
- */
-const COUNTER_SECTION = "Shown on each row";
-
-const COUNTER_SWITCHES: readonly { id: ForgeCounter; title: string; caption: string }[] = [
-  {
-    id: "merged",
-    title: "Merged requests",
-    caption: "Pull and merge requests you opened and had merged",
-  },
-  { id: "issues", title: "Opened issues", caption: "Issues you opened" },
-  { id: "comments", title: "Comments", caption: "Comments you wrote on issues and requests" },
-];
-
-/**
- * The contributions block, and the switches that govern it.
+ * The Overview's contributions block.
  *
- * The two are one section because the switch is what explains the block: the
- * app's `forgeCounters` do not hide a counter, they stop fetching it, so
- * turning one off is the privacy claim performed rather than repeated.
+ * The app's `forgeCounters` do not hide a counter, they stop fetching it, so
+ * the body says so rather than showing a block with them off. The contribution
+ * total has no switch because it is what the section is called.
  */
 export const YOURS = {
   id: "yours",
   eyebrow: "Yours",
   title: "What you switch off, Sissy stops asking for.",
   lede: "Under the day's work the Overview counts what you pushed: the contributions on each forge you connected, over the period you picked, then what you merged, what you opened and what you wrote.",
-  body: "Each of the three has a switch in Settings ▸ Forge, and a counter switched off is not hidden, it is not fetched. The block beside them is the one the panel draws.",
-  switchesTitle: COUNTER_SECTION,
-  counters: COUNTER_SWITCHES,
-  note: "The whole app is built this way. Every reading has a switch of its own, and what is off is never read.",
+  body: "Each of the three has a switch in Settings ▸ Forge, and one switched off is not hidden, it is not asked for. The whole app is built this way: every reading has a switch of its own, and what is off is never read.",
   panelLabel: "The Overview's Contributions block",
 } as const;
 

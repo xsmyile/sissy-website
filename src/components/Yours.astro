@@ -1,28 +1,8 @@
 ---
 import { YOURS } from "../content/sections";
-import {
-  ArrowTriangleheadMerge,
-  BubbleLeft,
-  SmallcircleFilledCircle,
-} from "../panel/components/Glyph";
 import { DEMO_SNAPSHOT } from "../panel/data";
 import { ForgeCrop } from "../panel/Panel";
-import type { ForgeCounter } from "../panel/types";
 import Section from "./Section.astro";
-
-/**
- * The mark each switch wears, which is the one the row it governs draws. The
- * app puts it on the label for the same reason: the figure it hides has no
- * words of its own, so the glyph is the only thing that says the switch and
- * the counter are the same thing.
- */
-const MARKS = {
-  merged: ArrowTriangleheadMerge,
-  issues: SmallcircleFilledCircle,
-  comments: BubbleLeft,
-} as const satisfies Record<ForgeCounter, typeof ArrowTriangleheadMerge>;
-
-const switchId = (counter: ForgeCounter): string => `forge-${counter}`;
 ---
 
 <Section
@@ -30,38 +10,16 @@ const switchId = (counter: ForgeCounter): string => `forge-${counter}`;
   eyebrow={YOURS.eyebrow}
   title={YOURS.title}
   lede={YOURS.lede}
-  layout="stack"
   tier="support"
 >
-  <p class="aside" slot="aside">{YOURS.body}</p>
-  <div class="demo">
-    <fieldset class="switches">
-      <legend>{YOURS.switchesTitle}</legend>
-      {
-        YOURS.counters.map((counter) => {
-          const Mark = MARKS[counter.id];
-          return (
-            <label class="switch" data-counter={counter.id}>
-              <input type="checkbox" id={switchId(counter.id)} checked />
-              <span class="mark"><Mark /></span>
-              <span class="words">
-                <span class="title">{counter.title}</span>
-                <span class="caption">{counter.caption}</span>
-              </span>
-            </label>
-          );
-        })
-      }
-    </fieldset>
-    <div class="stage">
-      <ForgeCrop snapshot={DEMO_SNAPSHOT} label={YOURS.panelLabel} />
-    </div>
+  <p class="body" slot="aside">{YOURS.body}</p>
+  <div class="stage">
+    <ForgeCrop snapshot={DEMO_SNAPSHOT} label={YOURS.panelLabel} />
   </div>
-  <p class="note">{YOURS.note}</p>
 </Section>
 
 <style>
-  .aside {
+  .body {
     margin: 8px 0 0;
     padding-top: 16px;
     border-top: 1px solid var(--border);
@@ -70,162 +28,16 @@ const switchId = (counter: ForgeCounter): string => `forge-${counter}`;
     text-wrap: pretty;
   }
 
-  /*
-   * One point size for the pair: the mark on a switch is the same glyph, at
-   * the same size, as the one in the row it governs, so the two are read as
-   * one thing rather than as a label about a thing.
-   */
-  .demo {
-    --demo-pt: 1.45px;
-
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 40px 64px;
-    align-items: center;
-  }
-
-  .switches {
-    display: grid;
-    gap: 8px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-
-  legend {
-    padding: 0 0 10px;
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .switch {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--surface);
-    cursor: pointer;
-  }
-
-  .switch:hover {
-    border-color: var(--accent-deep);
-  }
-
-  input {
-    appearance: none;
-    position: relative;
-    flex: none;
-    width: 18px;
-    height: 18px;
-    margin: 1px 0 0;
-    border: 1px solid var(--muted);
-    border-radius: 5px;
-    background: transparent;
-    cursor: pointer;
-  }
-
-  input:checked {
-    border-color: var(--accent);
-    background: var(--accent);
-  }
-
-  input:checked::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 5.5px;
-    width: 4px;
-    height: 9px;
-    border: solid var(--bg);
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-
-  input:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  .mark {
-    --pt: var(--demo-pt);
-
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 17px;
-    margin-top: 3px;
-    color: var(--muted);
-  }
-
-  .switch:has(input:checked) .mark {
-    color: var(--text);
-  }
-
-  .words {
-    display: grid;
-    gap: 2px;
-    min-width: 0;
-  }
-
-  .title {
-    font-size: 15px;
-    color: var(--text-2);
-  }
-
-  .switch:has(input:checked) .title {
-    color: var(--text);
-  }
-
-  .caption {
-    font-size: 13.5px;
-    color: var(--muted);
-    text-wrap: pretty;
-  }
-
   .stage {
-    --panel-pt: var(--demo-pt);
+    --panel-pt: 1.3px;
 
     display: flex;
     justify-content: center;
   }
 
-  /*
-   * The switch and the counter, wired in CSS rather than in a second island:
-   * `:has()` reads the checkbox the label owns and the panel is rendered to
-   * static HTML beside it, so the demonstration costs the page no script and
-   * works on a page whose JavaScript never arrived. The counter is removed
-   * rather than dimmed, because a counter switched off is one the app does not
-   * draw and does not fetch.
-   */
-  .demo:has(#forge-merged:not(:checked)) :global(.panel-forge-counter[data-counter="merged"]),
-  .demo:has(#forge-issues:not(:checked)) :global(.panel-forge-counter[data-counter="issues"]),
-  .demo:has(#forge-comments:not(:checked)) :global(.panel-forge-counter[data-counter="comments"]) {
-    display: none;
-  }
-
-  .note {
-    margin: 32px 0 0;
-    max-width: 44em;
-    font-size: 14.5px;
-    color: var(--muted);
-    text-wrap: pretty;
-  }
-
   @media (max-width: 920px) {
-    .demo {
-      --demo-pt: 1.15px;
-
-      grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
-    }
-
-    .note {
-      margin-top: 24px;
+    .stage {
+      --panel-pt: 1.05px;
     }
   }
 </style>
