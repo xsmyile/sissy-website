@@ -206,6 +206,13 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   colours are the popover material's, its font stack starts with the system
   font, and the cat's eye inside it is `systemBlue`, because the app draws it so
   (`SissyArtwork.holdTint`). The page around it uses `tokens.css`.
+- **A side-by-side section sets its panel on the copy's axis and against it.**
+  `split` and `reverse` centre the panel on the height of the words, and a crop
+  that is narrower than its column sits on the edge facing them rather than in
+  the middle of the track. Top-aligned and centred in its column, a small crop
+  left the gap below it and the gap beside it to be read as one empty cell.
+  `Projects` and `Yours` both keep the panel on the right, since both are one
+  block of the Overview at page scale.
 - **An inert panel sits on the page; only the hero's floats.** The popover's
   long shadow is the one macOS throws under a window above the desktop, and on
   the graphite ground it bloomed into a dark cloud some 80 px wide around every
