@@ -10,30 +10,30 @@ const SISSY: ProjectRow = {
   share: 0.568,
 };
 
-const HOMEBREW: ProjectRow = {
-  id: "homebrew-sissy",
+const BILLY: ProjectRow = {
+  id: "billy",
   owner: "xsmyile",
-  repo: "homebrew-sissy",
+  repo: "billy",
   forge: "github",
   tokens: "321.5M",
   cost: "$198.01",
   share: 0.212,
 };
 
-const ACME_API: ProjectRow = {
-  id: "acme-api",
-  owner: "acme",
-  repo: "api",
+const ORIGINS: ProjectRow = {
+  id: "group935-origins",
+  owner: "group935",
+  repo: "origins",
   forge: "gitlab",
   tokens: "264.7M",
   cost: "$188.02",
   share: 0.202,
 };
 
-const ACME_WEB: ProjectRow = {
-  id: "acme-web",
-  owner: "acme",
-  repo: "web",
+const BURIED: ProjectRow = {
+  id: "group935-buried",
+  owner: "group935",
+  repo: "buried",
   forge: "gitlab",
   tokens: "18.7M",
   cost: "$17.06",
@@ -41,8 +41,8 @@ const ACME_WEB: ProjectRow = {
 };
 
 /**
- * `projectsFolded`: what the Overview draws in place of `acme/api` and
- * `acme/web` once the day has more than three projects, their figures summed.
+ * `projectsFolded`: what the Overview draws in place of `group935/origins`
+ * and `group935/buried` once the day has more than three projects, their figures summed.
  */
 const FOLDED: ProjectRow = {
   id: "folded",
@@ -54,29 +54,30 @@ const FOLDED: ProjectRow = {
   share: 0.22,
 };
 
-const PERSONAL = "Smyile <dev@example.com>";
-const WORK = "Acme Dev <dev@acme.example>";
+const PERSONAL = "Smyile <smyile@example.com>";
+const WORK = "Billy Handsome <billy@group935.example>";
 
 /**
- * Six repositories, ordered the way `makeIdentities` orders them: the one that
- * disagrees first, then by name. Acme's GitLab account has three, two of them
- * committing as the work identity, which is what makes that name the
- * expectation and `acme/web`, set to the personal one in its own config, the
- * finding. Only a local override carries a fix.
+ * Seven repositories, ordered the way `makeIdentities` orders them: the one
+ * that disagrees first, then by name. Group 935's GitLab account has three, two
+ * of them committing as the work identity, which is what makes that name the
+ * expectation and `group935/buried`, set to the personal one in its own config,
+ * the finding. Only a local override carries a fix.
  */
 const IDENTITIES: IdentityRow[] = [
   {
-    id: "acme-web",
-    name: "acme/web",
+    id: "group935-buried",
+    name: "group935/buried",
     mark: "unexpected",
     author: PERSONAL,
-    origin: "local · /Users/dev/work/acme-web/.git/config",
-    expectation: "gitlab.com · 2 repositories there commit as Acme Dev",
-    fix: "git -C '/Users/dev/work/acme-web' config --unset-all user.name && git -C '/Users/dev/work/acme-web' config --unset-all user.email",
+    origin: "local · /Users/smyile/group935/buried/.git/config",
+    expectation: "gitlab.com · 2 repositories there commit as Billy Handsome",
+    fix: "git -C '/Users/smyile/group935/buried' config --unset-all user.name && git -C '/Users/smyile/group935/buried' config --unset-all user.email",
   },
   ...[
-    ["acme-api", "acme/api", WORK],
-    ["acme-infra", "acme/infra", WORK],
+    ["group935-origins", "group935/origins", WORK],
+    ["group935-tranzit", "group935/tranzit", WORK],
+    ["billy", "xsmyile/billy", PERSONAL],
     ["homebrew-sissy", "xsmyile/homebrew-sissy", PERSONAL],
     ["sissy", "xsmyile/sissy", PERSONAL],
     ["sissy-website", "xsmyile/sissy-website", PERSONAL],
@@ -123,16 +124,16 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       id: "claude-xsmyile",
       provider: "claude-code",
       account: "xsmyile",
-      name: "Claude · Xsmyile",
+      name: "Claude · xSmyile",
       window: "Weekly",
       usedFraction: 0.69,
       expectedFraction: 0.52,
     },
     {
-      id: "claude-acme",
+      id: "claude-group935",
       provider: "claude-code",
-      account: "acme",
-      name: "Claude · Acme Inc",
+      account: "group935",
+      name: "Claude · Group 935",
       window: "Weekly",
       usedFraction: 0.16,
       expectedFraction: 0.31,
@@ -148,13 +149,13 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     },
   ],
   agents: { running: 3, footprint: "1.42 GB" },
-  projects: [SISSY, HOMEBREW, FOLDED],
+  projects: [SISSY, BILLY, FOLDED],
   projectCount: 4,
   identities: IDENTITIES,
   identityLine: {
     state: "findings",
-    summary: "acme/web commits under an unexpected name",
-    repository: "acme-web",
+    summary: "group935/buried commits under an unexpected name",
+    repository: "group935-buried",
   },
   identitiesReading: "checked 3m ago",
   forge: [
@@ -171,8 +172,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     {
       id: "gitlab",
       host: "gitlab",
-      login: "acme-dev",
-      contributions: "112",
+      login: "billy-handsome",
+      contributions: "115",
       merged: "4",
       issues: "9",
       comments: "31",
@@ -185,8 +186,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       account: "xsmyile",
       name: "Claude",
       identity: {
-        email: "dev@example.com",
-        organization: "Xsmyile",
+        email: "smyile@example.com",
+        organization: "xSmyile",
         plan: "Max 20x",
         hasPicker: true,
         inCLI: true,
@@ -306,8 +307,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       projects: [
         { ...SISSY, tokens: "612.4M", cost: "$410.22", share: 0.576 },
-        { ...HOMEBREW, tokens: "290.0M", cost: "$179.34", share: 0.252 },
-        { ...ACME_API, tokens: "140.8M", cost: "$122.84", share: 0.172 },
+        { ...BILLY, tokens: "290.0M", cost: "$179.34", share: 0.252 },
+        { ...ORIGINS, tokens: "140.8M", cost: "$122.84", share: 0.172 },
       ],
       projectCount: 3,
       effort: { lead: "xhigh 99%", window: "6 of 7 days", rows: null },
@@ -315,11 +316,11 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     },
     {
       provider: "claude-code",
-      account: "acme",
+      account: "group935",
       name: "Claude",
       identity: {
-        email: "dev@acme.example",
-        organization: "Acme Inc",
+        email: "billy@group935.example",
+        organization: "Group 935",
         plan: "Team Premium",
         hasPicker: true,
         inCLI: false,
@@ -429,8 +430,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         ],
       },
       projects: [
-        { ...ACME_API, tokens: "123.9M", cost: "$65.18", share: 0.793 },
-        { ...ACME_WEB, share: 0.207 },
+        { ...ORIGINS, tokens: "123.9M", cost: "$65.18", share: 0.793 },
+        { ...BURIED, share: 0.207 },
       ],
       projectCount: 2,
       effort: { lead: "xhigh 97%", window: "5 of 7 days", rows: null },
@@ -441,7 +442,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       account: null,
       name: "Codex",
       identity: {
-        email: "dev@example.com",
+        email: "smyile@example.com",
         organization: null,
         plan: "Pro",
         hasPicker: false,
@@ -550,7 +551,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       projects: [
         { ...SISSY, tokens: "187.5M", cost: "$118.72", share: 0.864 },
-        { ...HOMEBREW, tokens: "31.5M", cost: "$18.67", share: 0.136 },
+        { ...BILLY, tokens: "31.5M", cost: "$18.67", share: 0.136 },
       ],
       projectCount: 2,
       effort: {
@@ -593,11 +594,11 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         0.62, 0.64, 0.71, 0.69, 0.74, 0.8, 0.79, 0.86, 0.84, 0.9, 0.95, 1, 0.94, 0.88, 0.88,
       ],
       peak: "1.61 GB",
-      caption: "since 09:12 · 4.88 GB with what they started",
+      caption: "since 09:35 · 4.88 GB with what they started",
       processes: [
         { id: "sissy", provider: "claude-code", name: "sissy", figures: "612 MB · 2h 14m" },
-        { id: "api", provider: "claude-code", name: "api", figures: "498 MB · 41m" },
-        { id: "homebrew", provider: "codex", name: "homebrew-sissy", figures: "310 MB · 1h 03m" },
+        { id: "origins", provider: "claude-code", name: "origins", figures: "498 MB · 41m" },
+        { id: "billy", provider: "codex", name: "billy", figures: "310 MB · 1h 03m" },
       ],
     },
     counted: {
