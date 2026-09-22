@@ -30,7 +30,6 @@
   --panel-sparkline: calc(26 * var(--pt));
   --panel-strip: calc(8 * var(--pt));
   --panel-forge: calc(11 * var(--pt));
-  --panel-forge-glyph: calc(10 * var(--pt));
   --panel-forge-gap: calc(9 * var(--pt));
   --panel-forge-notice: calc(11 * var(--pt));
   --panel-status-dot: calc(7 * var(--pt));
