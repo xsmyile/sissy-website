@@ -143,6 +143,45 @@ export interface StatusLine {
   checked: string;
 }
 
+/**
+ * `EffortSegment`: one effort's share of one model's spend over the window,
+ * and the words the legend gives it. `effort` is null on spend whose lines
+ * named no effort, which is drawn last and never in the provider's tint.
+ */
+export interface EffortSegment {
+  id: string;
+  effort: string | null;
+  share: number;
+  label: string;
+}
+
+/**
+ * `EffortRow`: one model on the effort page, its segments dearest first.
+ * `detail` is the hover and the accessibility label, what each effort cost and
+ * how many turns it took.
+ */
+export interface EffortRow {
+  id: string;
+  name: string;
+  total: string;
+  detail: string;
+  segments: EffortSegment[];
+}
+
+/**
+ * The provider page's `By effort` row: `EffortSummary`'s lead over
+ * `effortWindow`'s days, and the page it opens.
+ *
+ * `rows` is null where the row is not a door, which is when every model leads
+ * on the provider's own leading effort by `effortWholeShare` or more: a page
+ * of full bars would answer what the row already did.
+ */
+export interface EffortReading {
+  lead: string;
+  window: string;
+  rows: EffortRow[] | null;
+}
+
 /** `ProviderRow`, as `PanelProviderPage` draws it for one account. */
 export interface ProviderPage {
   provider: ProviderId;
@@ -162,7 +201,12 @@ export interface ProviderPage {
   /** Today's split by model, which the pills draw while the pointer is on no bar. */
   models: ModelRow[];
   strip: DayStrip;
+  /** `ProviderRow.projects`: two repositories and the fold, past three. */
   projects: ProjectRow[];
+  /** `ProviderRow.projectCount`: every project of the day, which the label counts. */
+  projectCount: number;
+  /** Null when the window named no effort, which draws no row at all. */
+  effort: EffortReading | null;
   status: StatusLine;
 }
 
@@ -182,6 +226,8 @@ export interface ProviderCount {
 
 /** `AgentsBlock`, as `PanelStats` draws it: the live half and the counted one. */
 export interface StatsPage {
+  /** `agentsReading`: when the count on screen was taken, under the page's title. */
+  reading: string;
   live: {
     line: AgentsLine;
     samples: number[];
@@ -264,10 +310,18 @@ export interface PanelSnapshot {
   meteringProviders: number;
   gaugeRows: GaugeRow[];
   agents: AgentsLine;
+  /**
+   * `UsagePanelSnapshot.projects`: past three, the two busiest and one row
+   * folding the rest, which names no owner and no forge.
+   */
   projects: ProjectRow[];
+  /** `UsagePanelSnapshot.projectCount`: every project of the day, folded ones included. */
+  projectCount: number;
   /** Every repository read, the ones that disagree with their forge first. */
   identities: IdentityRow[];
   identityLine: IdentityLine;
+  /** `identitiesReading`: when the repositories were last read, under the page's title. */
+  identitiesReading: string;
   forge: ForgeRow[];
   providerPages: ProviderPage[];
   stats: StatsPage;
@@ -280,5 +334,6 @@ export interface PanelSnapshot {
 export type PanelPage =
   | { kind: "overview" }
   | { kind: "provider"; provider: ProviderId; account: string | null }
+  | { kind: "effort"; provider: ProviderId; account: string | null }
   | { kind: "stats" }
   | { kind: "identities"; focus: string | null };

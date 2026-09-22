@@ -24,7 +24,8 @@ const IDENTITY_HELP = "Show every repository's commit identity";
 const IDENTITY_TARGET = "identities";
 
 export function Overview({ snapshot, open }: OverviewProps): ReactElement {
-  const { header, headline, gaugeRows, agents, projects, identityLine, forge } = snapshot;
+  const { header, headline, gaugeRows, agents, projects, projectCount, identityLine, forge } =
+    snapshot;
   const ids = useId();
   const readingId = (id: string): string => `${ids}${id}`;
   return (
@@ -96,7 +97,7 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
       {projects.length > 0 && (
         <>
           <div className="panel-divider" />
-          <ProjectsSection label="By project · today" rows={projects} />
+          <ProjectsSection label="By project · today" rows={projects} count={projectCount} />
         </>
       )}
       <div className="panel-divider" />

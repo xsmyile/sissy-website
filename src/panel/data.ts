@@ -40,6 +40,20 @@ const ACME_WEB: ProjectRow = {
   share: 0.018,
 };
 
+/**
+ * `projectsFolded`: what the Overview draws in place of `acme/api` and
+ * `acme/web` once the day has more than three projects, their figures summed.
+ */
+const FOLDED: ProjectRow = {
+  id: "folded",
+  owner: null,
+  repo: "2 more projects",
+  forge: null,
+  tokens: "283.4M",
+  cost: "$205.08",
+  share: 0.22,
+};
+
 const PERSONAL = "Smyile <dev@example.com>";
 const WORK = "Acme Dev <dev@acme.example>";
 
@@ -82,7 +96,8 @@ const IDENTITIES: IdentityRow[] = [
 /**
  * One day of demo readings, internally consistent: the three accounts sum to
  * the headline, each account's projects sum to its day, each project's rows
- * across the accounts sum to its line on the Overview, and the stats page
+ * across the accounts sum to its line on the Overview, or to the fold that
+ * stands for it there, and the stats page
  * counts the same three processes the Overview's agents line does. Every
  * repository the identities page reads is one Sissy has seen an agent in, and
  * the Overview's line names the one that disagrees. Every
@@ -91,6 +106,12 @@ const IDENTITIES: IdentityRow[] = [
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
  * over the costliest day's, and the total under the label is the bars above it
  * summed. A window's reset is what is left of it at its own pace mark.
+ *
+ * Every account's effort reading is of its strip's window: each model's
+ * efforts sum to what the pills give that model across the covered days, and
+ * the lead is the provider's dearest effort over the strip's total. Claude's
+ * models each lead on `xhigh` above `effortWholeShare`, so its rows are not
+ * doors; Codex's lead on two different efforts, so its row opens.
  */
 export const DEMO_SNAPSHOT: PanelSnapshot = {
   header: { updated: "21s ago", awake: "<1m" },
@@ -127,13 +148,15 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     },
   ],
   agents: { running: 3, footprint: "1.42 GB" },
-  projects: [SISSY, HOMEBREW, ACME_API, ACME_WEB],
+  projects: [SISSY, HOMEBREW, FOLDED],
+  projectCount: 4,
   identities: IDENTITIES,
   identityLine: {
     state: "findings",
     summary: "acme/web commits under an unexpected name",
     repository: "acme-web",
   },
+  identitiesReading: "checked 3m ago",
   forge: [
     {
       id: "github",
@@ -286,6 +309,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...HOMEBREW, tokens: "290.0M", cost: "$179.34", share: 0.252 },
         { ...ACME_API, tokens: "140.8M", cost: "$122.84", share: 0.172 },
       ],
+      projectCount: 3,
+      effort: { lead: "xhigh 99%", window: "6 of 7 days", rows: null },
       status: { label: "All Systems Operational", checked: "checked 21s ago" },
     },
     {
@@ -407,6 +432,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...ACME_API, tokens: "123.9M", cost: "$65.18", share: 0.793 },
         { ...ACME_WEB, share: 0.207 },
       ],
+      projectCount: 2,
+      effort: { lead: "xhigh 97%", window: "5 of 7 days", rows: null },
       status: { label: "All Systems Operational", checked: "checked 21s ago" },
     },
     {
@@ -525,10 +552,41 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...SISSY, tokens: "187.5M", cost: "$118.72", share: 0.864 },
         { ...HOMEBREW, tokens: "31.5M", cost: "$18.67", share: 0.136 },
       ],
+      projectCount: 2,
+      effort: {
+        lead: "medium 48%",
+        window: "4 of 7 days",
+        rows: [
+          {
+            id: "gpt-6-astra",
+            name: "gpt-6-astra",
+            total: "$898.95 · 216 turns",
+            detail:
+              "medium $440.49 · 118 turns · high $332.61 · 64 turns · xhigh $89.90 · 11 turns · low $35.95 · 23 turns",
+            segments: [
+              { id: "medium", effort: "medium", share: 0.49, label: "medium 49%" },
+              { id: "high", effort: "high", share: 0.37, label: "high 37%" },
+              { id: "xhigh", effort: "xhigh", share: 0.1, label: "xhigh 10%" },
+              { id: "low", effort: "low", share: 0.04, label: "low 4%" },
+            ],
+          },
+          {
+            id: "gpt-6-mini",
+            name: "gpt-6-mini",
+            total: "$39.32 · 46 turns",
+            detail: "low $27.52 · 37 turns · medium $11.80 · 9 turns",
+            segments: [
+              { id: "low", effort: "low", share: 0.7, label: "low 70%" },
+              { id: "medium", effort: "medium", share: 0.3, label: "medium 30%" },
+            ],
+          },
+        ],
+      },
       status: { label: "All Systems Operational", checked: "checked 34s ago" },
     },
   ],
   stats: {
+    reading: "counted 12s ago",
     live: {
       line: { running: 3, footprint: "1.42 GB" },
       samples: [

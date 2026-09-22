@@ -6,7 +6,7 @@
  * function it copies.
  */
 
-import type { AgentsLine, ForgeHost, GaugeRow, HeaderReading, Period } from "./types";
+import type { AgentsLine, ForgeHost, GaugeRow, HeaderReading, IdentityMark, Period } from "./types";
 
 export const SEPARATOR = " · ";
 
@@ -86,4 +86,33 @@ export function identityFooter(checked: number): string {
 /** `identityDisclosure`: the control that opens the rows the page did not need to show. */
 export function identityDisclosure(all: number): string {
   return `Show all ${all}`;
+}
+
+/**
+ * `identityVerdict`: the sentence the identities page leads with. "Every
+ * repository" only when every one was judged and agrees, because one read and
+ * not judged has no verdict to claim.
+ */
+export function identityVerdict(unexpected: number, unjudged: number): string {
+  if (unexpected === 1) return "1 repository commits under an unexpected name.";
+  if (unexpected > 1) return `${unexpected} repositories commit under an unexpected name.`;
+  return unjudged === 0
+    ? "Every repository commits under the name its forge expects."
+    : "No repository commits under an unexpected name.";
+}
+
+/** `identityCount`: one of the recap's counts, beside the mark it counts. */
+export function identityCount(mark: IdentityMark, count: number): string {
+  return `${count} ${identityVerdictWord(mark)}`;
+}
+
+function identityVerdictWord(mark: IdentityMark): string {
+  switch (mark) {
+    case "unexpected":
+      return "unexpected";
+    case "agrees":
+      return "as expected";
+    case "unjudged":
+      return "not judged";
+  }
 }

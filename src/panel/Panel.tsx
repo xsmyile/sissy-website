@@ -4,11 +4,12 @@ import { ForgeSection } from "./components/ForgeSection";
 import { Identity } from "./components/Identity";
 import { ProjectsSection } from "./components/ProjectRow";
 import { type OpenPage, OVERVIEW, pageIdentity } from "./page";
+import { Effort } from "./pages/Effort";
 import { Identities, IdentitiesBlock } from "./pages/Identities";
 import { Overview } from "./pages/Overview";
 import { Provider } from "./pages/Provider";
 import { Stats } from "./pages/Stats";
-import type { AccountIdentity, PanelPage, PanelSnapshot } from "./types";
+import type { AccountIdentity, PanelPage, PanelSnapshot, ProviderId, ProviderPage } from "./types";
 
 interface PanelProps {
   snapshot: PanelSnapshot;
@@ -17,23 +18,44 @@ interface PanelProps {
   open?: OpenPage;
 }
 
+function providerPage(
+  page: { provider: ProviderId; account: string | null },
+  snapshot: PanelSnapshot,
+): ProviderPage {
+  const found = snapshot.providerPages.find(
+    (entry) => entry.provider === page.provider && entry.account === page.account,
+  );
+  if (found === undefined) {
+    throw new Error(`The fixture has no page for "${page.provider}:${page.account ?? ""}"`);
+  }
+  return found;
+}
+
 function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
   switch (page.kind) {
     case "overview":
       return <Overview snapshot={snapshot} open={open} />;
-    case "provider": {
-      const found = snapshot.providerPages.find(
-        (entry) => entry.provider === page.provider && entry.account === page.account,
-      );
-      if (found === undefined) {
-        throw new Error(`The fixture has no page for "${pageIdentity(page)}"`);
+    case "provider":
+      return <Provider page={providerPage(page, snapshot)} header={snapshot.header} open={open} />;
+    case "effort": {
+      const found = providerPage(page, snapshot);
+      const reading = found.effort;
+      if (reading === null || reading.rows === null) {
+        throw new Error(`The fixture's "${pageIdentity(page)}" has no effort page to open`);
       }
-      return <Provider page={found} header={snapshot.header} open={open} />;
+      return <Effort page={found} reading={{ ...reading, rows: reading.rows }} open={open} />;
     }
     case "stats":
       return <Stats page={snapshot.stats} open={open} />;
     case "identities":
-      return <Identities rows={snapshot.identities} focus={page.focus} open={open} />;
+      return (
+        <Identities
+          rows={snapshot.identities}
+          focus={page.focus}
+          reading={snapshot.identitiesReading}
+          open={open}
+        />
+      );
   }
 }
 
@@ -78,7 +100,11 @@ export function ProjectsCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <ProjectsSection label="By project · today" rows={snapshot.projects} />
+      <ProjectsSection
+        label="By project · today"
+        rows={snapshot.projects}
+        count={snapshot.projectCount}
+      />
     </Crop>
   );
 }

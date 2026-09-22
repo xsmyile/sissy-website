@@ -470,8 +470,27 @@ svg[data-glyph="chevron.down"] {
   font-weight: 400;
 }
 
+.panel-identity-recap {
+  display: grid;
+  gap: calc(6 * var(--pt));
+}
+
 .panel-identity-verdict {
   font-size: var(--panel-row);
+}
+
+.panel-identity-counts {
+  display: flex;
+  gap: calc(10 * var(--pt));
+}
+
+.panel-identity-count {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+  font-size: var(--panel-headline-meta);
+  white-space: nowrap;
+  color: var(--panel-secondary);
 }
 
 .panel-identity-rows {
@@ -842,6 +861,121 @@ svg[data-glyph="chevron.down"] {
 
 .panel-status .panel-chevron {
   margin-left: auto;
+}
+
+/*
+ * The provider page's By effort row and the page behind it, from
+ * PanelProviderPage.effort and PanelEffortPage. The bar's segments grow from
+ * nothing by their share, so the gaps come off the width before it is split,
+ * as the app's GeometryReader does.
+ */
+.panel-effort-line {
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--pt));
+  padding: calc(12 * var(--pt)) var(--panel-gutter);
+}
+
+.panel-effort-line .panel-label-end,
+.panel-effort-head .panel-label-end {
+  flex: none;
+  margin-left: auto;
+}
+
+.panel-effort-head {
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--pt));
+  padding: calc(12 * var(--pt)) var(--panel-gutter) calc(4 * var(--pt));
+}
+
+.panel-effort-models {
+  --effort-tint: var(--panel-text);
+
+  display: grid;
+  gap: calc(14 * var(--pt));
+  padding: calc(8 * var(--pt)) var(--panel-gutter) calc(12 * var(--pt));
+}
+
+.panel-effort-models[data-tint="claude-code"] {
+  --effort-tint: var(--panel-claude);
+}
+
+.panel-effort-model {
+  display: grid;
+  gap: calc(5 * var(--pt));
+}
+
+.panel-effort-name-line {
+  display: flex;
+  align-items: baseline;
+  gap: calc(8 * var(--pt));
+}
+
+.panel-effort-name {
+  overflow: hidden;
+  min-width: 0;
+  margin-right: auto;
+  font-weight: 500;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-effort-name-line .panel-caption {
+  flex: none;
+}
+
+.panel-effort-bar {
+  display: flex;
+  gap: calc(1 * var(--pt));
+  overflow: hidden;
+  height: calc(10 * var(--pt));
+  border-radius: calc(3 * var(--pt));
+}
+
+.panel-effort-segment {
+  flex: var(--share) 1 0;
+  min-width: 0;
+}
+
+.panel-effort-segment,
+.panel-effort-swatch {
+  background: var(--effort-tint);
+  opacity: var(--rank-opacity);
+}
+
+.panel-effort-segment[data-unattributed],
+.panel-effort-swatch[data-unattributed] {
+  background: var(--panel-secondary);
+  opacity: 0.18;
+}
+
+.panel-effort-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(3 * var(--pt)) calc(10 * var(--pt));
+}
+
+.panel-effort-legend-line {
+  display: inline-flex;
+  gap: calc(10 * var(--pt));
+}
+
+.panel-effort-key {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+}
+
+.panel-effort-key .panel-caption {
+  overflow: visible;
+}
+
+.panel-effort-swatch {
+  flex: none;
+  width: calc(8 * var(--pt));
+  height: calc(8 * var(--pt));
+  border-radius: calc(2 * var(--pt));
 }
 
 .panel-limits .panel-label .panel-caption {
