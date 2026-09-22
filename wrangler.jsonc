@@ -1,0 +1,14 @@
+{
+  "name": "sissy-website",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "assets": {
+    "directory": "./dist"
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+  "observability": {
+    "enabled": true
+  },
+  "previews": {}
+}
