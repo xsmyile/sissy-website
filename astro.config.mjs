@@ -2,6 +2,7 @@ import react from "@astrojs/react";
 import { defineConfig, fontProviders } from "astro/config";
 
 export default defineConfig({
+  site: "https://sissy.smyile.com",
   integrations: [react()],
   fonts: [
     {
