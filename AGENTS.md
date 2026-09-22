@@ -91,9 +91,16 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   other way, which means the lit edge moves with her: she is below the panel's
   left corner on a wide scene, so its left and bottom edges take the rim and
   the shadow goes up and right, and above its right on a narrow one, where the
-  pair swaps back. Her eye lands under the download button, so the one light on
-  the page falls on the one thing the page asks for. Her interior is untouched,
-  because the replica stays in macOS neutrals.
+  pair swaps back. **How bright that rim is belongs to the light alone**: it
+  carried the pointer's tilt as well until the two gestures were found
+  multiplying on one value, where a blink cut the rim to 42% of wherever the
+  pointer had left it, between 0.12 and 0.32. That collision is the normal case
+  rather than an edge one, because the panel blinks when it opens a page and
+  opening a page means clicking a row, so the pointer is on the panel and
+  tilting it every time. The tilt keeps the rotation and both drop shadows,
+  which is enough for it to be felt. Her eye lands under the download button, so
+  the one light on the page falls on the one thing the page asks for. Her
+  interior is untouched, because the replica stays in macOS neutrals.
 - **She blinks when numbers land, and never otherwise.** `blink` is
   `SissyMenuBarMotion.blink` — *"Sissy noticing new numbers"* — so the page
   plays it when a figure arrives, on the app's own timing and
