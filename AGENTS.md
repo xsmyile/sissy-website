@@ -8,20 +8,22 @@ repository and is the reference for everything the site draws.
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
-  `Agents`, `Projects`, `Yours`, `Privacy`, `Detail`, `Install` and `Footer`
-  are the page in order, which is the order the Overview itself reads in:
-  gauges, accounts, agents, projects, contributions. `Section` is the frame the
-  middle ones share (eyebrow, title, lede, an `aside` slot under them, a
-  `split`, `reverse` or `stack` layout, and the `tier` that says how it
-  arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
+  `Agents`, `Git`, `Privacy`, `Detail`, `Install` and `Footer` are the page in
+  order, which is the order the Overview itself reads in: gauges, accounts,
+  agents, then the repositories. `Section` is the frame the middle ones share
+  (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
+  both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
+  says how it arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
   `Inline` are the pieces. `Nav` is rendered inside `Hero`, not beside it, and
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
   on the page, `page.ts` carries which page that is and how one is opened,
-  `pages/` holds one component per page (Overview, Provider, Stats),
+  `pages/` holds one component per page (Overview, Provider, Stats,
+  Identities),
   `components/` the pieces they share, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `ProjectsCrop`, `ForgeCrop` and `IdentityCrop`, each
+  enlarges one block with: `ProjectsCrop`, `ForgeCrop`, `IdentityCrop` and
+  `IdentitiesCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
@@ -62,7 +64,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`,
   `Panel.tsx` mirrors `UsagePanelView.Page`, `pages/Overview.tsx` mirrors
   `PanelOverview.swift`, `pages/Provider.tsx` mirrors `PanelProviderPage.swift`,
-  `pages/Stats.tsx` mirrors `PanelStats.swift`, `components/ForgeSection.tsx`
+  `pages/Stats.tsx` mirrors `PanelStats.swift`, `pages/Identities.tsx` mirrors
+  `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
+  mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
   mirrors `ForgeRowView`, `metrics.css` mirrors
   `PanelMetrics`, both in `PanelComponents.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
@@ -72,7 +76,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **One point is `--pt`.** Every panel measure is `calc(N * var(--pt))` with N
   the value `PanelMetrics` declares. A surface that wants the panel larger sets
   `--panel-pt` on an ancestor; nothing else scales it. The hero's is
-  `clamp(0.72px, calc(0.16svh - 0.2px), 1.25px)`: above native size on any
+  `clamp(0.68px, calc(0.16svh - 0.28px), 1.25px)`: above native size on any
   ordinary screen, because the replica is the subject of the hero and not an
   illustration beside the headline, and tied to the viewport because the scene
   owes the fold a whole hero and the panel is the tallest thing in it, so it is
@@ -80,8 +84,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   a plain fraction, because the hero's furniture — nav, words, cue, gaps —
   costs the same on every screen: a plain fraction keeps the panel growing on a
   short window where that constant is most of the fold, and the cue is what
-  falls off the bottom. Measured, it clears the fold from 600 px of viewport
-  height up. That size is what the words being one block in their own column
+  falls off the bottom. Measured on the wide scene, with the identity line in
+  the Overview, it clears the fold from 600 px of viewport height up; the
+  stacked scene puts the panel under the words and makes no such claim. That size is what the words being one block in their own column
   buys: the title no longer spans the scene with the panel taking what is left
   under it, so the panel has a column for the whole height of the stack.
 - **The hero is Sissy, and her eye is the one light.** On a wide scene she sits
@@ -127,34 +132,38 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the pair the gesture calls for.
 - **One panel is operable, and only along routes the app has.** The hero's is
   the only one; every other panel on the page is the same markup rendered
-  inert. `Yours` is not an exception: its switches are the page's own controls
-  and they change what the panel beside them draws, not what it does. A panel is given `open` or it is not, and that single switch decides
+  inert. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
-  line and the back control, and nothing else — the picker, refresh, settings,
-  the projects label and the day bars stay drawn and dead. A gauge row is named
+  line, the commit identity line and the back control, and nothing else — the
+  picker, refresh, settings, the projects label, `Show all` and `Copy the fix`
+  stay drawn and dead. The identity line opens its page on the repository it
+  names, as the app does when exactly one is wrong. The one gesture that is not
+  a route is the day strip's hover, which the same switch turns on: pointing at
+  a bar swaps the strip's header and the model pills to that day, as
+  `PanelDayBlock` does, and an inert strip keeps the window's header over
+  today's pills. A gauge row is named
   the way the app names it, with `legendHelp` as an accessibility label and the
   reading beside it as a description, so the name does not swallow the figures.
-  The agents row takes no label at all, because the app gives that one a help
-  string and nothing else: its visible text is its name, which is also what
+  The agents and identity rows take no label at all, because the app gives each
+  a help string and nothing else: its visible text is its name, which is also what
   keeps the accessible name and the visible label the same words. Focus lands
   on the new page's back control when one opens and returns to the row it came
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
   the same Overview with nothing on it that looks pressable.
-- **A switch on the page changes what the panel draws, in CSS.** `Yours` puts
-  the three `forgeCounters` beside the Contributions block and wires them with
-  `:has()` on the checkbox each label owns, so the demonstration costs the page
-  no second island and still works where JavaScript never arrived. The counter
-  is removed rather than dimmed, because that is what the app does with it: a
-  counter switched off is not drawn and, more to the point, not fetched, which
-  is the privacy claim performed instead of repeated. The switch titles and
-  captions are `ForgeCounterCopy`'s own and their ids are `ForgeCounter`, so a
-  counter the app renames fails the build here; the ids the stylesheet selects
-  on are the one place that coupling is spelled twice, and both spellings live
-  in `Yours.astro`. A switch wears the mark of the row it governs, at the size
-  that row draws it: the section sets one `--demo-pt` and hands it to the
-  crop's `--panel-pt` and to the mark's `--pt`, so the glyph is sized by
-  `svg[data-glyph]` like every other and the page names no extent of its own.
+- **`Git` is the repositories, one section rather than one per block.** The
+  commit-identity check leads it, because it is the one thing on the page few
+  other tools do, and the Overview's projects and contributions blocks follow
+  it at native size, a sentence each, in the `after` slot. They were a section
+  each before, and a screen per block is the opposite of a page that shows the
+  main things and lets the rest be inferred. Projects belong here because the
+  app collects them as repositories. The identities crop is drawn unfolded, so
+  the one repository that disagrees is read against the ones that agree. The
+  contributions sentence says what a switch does rather than drawing one: the
+  section had three switches of its own once, and they were the one thing on
+  the page that mirrored nothing, since `ForgeSettings` draws that control as a
+  macOS switch in a grouped `Form` and says why, *"a window that answered that
+  question two ways would be asking the reader which one meant what"*.
 - **The band opens Limits; it is not a section.** The 69% is the Overview's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
@@ -176,8 +185,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
   three account pages, two vendors.
 - **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
-  Privacy and Install carry the decision and rise on arrival; Agents, Projects
-  and Yours support them and barely settle; How it works does not move. A section does not
+  Git, Privacy and Install carry the decision and rise on arrival; Agents
+  supports them and barely settles; How it works does not move. A section does not
   arrive as one object: `reveal.ts` springs its parts in, and the tier is
   whether they land as a sequence or as one settle. That difference is
   categorical rather than a matter of degree, because sections arrive seconds
@@ -210,6 +219,18 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   colours are the popover material's, its font stack starts with the system
   font, and the cat's eye inside it is `systemBlue`, because the app draws it so
   (`SissyArtwork.holdTint`). The page around it uses `tokens.css`.
+- **A side-by-side section sets its panel on the copy's axis and against it.**
+  `split` and `reverse` centre the panel on the height of the words, and a crop
+  that is narrower than its column sits on the edge facing them rather than in
+  the middle of the track. Top-aligned and centred in its column, a small crop
+  left the gap below it and the gap beside it to be read as one empty cell.
+  `Git`'s pair below takes the same two columns, so its second block starts
+  where the page above it does.
+- **An inert panel sits on the page; only the hero's floats.** The popover's
+  long shadow is the one macOS throws under a window above the desktop, and on
+  the graphite ground it bloomed into a dark cloud some 80 px wide around every
+  crop. So `.panel` carries only its contact shadow, and the hero, which is the
+  one panel presented as floating, draws its own light over it.
 - **The palette is the seal point Siamese the app is named after.** Graphite
   ground from the icon's gradient, cream text from her coat, the pale glacial
   blue of her eyes as the one accent. Coral `#d97757` appears only inside the
@@ -284,7 +305,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   The forge block is drawn, with one connected account per vendor, and its two
   rows are never summed — each vendor counts its own thing, so a total across
   them would be a third number belonging to neither. The identity alert and the
-  credits stay omitted rather than faked. The identity block draws both halves
+  credits stay omitted rather than faked, and so does `By effort`, until
+  xsmyile/sissy#236 settles which page it belongs on. The identity block draws both halves
   of one state and never both at once: `Use in CLI` on an account the CLI is
   not on, the `· in CLI` badge on the one it is and only where a second account
   exists to tell it from, which is what `inCLI` and `switchable` carry.

@@ -1,0 +1,89 @@
+---
+import { GIT } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { ForgeCrop, IdentitiesCrop, ProjectsCrop } from "../panel/Panel";
+import Inline from "./Inline.astro";
+import Section from "./Section.astro";
+
+const { projects, contributions } = GIT.blocks;
+---
+
+<Section id={GIT.id} eyebrow={GIT.eyebrow} title={GIT.title} lede={GIT.lede} tier="lead">
+  <p class="body" slot="aside"><Inline text={GIT.body} /></p>
+  <div class="stage">
+    <IdentitiesCrop snapshot={DEMO_SNAPSHOT} label={GIT.panelLabel} />
+  </div>
+  <div class="pair" slot="after">
+    <figure>
+      <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={projects.panelLabel} />
+      <figcaption><b>{projects.title}</b> {projects.body}</figcaption>
+    </figure>
+    <figure>
+      <ForgeCrop snapshot={DEMO_SNAPSHOT} label={contributions.panelLabel} />
+      <figcaption><b>{contributions.title}</b> {contributions.body}</figcaption>
+    </figure>
+  </div>
+</Section>
+
+<style>
+  .body {
+    margin: 8px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 14.5px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .stage {
+    --panel-pt: 1.3px;
+
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  /*
+   * The two blocks that follow are one row at native size, each over its own
+   * sentence, so they read as belonging to the section above rather than as
+   * two sections of their own. They take the section's own columns, so the
+   * second starts where the page above it does.
+   */
+  .pair {
+    --panel-pt: 1px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 40px 64px;
+    padding-top: 16px;
+  }
+
+  figure {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
+    margin: 0;
+  }
+
+  figcaption {
+    max-width: calc(340 * var(--panel-pt));
+    font-size: 14.5px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  figcaption b {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  @media (max-width: 920px) {
+    .stage {
+      --panel-pt: 1.05px;
+    }
+
+    .pair {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

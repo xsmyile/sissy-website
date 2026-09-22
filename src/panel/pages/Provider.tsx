@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { DayBars } from "../components/DayBars";
+import { DayBlock } from "../components/DayBlock";
 import { ChevronRight } from "../components/Glyph";
 import { Identity } from "../components/Identity";
 import { PageHeader } from "../components/PageHeader";
@@ -16,8 +16,11 @@ interface ProviderProps {
 
 /**
  * `PanelProviderPage`: what one account is doing. Identity, the limits it is
- * closest to, its day against the week behind it, its own projects, and the
- * vendor's own status line at the foot.
+ * closest to, its day against the week behind it with the split by model
+ * under it, its own projects, and the vendor's own status line at the foot.
+ * `By effort` and the credits bar are not drawn: where the first belongs is
+ * the open question of xsmyile/sissy#236, and the fixture's accounts hold no
+ * credits.
  */
 export function Provider({ page, header, open }: ProviderProps): ReactElement {
   return (
@@ -56,13 +59,13 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
         ))}
       </div>
       <div className="panel-divider" />
-      <div className="panel-section panel-day">
-        <div className="panel-label">
-          Today
-          <span className="panel-label-end panel-figures">{page.today}</span>
-        </div>
-        <DayBars strip={page.strip} tint={page.provider} />
-      </div>
+      <DayBlock
+        today={page.today}
+        models={page.models}
+        strip={page.strip}
+        tint={page.provider}
+        pointable={open !== undefined}
+      />
       {page.projects.length > 0 && (
         <>
           <div className="panel-divider" />

@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { forgeCommentsHelp, forgeIssuesHelp, forgeMergedHelp, forgeSectionLabel } from "../format";
-import type { ForgeRow, Period } from "../types";
+import type { ForgeCounter, ForgeRow, Period } from "../types";
 import { ArrowTriangleheadMerge, BubbleLeft, SmallcircleFilledCircle } from "./Glyph";
 import { ForgeMark } from "./Sprite";
 
@@ -58,7 +58,7 @@ function Counter({
   mark,
 }: {
   value: string;
-  counter: string;
+  counter: ForgeCounter;
   help: string;
   mark: ReactElement;
 }): ReactElement {

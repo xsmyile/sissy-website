@@ -77,3 +77,13 @@ export function forgeCommentsHelp(host: ForgeHost): string {
     ? "Comments you wrote on issues and pull requests"
     : "Comments you wrote on issues and merge requests";
 }
+
+/** `identityFooter`: the count of what was read, on the page's label row. */
+export function identityFooter(checked: number): string {
+  return `${checked} ${checked === 1 ? "repository" : "repositories"} checked`;
+}
+
+/** `identityDisclosure`: the control that opens the rows the page did not need to show. */
+export function identityDisclosure(all: number): string {
+  return `Show all ${all}`;
+}

@@ -104,12 +104,32 @@ export interface AccountIdentity {
   switchable: boolean;
 }
 
-/** One bar of `DayStrip`; `fraction` is null on a day Sissy was not running. */
+/**
+ * `ModelRow`: one pill under the day strip, the model's name with its vendor
+ * prefix and release date off, and its share of the day with what it cost.
+ */
+export interface ModelRow {
+  id: string;
+  name: string;
+  reading: string;
+}
+
+/**
+ * One bar of `DayStrip`; `fraction` is null on a day Sissy was not running.
+ *
+ * `title` and `figures` are what the strip's header swaps in while the pointer
+ * is on the bar, and `models` what the pills under it swap to. A day with no
+ * reading has no models, and the pills say nothing rather than keeping the
+ * last day that had some.
+ */
 export interface DayBar {
   id: string;
   label: string;
   fraction: number | null;
   isToday: boolean;
+  title: string;
+  figures: string;
+  models: ModelRow[];
 }
 
 export interface DayStrip {
@@ -139,6 +159,8 @@ export interface ProviderPage {
    */
   binding: string;
   today: string;
+  /** Today's split by model, which the pills draw while the pointer is on no bar. */
+  models: ModelRow[];
   strip: DayStrip;
   projects: ProjectRow[];
   status: StatusLine;
@@ -199,6 +221,42 @@ export interface ForgeRow {
   notice: string;
 }
 
+/**
+ * `IdentityMark`: a tick, a warning, or a dash for a repository that was read
+ * and not judged, because an empty mark would be a verdict.
+ */
+export type IdentityMark = "agrees" | "unexpected" | "unjudged";
+
+/**
+ * `IdentityRow`: who would sign the next commit in one repository, and, on a
+ * row that needs correcting, what its forge expects and where the wrong value
+ * comes from. `fix` is the `git config --unset-all` command, present only
+ * where the override is the repository's own.
+ */
+export interface IdentityRow {
+  id: string;
+  name: string;
+  mark: IdentityMark;
+  author: string;
+  origin: string | null;
+  expectation: string | null;
+  fix: string | null;
+}
+
+/** `IdentityLineState`: nothing read is its own state, never an agreement. */
+export type IdentityLineState = "unread" | "clean" | "findings";
+
+/**
+ * `IdentityLine`: the Overview's one line about commit identity, drawn on
+ * every frame. `repository` is the row the page opens on, set only when
+ * exactly one repository is wrong.
+ */
+export interface IdentityLine {
+  state: IdentityLineState;
+  summary: string;
+  repository: string | null;
+}
+
 export interface PanelSnapshot {
   header: HeaderReading;
   headline: Headline;
@@ -207,6 +265,9 @@ export interface PanelSnapshot {
   gaugeRows: GaugeRow[];
   agents: AgentsLine;
   projects: ProjectRow[];
+  /** Every repository read, the ones that disagree with their forge first. */
+  identities: IdentityRow[];
+  identityLine: IdentityLine;
   forge: ForgeRow[];
   providerPages: ProviderPage[];
   stats: StatsPage;
@@ -219,4 +280,5 @@ export interface PanelSnapshot {
 export type PanelPage =
   | { kind: "overview" }
   | { kind: "provider"; provider: ProviderId; account: string | null }
-  | { kind: "stats" };
+  | { kind: "stats" }
+  | { kind: "identities"; focus: string | null };

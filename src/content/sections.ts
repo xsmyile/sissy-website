@@ -1,4 +1,3 @@
-import type { ForgeCounter } from "../panel/types";
 import { GITHUB_URL } from "./site";
 
 /**
@@ -59,50 +58,36 @@ export const AGENTS_SCENE = {
   panelLabel: "Sissy's Agents page",
 } as const;
 
-/** The Overview's projects block, which was the detail tier's left half. */
-export const PROJECTS = {
-  id: "projects",
-  eyebrow: "By project",
-  title: "Where the day went, by repository.",
-  lede: "Each row is one repository with what it cost today, and the band behind it is that repository's share of the day.",
-  body: "A worktree counts against the repository it was cut from, so one project is one row, whichever CLI did the work. The label is the way to the whole list. Rows carry the forge's mark when the repository has one, and the path stays on the hover.",
-  panelLabel: "The Overview's By project block, enlarged",
-} as const;
-
 /**
- * The switches, worded as `ForgeCounterCopy` words them, and keyed by the
- * counter the panel draws: the ids are `ForgeCounter`, so a counter the app
- * renames is a compile error here rather than a switch that governs nothing.
- */
-const COUNTER_SECTION = "Shown on each row";
-
-const COUNTER_SWITCHES: readonly { id: ForgeCounter; title: string; caption: string }[] = [
-  {
-    id: "merged",
-    title: "Merged requests",
-    caption: "Pull and merge requests you opened and had merged",
-  },
-  { id: "issues", title: "Opened issues", caption: "Issues you opened" },
-  { id: "comments", title: "Comments", caption: "Comments you wrote on issues and requests" },
-];
-
-/**
- * The contributions block, and the switches that govern it.
+ * The repositories, as one section: the commit-identity check leads, and the
+ * two Overview blocks that are also about repositories follow it.
  *
- * The two are one section because the switch is what explains the block: the
- * app's `forgeCounters` do not hide a counter, they stop fetching it, so
- * turning one off is the privacy claim performed rather than repeated.
+ * The copy is the README's "Commit identity" paragraph, narrowed to what the
+ * replica draws. The two blocks under it keep a sentence each, because a
+ * section per block spent a screen on what one line says.
+ *
+ * The contributions sentence says what a switch does rather than drawing one:
+ * `forgeCounters` do not hide a counter, they stop fetching it.
  */
-export const YOURS = {
-  id: "yours",
-  eyebrow: "Yours",
-  title: "What you switch off, Sissy stops asking for.",
-  lede: "Under the day's work the Overview counts what you pushed: the contributions on each forge you connected, over the period you picked, then what you merged, what you opened and what you wrote.",
-  body: "Each of the three has a switch in Settings ▸ Forge, and a counter switched off is not hidden, it is not fetched. The block beside them is the one the panel draws.",
-  switchesTitle: COUNTER_SECTION,
-  counters: COUNTER_SWITCHES,
-  note: "The whole app is built this way. Every reading has a switch of its own, and what is off is never read.",
-  panelLabel: "The Overview's Contributions block",
+export const GIT = {
+  id: "git",
+  eyebrow: "Git",
+  title: "Catch the wrong name before you push.",
+  lede: "The work repository you are about to push under your personal name, or the other way round. For every repository your agents have worked in, Sissy asks git who would sign the next commit, and compares it with the other repositories on the same forge account.",
+  body: "Findings come first, with the name it would commit under, what its forge expects and the file the wrong value comes from. Where that file is the repository's own, *Copy the fix* puts the `git config --unset` command on the clipboard. Sissy never writes to a repository or to any git config.",
+  panelLabel: "The Identities page, every repository shown",
+  blocks: {
+    projects: {
+      title: "By project",
+      body: "Where the day went, one row per repository. A worktree counts against the one it was cut from, whichever CLI did the work.",
+      panelLabel: "The Overview's By project block",
+    },
+    contributions: {
+      title: "Contributions",
+      body: "What you pushed on each forge you connected. Every counter has a switch in Settings, and one switched off is not asked for.",
+      panelLabel: "The Overview's Contributions block",
+    },
+  },
 } as const;
 
 export const PRIVACY = {
