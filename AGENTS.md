@@ -250,7 +250,10 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   The forge block is drawn, with one connected account per vendor, and its two
   rows are never summed — each vendor counts its own thing, so a total across
   them would be a third number belonging to neither. The identity alert and the
-  credits stay omitted rather than faked.
+  credits stay omitted rather than faked. The identity block draws both halves
+  of one state and never both at once: `Use in CLI` on an account the CLI is
+  not on, the `· in CLI` badge on the one it is and only where a second account
+  exists to tell it from, which is what `inCLI` and `switchable` carry.
 - **No runtime requests to third parties.** Fonts are downloaded at build time
   by Astro's fonts API and served from the site's own origin. The app's whole
   pitch is that nothing leaves the machine; the site does not undercut it.

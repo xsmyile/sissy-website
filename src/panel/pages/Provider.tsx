@@ -1,6 +1,7 @@
 import type { ReactElement } from "react";
 import { DayBars } from "../components/DayBars";
-import { ChevronRight, ChevronUpDown, PersonTwo } from "../components/Glyph";
+import { ChevronRight } from "../components/Glyph";
+import { Identity } from "../components/Identity";
 import { PageHeader } from "../components/PageHeader";
 import { ProjectsSection } from "../components/ProjectRow";
 import { ShareBar } from "../components/ShareBar";
@@ -28,21 +29,7 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
         backLabel="Back to today"
         back={open && (() => open(OVERVIEW, BACK))}
       />
-      <div className="panel-identity">
-        <div className="panel-identity-lines">
-          <div className="panel-email">{page.identity.email}</div>
-          <div className="panel-organisation">
-            {page.identity.organization !== null && <span>{page.identity.organization}</span>}
-            <span className="panel-badge">{page.identity.plan}</span>
-          </div>
-        </div>
-        {page.identity.hasPicker && (
-          <span className="panel-picker">
-            <PersonTwo />
-            <ChevronUpDown />
-          </span>
-        )}
-      </div>
+      <Identity identity={page.identity} />
       <div className="panel-divider" />
       <div className="panel-section panel-limits">
         <div className="panel-label">

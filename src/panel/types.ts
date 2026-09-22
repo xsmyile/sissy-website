@@ -80,6 +80,21 @@ export interface AccountIdentity {
   plan: string;
   /** More than one account of this vendor, which is what draws the picker. */
   hasPicker: boolean;
+  /**
+   * `ClaudeAccount.isSignedIn`: the account the CLI is on, which is the one
+   * whose future spend lands in the day beside it. It draws the `· in CLI`
+   * badge, and only where there is more than one account to distinguish it
+   * from.
+   */
+  inCLI: boolean;
+  /**
+   * `ClaudeAccount.isSwitchable`: Sissy holds a sign-in for this account and
+   * the vendor lets it be written. It draws the `Use in CLI` button, which the
+   * app shows only on an account the CLI is not already on, so the accident it
+   * used to be is gone by construction rather than by dialog. Codex accounts
+   * are read and never signed in with, so theirs is false.
+   */
+  switchable: boolean;
 }
 
 /** One bar of `DayStrip`; `fraction` is null on a day Sissy was not running. */
