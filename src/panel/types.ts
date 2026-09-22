@@ -162,7 +162,10 @@ export interface ProviderPage {
   /** Today's split by model, which the pills draw while the pointer is on no bar. */
   models: ModelRow[];
   strip: DayStrip;
+  /** `ProviderRow.projects`: two repositories and the fold, past three. */
   projects: ProjectRow[];
+  /** `ProviderRow.projectCount`: every project of the day, which the label counts. */
+  projectCount: number;
   status: StatusLine;
 }
 
@@ -264,7 +267,13 @@ export interface PanelSnapshot {
   meteringProviders: number;
   gaugeRows: GaugeRow[];
   agents: AgentsLine;
+  /**
+   * `UsagePanelSnapshot.projects`: past three, the two busiest and one row
+   * folding the rest, which names no owner and no forge.
+   */
   projects: ProjectRow[];
+  /** `UsagePanelSnapshot.projectCount`: every project of the day, folded ones included. */
+  projectCount: number;
   /** Every repository read, the ones that disagree with their forge first. */
   identities: IdentityRow[];
   identityLine: IdentityLine;

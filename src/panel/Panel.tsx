@@ -78,7 +78,11 @@ export function ProjectsCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <ProjectsSection label="By project · today" rows={snapshot.projects} />
+      <ProjectsSection
+        label="By project · today"
+        rows={snapshot.projects}
+        count={snapshot.projectCount}
+      />
     </Crop>
   );
 }

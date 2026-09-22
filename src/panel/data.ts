@@ -40,6 +40,20 @@ const ACME_WEB: ProjectRow = {
   share: 0.018,
 };
 
+/**
+ * `projectsFolded`: what the Overview draws in place of `acme/api` and
+ * `acme/web` once the day has more than three projects, their figures summed.
+ */
+const FOLDED: ProjectRow = {
+  id: "folded",
+  owner: null,
+  repo: "2 more projects",
+  forge: null,
+  tokens: "283.4M",
+  cost: "$205.08",
+  share: 0.22,
+};
+
 const PERSONAL = "Smyile <dev@example.com>";
 const WORK = "Acme Dev <dev@acme.example>";
 
@@ -82,7 +96,8 @@ const IDENTITIES: IdentityRow[] = [
 /**
  * One day of demo readings, internally consistent: the three accounts sum to
  * the headline, each account's projects sum to its day, each project's rows
- * across the accounts sum to its line on the Overview, and the stats page
+ * across the accounts sum to its line on the Overview, or to the fold that
+ * stands for it there, and the stats page
  * counts the same three processes the Overview's agents line does. Every
  * repository the identities page reads is one Sissy has seen an agent in, and
  * the Overview's line names the one that disagrees. Every
@@ -127,7 +142,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     },
   ],
   agents: { running: 3, footprint: "1.42 GB" },
-  projects: [SISSY, HOMEBREW, ACME_API, ACME_WEB],
+  projects: [SISSY, HOMEBREW, FOLDED],
+  projectCount: 4,
   identities: IDENTITIES,
   identityLine: {
     state: "findings",
@@ -286,6 +302,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...HOMEBREW, tokens: "290.0M", cost: "$179.34", share: 0.252 },
         { ...ACME_API, tokens: "140.8M", cost: "$122.84", share: 0.172 },
       ],
+      projectCount: 3,
       status: { label: "All Systems Operational", checked: "checked 21s ago" },
     },
     {
@@ -407,6 +424,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...ACME_API, tokens: "123.9M", cost: "$65.18", share: 0.793 },
         { ...ACME_WEB, share: 0.207 },
       ],
+      projectCount: 2,
       status: { label: "All Systems Operational", checked: "checked 21s ago" },
     },
     {
@@ -525,6 +543,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         { ...SISSY, tokens: "187.5M", cost: "$118.72", share: 0.864 },
         { ...HOMEBREW, tokens: "31.5M", cost: "$18.67", share: 0.136 },
       ],
+      projectCount: 2,
       status: { label: "All Systems Operational", checked: "checked 34s ago" },
     },
   ],

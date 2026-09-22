@@ -69,7 +69,7 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
       {page.projects.length > 0 && (
         <>
           <div className="panel-divider" />
-          <ProjectsSection label="By project" rows={page.projects} />
+          <ProjectsSection label="By project" rows={page.projects} count={page.projectCount} />
         </>
       )}
       <div className="panel-divider" />

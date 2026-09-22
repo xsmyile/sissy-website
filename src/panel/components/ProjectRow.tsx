@@ -34,16 +34,22 @@ export function ProjectsLabel({ text, count }: { text: string; count: number }):
   );
 }
 
+/**
+ * The label counts every project of the day rather than the rows under it,
+ * because the last row can fold several.
+ */
 export function ProjectsSection({
   label,
   rows,
+  count,
 }: {
   label: string;
   rows: ProjectRowData[];
+  count: number;
 }): ReactElement {
   return (
     <div className="panel-section panel-projects">
-      <ProjectsLabel text={label} count={rows.length} />
+      <ProjectsLabel text={label} count={count} />
       <div className="panel-project-list">
         {rows.map((row) => (
           <ProjectRow row={row} key={row.id} />
