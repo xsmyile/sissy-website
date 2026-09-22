@@ -1,0 +1,505 @@
+---
+import { PACE } from "../content/sections";
+import {
+  COST_NOTE,
+  HERO_PANEL_LABEL,
+  LEDE,
+  PANEL_INVITATION,
+  REQUIREMENTS,
+  SCROLL_CUE,
+  symbolHref,
+  TAGLINE,
+} from "../content/site";
+import { HeroPanel } from "../panel/HeroPanel";
+import {
+  BLINK_CLOSE_MS,
+  BLINK_OPEN_MS,
+  BLINK_SHUT_MS,
+  EYE_CLOSE_MS,
+  EYE_OPEN_MS,
+} from "../panel/motion";
+import DownloadButton from "./DownloadButton.astro";
+import Nav from "./Nav.astro";
+
+const timing = [
+  `--eye-close: ${EYE_CLOSE_MS}ms`,
+  `--eye-open: ${EYE_OPEN_MS}ms`,
+  `--blink-close: ${BLINK_CLOSE_MS}ms`,
+  `--blink-shut: ${BLINK_SHUT_MS}ms`,
+  `--blink-open: ${BLINK_OPEN_MS}ms`,
+].join(";");
+---
+
+<section class="hero" data-scene style={timing}>
+  <div class="scene">
+    <div class="cat" aria-hidden="true">
+      <svg class="cat-body"><use href={symbolHref("sissy-body")} /></svg>
+      <svg class="cat-body cat-lit"><use href={symbolHref("sissy-body")} /></svg>
+      <svg class="cat-eye" data-sissy-eye><use href={symbolHref("sissy-eye")} /></svg>
+    </div>
+
+    <Nav />
+
+    <div class="stack wrap">
+      <div class="words">
+        <h1>{TAGLINE}</h1>
+
+        <div class="say">
+          <p class="lede">{LEDE}</p>
+          <div class="cta">
+            <DownloadButton />
+          </div>
+          <p class="requirements">
+            {
+              REQUIREMENTS.map((item, index) => (
+                <>
+                  {index > 0 && <span class="dot">·</span>}
+                  {item.strong && <b>{item.strong}</b>}
+                  {item.rest}
+                </>
+              ))
+            }
+          </p>
+          <p class="note">{COST_NOTE}</p>
+        </div>
+      </div>
+
+      <div class="lit">
+        <HeroPanel client:load label={HERO_PANEL_LABEL} />
+        <p class="invitation">{PANEL_INVITATION}</p>
+      </div>
+    </div>
+
+    <a class="cue" href={`#${PACE.id}`}>
+      {SCROLL_CUE}
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <path
+          d="M3 6l5 5 5-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    --cat: clamp(420px, 40vw, 620px);
+    --eye-x: 17%;
+    --eye-y: 80%;
+    --eye-origin: 60.5% 54%;
+    --eye-shut: 0.05;
+    --tilt-max-x: 3deg;
+    --tilt-max-y: 4deg;
+
+    position: relative;
+    view-timeline: --hero block;
+  }
+
+  /*
+   * The scene owes the fold a whole hero, so its budget is measured in `svh`
+   * rather than fixed: `min-height` only ever grows a box, so on a viewport
+   * shorter than the content the cue would simply fall past it. The panel
+   * gives up the most, because it is the tallest thing here.
+   */
+  .scene {
+    --lights: calc(var(--eye-lights) * var(--scroll-lights));
+    --rim: calc((0.22 + var(--tilt-x, 0) * -0.1) * var(--lights));
+
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100svh;
+    padding-bottom: clamp(24px, 4svh, 40px);
+    background: radial-gradient(
+      140% 120% at var(--eye-x) var(--eye-y),
+      color-mix(in srgb, #15171d calc(var(--lights) * 100%), var(--bg)) 0%,
+      var(--bg) 72%
+    );
+  }
+
+  .cat {
+    position: absolute;
+    z-index: -2;
+    width: var(--cat);
+    height: var(--cat);
+    left: calc(var(--eye-x) - 0.605 * var(--cat));
+    top: calc(var(--eye-y) - 0.54 * var(--cat));
+    transform: translate3d(calc(var(--tilt-x, 0) * -7px), calc(var(--tilt-y, 0) * -5px), 0);
+    pointer-events: none;
+  }
+
+  .cat svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cat-body {
+    color: #1c1e25;
+  }
+
+  /*
+   * The light has a surface to land on: a lit copy of the same silhouette,
+   * masked to a falloff centred on her eye. The sprite's path carries its own
+   * fill, so an inherited colour loses and this is what a gradient on her fur
+   * costs.
+   */
+  .cat-lit {
+    color: #333a45;
+    opacity: var(--lights);
+    mask-image: radial-gradient(
+      60% 60% at var(--eye-origin),
+      #000 0%,
+      rgba(0, 0, 0, 0.4) 42%,
+      transparent 82%
+    );
+  }
+
+  .cat-eye {
+    color: var(--accent-bright);
+    filter: drop-shadow(0 0 18px rgba(199, 218, 232, calc(0.5 * var(--lights))))
+      drop-shadow(0 0 54px rgba(122, 160, 190, calc(0.42 * var(--lights))));
+  }
+
+  .stack {
+    position: relative;
+    display: grid;
+    margin-block: auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "words panel";
+    align-items: center;
+    gap: clamp(20px, 3.2svh, 32px) 64px;
+    padding-block: clamp(8px, 1.6svh, 16px);
+  }
+
+  /*
+   * The words are one block, not two rows the panel has to share a grid with:
+   * the panel takes a column of its own for the whole height of the stack,
+   * which is the room it is drawn at.
+   */
+  .words {
+    grid-area: words;
+    display: grid;
+    gap: clamp(20px, 3.2svh, 32px);
+  }
+
+  h1 {
+    max-width: 13.4em;
+    margin: 0;
+    font-size: clamp(38px, min(6.1vw, 7.6svh), 74px);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+  }
+
+  .say {
+    display: grid;
+    gap: 24px;
+    max-width: 30em;
+  }
+
+  .lede {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .requirements {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  .requirements b {
+    font-weight: 500;
+    color: var(--text-2);
+  }
+
+  .dot {
+    margin-inline: 8px;
+    opacity: 0.6;
+  }
+
+  /*
+   * The one caveat the hero carries, and it sits in the words rather than
+   * under the panel: the panel column is what the fold is measured against,
+   * where the words have room to spare on every screen the cue survives.
+   */
+  .note {
+    max-width: 32em;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  /*
+   * What the panel may be drawn at, measured rather than picked: the hero's
+   * furniture — the nav, the words, the cue and the gaps — costs a constant,
+   * and the rest of the viewport is the panel's. That is why the budget is a
+   * share of the height minus a fixed term and not a plain fraction: a plain
+   * fraction keeps the panel growing on a short window, where the constant is
+   * most of the fold, and it is the cue that falls off the bottom.
+   */
+  .lit {
+    --panel-pt: clamp(0.72px, calc(0.16svh - 0.2px), 1.25px);
+
+    grid-area: panel;
+    display: grid;
+    gap: 14px;
+    justify-self: end;
+    align-self: center;
+    perspective: 960px;
+  }
+
+  .invitation {
+    max-width: calc(340 * var(--panel-pt));
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .lit :global(.hero-panel) {
+    transform-style: preserve-3d;
+    transform: rotateX(calc(var(--tilt-y, 0) * var(--tilt-max-x) * -1))
+      rotateY(calc(var(--tilt-x, 0) * var(--tilt-max-y)));
+    filter: drop-shadow(10px -5px 12px rgba(0, 0, 0, 0.42))
+      drop-shadow(30px -20px 64px rgba(0, 0, 0, 0.6));
+  }
+
+  /*
+   * She sits below the panel's left corner, so the edges facing her are the
+   * left and the bottom, and the dark one is the top.
+   */
+  .lit :global(.panel) {
+    box-shadow:
+      inset 1px 0 0 rgba(199, 218, 232, var(--rim)),
+      inset 0 -1px 0 rgba(199, 218, 232, calc(0.07 * var(--lights))),
+      inset 0 1px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lit :global(.hero-panel) {
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .cat {
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero[data-tilting] :global(.hero-panel),
+    .hero[data-tilting] .cat {
+      transition: none;
+    }
+  }
+
+  .cue {
+    align-self: center;
+    display: inline-flex;
+    margin-top: clamp(14px, 2.8svh, 28px);
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+  }
+
+  .cue:hover {
+    color: var(--text-2);
+  }
+
+  .cue svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cat-eye,
+  .hero :global(.panel-cat-eye) {
+    transform-origin: var(--eye-origin);
+  }
+
+  @keyframes eye-close {
+    to {
+      transform: scaleY(var(--eye-shut));
+    }
+  }
+
+  @keyframes eye-open {
+    from {
+      transform: scaleY(var(--eye-shut));
+    }
+
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes lights-dim {
+    to {
+      --eye-lights: 0.42;
+    }
+  }
+
+  @keyframes lights-lift {
+    from {
+      --eye-lights: 0.42;
+    }
+
+    to {
+      --eye-lights: 1;
+    }
+  }
+
+  @keyframes lights-out {
+    to {
+      --scroll-lights: 0.1;
+    }
+  }
+
+  @keyframes cue-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cat-eye[data-motion="blink"],
+    .hero :global(.panel-cat-eye[data-motion="blink"]) {
+      animation:
+        eye-close var(--blink-close) linear forwards,
+        eye-open var(--blink-open) linear calc(var(--blink-close) + var(--blink-shut)) forwards;
+    }
+
+    .cat-eye[data-motion="close"],
+    .hero :global(.panel-cat-eye[data-motion="close"]) {
+      animation: eye-close var(--eye-close) linear forwards;
+    }
+
+    .cat-eye[data-motion="open"],
+    .hero :global(.panel-cat-eye[data-motion="open"]) {
+      animation: eye-open var(--eye-open) linear forwards;
+    }
+
+    .hero[data-motion="blink"] {
+      animation:
+        lights-dim var(--blink-close) linear forwards,
+        lights-lift var(--blink-open) linear calc(var(--blink-close) + var(--blink-shut)) forwards;
+    }
+
+    .hero[data-motion="close"] {
+      animation: lights-dim var(--eye-close) linear forwards;
+    }
+
+    .hero[data-motion="open"] {
+      animation: lights-lift var(--eye-open) linear forwards;
+    }
+  }
+
+  /*
+   * The light leaves with its source. Named timeline and an explicit exit
+   * range: a bare `view()` tracks the wrong thing, and the `animation`
+   * shorthand would reset the timeline it was just given.
+   */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .scene {
+        animation-name: lights-out;
+        animation-fill-mode: both;
+        animation-timing-function: linear;
+        animation-timeline: --hero;
+        animation-range: exit 0% exit 100%;
+      }
+
+      .cue {
+        animation-name: cue-out;
+        animation-fill-mode: both;
+        animation-timing-function: linear;
+        animation-timeline: --hero;
+        animation-range: exit 0% exit 40%;
+      }
+    }
+  }
+
+  @media (max-width: 920px) {
+    .hero {
+      --cat: clamp(460px, 108vw, 820px);
+      --eye-x: 74%;
+      --eye-y: 12%;
+    }
+
+    .stack {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "words" "panel";
+      gap: 28px;
+      padding-block: 24px;
+    }
+
+    h1 {
+      max-width: none;
+      font-size: clamp(36px, 8.4vw, 54px);
+    }
+
+    .say {
+      max-width: none;
+    }
+
+    .lit {
+      --panel-pt: 1px;
+
+      justify-self: center;
+      margin-top: 20px;
+    }
+
+    /*
+     * Her eye moves to the top right on a narrow scene, so the edge facing her
+     * does too: the panel is lit along its top and right and throws its shadow
+     * down and to the left.
+     */
+    .lit :global(.panel) {
+      box-shadow:
+        inset 0 1px 0 rgba(199, 218, 232, var(--rim)),
+        inset -1px 0 0 rgba(199, 218, 232, calc(0.07 * var(--lights))),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+    }
+
+    .lit :global(.hero-panel) {
+      filter: drop-shadow(-6px 10px 12px rgba(0, 0, 0, 0.42))
+        drop-shadow(-20px 34px 64px rgba(0, 0, 0, 0.6));
+    }
+
+    .invitation {
+      max-width: none;
+    }
+
+    /*
+     * A stacked hero is taller than any fold, so the cue would sit below the
+     * one it points past. The scroll it invites is the one already happening.
+     */
+    .cue {
+      display: none;
+    }
+  }
+</style>

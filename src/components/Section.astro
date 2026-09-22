@@ -1,0 +1,113 @@
+---
+interface Props {
+  id: string;
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  layout?: "split" | "stack" | "reverse";
+  /** Which of the page's three tiers this is, which is also how it arrives. */
+  tier?: "lead" | "support" | "detail";
+}
+
+const { id, eyebrow, title, lede, layout = "split", tier = "support" } = Astro.props;
+---
+
+<section class:list={["section", "wrap", layout]} id={id} data-tier={tier}>
+  <i class="rule" aria-hidden="true"></i>
+  <header class="head">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    {lede && <p class="lede">{lede}</p>}
+    <slot name="aside" />
+  </header>
+  <div class="body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    position: relative;
+    display: grid;
+    gap: 40px 64px;
+    padding-block: 80px;
+    scroll-margin-top: 24px;
+  }
+
+  .rule {
+    position: absolute;
+    inset: 0 var(--gutter) auto;
+    height: 1px;
+    background: var(--border);
+    transform-origin: left;
+  }
+
+  .split,
+  .reverse {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
+
+  .reverse {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+
+  .reverse .head {
+    order: 2;
+  }
+
+  .stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .head {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .stack .head {
+    max-width: 44em;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin: 0;
+    font-size: 17px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 920px) {
+    .split,
+    .reverse {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .reverse .head {
+      order: 0;
+    }
+
+    .section {
+      gap: 32px;
+      padding-block: 56px;
+    }
+  }
+</style>

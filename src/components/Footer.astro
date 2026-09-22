@@ -1,0 +1,133 @@
+---
+import { FOOTER } from "../content/sections";
+import { symbolHref } from "../content/site";
+---
+
+<footer class="footer wrap">
+  <div class="cat-line">
+    <span class="cat" aria-hidden="true">
+      <svg class="body"><use href={symbolHref("sissy-body")} /></svg>
+      <svg class="eye"><use href={symbolHref("sissy-eye")} /></svg>
+    </span>
+    <p>{FOOTER.cat}</p>
+  </div>
+  <i class="rule" aria-hidden="true"></i>
+  <div class="band">
+    <nav class="docs" aria-label="Project documents">
+      {FOOTER.docs.map((doc) => <a href={doc.href}>{doc.label}</a>)}
+    </nav>
+    <div class="marks">
+      {
+        FOOTER.marks.map((mark) => (
+          <a href={mark.href} aria-label={mark.label} title={mark.label}>
+            <svg aria-hidden="true"><use href={symbolHref(mark.symbol)} /></svg>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+  <p class="license">{FOOTER.license}</p>
+</footer>
+
+<style>
+  .footer {
+    display: grid;
+    gap: 24px;
+    padding-block: 56px 64px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cat-line {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .cat {
+    position: relative;
+    flex: none;
+    width: 32px;
+    height: 32px;
+  }
+
+  .cat svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .body {
+    color: var(--text-2);
+  }
+
+  .eye {
+    color: var(--accent);
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--border);
+  }
+
+  .band {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .docs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+
+  .docs a {
+    text-decoration: none;
+  }
+
+  .docs a:hover {
+    color: var(--text);
+  }
+
+  .marks {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .marks a {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    color: var(--text-2);
+    transition: color 140ms ease;
+  }
+
+  .marks a:hover {
+    color: var(--text);
+  }
+
+  .marks svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .license {
+    max-width: 44em;
+    font-size: 14px;
+    color: var(--muted);
+  }
+</style>

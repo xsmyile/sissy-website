@@ -1,0 +1,95 @@
+---
+import { INSTALL } from "../content/sections";
+import { BREW_CASK, BREW_COMMAND } from "../content/site";
+import Command from "./Command.astro";
+import Disclosure from "./Disclosure.astro";
+import DownloadButton from "./DownloadButton.astro";
+import Inline from "./Inline.astro";
+import MenuBar from "./MenuBar.astro";
+import Section from "./Section.astro";
+---
+
+<Section
+  id={INSTALL.id}
+  eyebrow={INSTALL.eyebrow}
+  title={INSTALL.title}
+  lede={INSTALL.requirements}
+  tier="lead"
+>
+  <div class="lives" slot="aside">
+    <MenuBar />
+    <p class="menu-bar">{INSTALL.menuBar}</p>
+  </div>
+  <div class="column">
+    <div class="cta">
+      <DownloadButton />
+      <Command command={BREW_COMMAND} highlight={BREW_CASK} />
+    </div>
+    <p><Inline text={INSTALL.reassurance} /></p>
+    <a class="github" href={INSTALL.github.href}>{INSTALL.github.label} →</a>
+    <Disclosure summary={INSTALL.uninstallSummary}>
+      <div class="uninstall">
+        <Command command={INSTALL.uninstallCommand} />
+        <p><Inline text={INSTALL.uninstall} /></p>
+      </div>
+    </Disclosure>
+  </div>
+</Section>
+
+<style>
+  .lives {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .menu-bar {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .column {
+    display: grid;
+    gap: 20px;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .github {
+    justify-self: start;
+    font-size: 14.5px;
+    color: var(--text-2);
+    text-decoration: none;
+  }
+
+  .github:hover {
+    color: var(--text);
+  }
+
+  .uninstall {
+    display: grid;
+    gap: 14px;
+    justify-items: start;
+  }
+
+  .uninstall p {
+    font-size: 14.5px;
+  }
+</style>

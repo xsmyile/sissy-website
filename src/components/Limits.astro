@@ -1,0 +1,55 @@
+---
+import { LIMITS } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { Panel } from "../panel/Panel";
+import Section from "./Section.astro";
+
+const account = DEMO_SNAPSHOT.gaugeRows[0];
+if (account === undefined) {
+  throw new Error("The fixture has no gauge row for the limits section to open");
+}
+---
+
+<Section
+  id={LIMITS.id}
+  eyebrow={LIMITS.eyebrow}
+  title={LIMITS.title}
+  lede={LIMITS.lede}
+  tier="support"
+>
+  <p class="body" slot="aside">{LIMITS.body}</p>
+  <div class="stage">
+    <Panel
+      snapshot={DEMO_SNAPSHOT}
+      page={{ kind: "provider", provider: account.provider, account: account.account }}
+      label={LIMITS.panelLabel}
+    />
+  </div>
+</Section>
+
+<style>
+  .body {
+    margin: 8px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 14.5px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .stage {
+    --panel-pt: 1.12px;
+
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 24px;
+  }
+
+  @media (max-width: 920px) {
+    .stage {
+      --panel-pt: 1px;
+
+      padding: 0 0 8px;
+    }
+  }
+</style>

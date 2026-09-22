@@ -1,0 +1,71 @@
+---
+import { AGENTS_SCENE } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { Panel } from "../panel/Panel";
+import Section from "./Section.astro";
+---
+
+<Section
+  id={AGENTS_SCENE.id}
+  eyebrow={AGENTS_SCENE.eyebrow}
+  title={AGENTS_SCENE.title}
+  lede={AGENTS_SCENE.lede}
+  layout="reverse"
+  tier="support"
+>
+  <dl class="points" slot="aside">
+    {
+      AGENTS_SCENE.points.map((point) => (
+        <div class="point">
+          <dt>{point.title}</dt>
+          <dd>{point.body}</dd>
+        </div>
+      ))
+    }
+  </dl>
+  <div class="stage">
+    <Panel snapshot={DEMO_SNAPSHOT} page={{ kind: "stats" }} label={AGENTS_SCENE.panelLabel} />
+  </div>
+</Section>
+
+<style>
+  .points {
+    display: grid;
+    gap: 20px;
+    margin: 12px 0 0;
+  }
+
+  .point {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  dt {
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .stage {
+    --panel-pt: 1.12px;
+
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 24px;
+  }
+
+  @media (max-width: 920px) {
+    .stage {
+      --panel-pt: 1px;
+
+      padding: 0 0 8px;
+    }
+  }
+</style>

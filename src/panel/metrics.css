@@ -1,0 +1,37 @@
+/*
+ * PanelMetrics, as the app declares them in
+ * app/Sissy/Panel/PanelComponents.swift. One point is --pt, so a surface that
+ * wants the panel larger sets --panel-pt on an ancestor and every measure
+ * scales with it.
+ */
+.panel-wrap {
+  --pt: var(--panel-pt, 1px);
+  --panel-width: calc(340 * var(--pt));
+  --panel-gutter: calc(14 * var(--pt));
+  --panel-bar: calc(5 * var(--pt));
+  --panel-headline: calc(18 * var(--pt));
+  --panel-headline-meta: calc(11 * var(--pt));
+  --panel-row: calc(12 * var(--pt));
+  --panel-mark: calc(14 * var(--pt));
+  --panel-title: calc(13 * var(--pt));
+  --panel-control: calc(26 * var(--pt));
+  --panel-back: calc(20 * var(--pt));
+  --panel-header-mark: calc(18 * var(--pt));
+  --panel-sissy: calc(24 * var(--pt));
+  --panel-radius: calc(12 * var(--pt));
+  --panel-bar-mark: calc(2 * var(--pt));
+  --panel-bar-gap: calc(5 * var(--pt));
+  --panel-bar-stub: calc(3 * var(--pt));
+  --panel-wash-inset: calc(3.5 * var(--pt));
+  --panel-wash-radius: calc(4 * var(--pt));
+  --panel-caption: calc(10 * var(--pt));
+  --panel-plot: calc(52 * var(--pt));
+  --panel-day-label: calc(13 * var(--pt));
+  --panel-sparkline: calc(26 * var(--pt));
+  --panel-strip: calc(8 * var(--pt));
+  --panel-forge: calc(11 * var(--pt));
+  --panel-forge-glyph: calc(10 * var(--pt));
+  --panel-forge-gap: calc(9 * var(--pt));
+  --panel-forge-notice: calc(11 * var(--pt));
+  --panel-status-dot: calc(7 * var(--pt));
+}

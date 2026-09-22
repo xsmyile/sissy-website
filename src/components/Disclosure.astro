@@ -1,0 +1,76 @@
+---
+interface Props {
+  summary: string;
+}
+
+const { summary } = Astro.props;
+---
+
+<details class="disclosure">
+  <summary>
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path
+        d="M6 3l5 5-5 5"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    {summary}
+  </summary>
+  <div class="body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .disclosure {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-2);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover {
+    color: var(--text);
+  }
+
+  summary svg {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    color: var(--muted);
+  }
+
+  .disclosure[open] summary svg {
+    transform: rotate(90deg);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    summary svg {
+      transition: transform 180ms ease;
+    }
+  }
+
+  .body {
+    display: grid;
+    gap: 32px;
+    padding: 8px 0 32px;
+  }
+</style>
