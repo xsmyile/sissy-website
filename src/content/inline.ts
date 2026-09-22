@@ -20,7 +20,13 @@ export function inlineSegments(text: string): Segment[] {
     .filter((part) => part.length > 0)
     .map((part) => {
       if (part.startsWith("`")) return { kind: "code" as const, text: part.slice(1, -1) };
-      if (part.startsWith("*")) return { kind: "em" as const, text: part.slice(1, -1) };
+      if (part.startsWith("*")) {
+        const emphasised = part.slice(1, -1);
+        if (emphasised.includes("`")) {
+          throw new Error(`Code inside emphasis does not nest: "${part.slice(0, 60)}"`);
+        }
+        return { kind: "em" as const, text: emphasised };
+      }
       if (STRAY_DELIMITER.test(part)) {
         throw new Error(`Unbalanced markup in copy: "${text.slice(0, 60)}"`);
       }

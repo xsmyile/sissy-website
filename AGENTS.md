@@ -201,7 +201,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   site corrects the README instead of narrowing it: *"The icon is her"* claims
   a likeness the drawing is not, and the licence line under it already calls
   the artwork her face, so the site says *"The silhouette is drawn from her."*
-  The app's README wants the same edit at its own copy of that line.
+  The app's README wants the same edit at its own copy of that line. Code and
+  emphasis do not nest in this markup, and `inline.ts` fails the build rather
+  than printing the delimiters.
 - **The page says what the money is, where the money is.** The headline figure
   is Sissy's own count of the tokens priced at the published rates, and
   the app keeps that apart from what a vendor charged everywhere it draws both
