@@ -104,12 +104,32 @@ export interface AccountIdentity {
   switchable: boolean;
 }
 
-/** One bar of `DayStrip`; `fraction` is null on a day Sissy was not running. */
+/**
+ * `ModelRow`: one pill under the day strip, the model's name with its vendor
+ * prefix and release date off, and its share of the day with what it cost.
+ */
+export interface ModelRow {
+  id: string;
+  name: string;
+  reading: string;
+}
+
+/**
+ * One bar of `DayStrip`; `fraction` is null on a day Sissy was not running.
+ *
+ * `title` and `figures` are what the strip's header swaps in while the pointer
+ * is on the bar, and `models` what the pills under it swap to. A day with no
+ * reading has no models, and the pills say nothing rather than keeping the
+ * last day that had some.
+ */
 export interface DayBar {
   id: string;
   label: string;
   fraction: number | null;
   isToday: boolean;
+  title: string;
+  figures: string;
+  models: ModelRow[];
 }
 
 export interface DayStrip {
@@ -139,6 +159,8 @@ export interface ProviderPage {
    */
   binding: string;
   today: string;
+  /** Today's split by model, which the pills draw while the pointer is on no bar. */
+  models: ModelRow[];
   strip: DayStrip;
   projects: ProjectRow[];
   status: StatusLine;

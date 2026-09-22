@@ -33,4 +33,11 @@
   --panel-forge-gap: calc(9 * var(--pt));
   --panel-forge-notice: calc(11 * var(--pt));
   --panel-status-dot: calc(7 * var(--pt));
+  --panel-pill-name: calc(10 * var(--pt));
+  --panel-pill-reading: calc(9 * var(--pt));
+  --panel-pill-padding: calc(7 * var(--pt));
+  --panel-pill-inset: calc(3 * var(--pt));
+  --panel-pill-radius: calc(7 * var(--pt));
+  --panel-pill-gap: calc(4 * var(--pt));
+  --panel-block-gap: calc(8 * var(--pt));
 }

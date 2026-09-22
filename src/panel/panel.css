@@ -17,6 +17,7 @@
   --panel-system-red: #ff453a;
   --panel-held: rgba(10, 132, 255, 0.22);
   --panel-held-glyph: #6fb2ff;
+  --panel-quaternary: rgba(255, 255, 255, 0.1);
 
   position: relative;
   width: var(--panel-width);
@@ -637,6 +638,50 @@ svg[data-glyph="bubble.left"] {
 }
 
 .panel-day-column[data-today] .panel-day-label {
+  color: var(--panel-secondary);
+}
+
+.panel-day-column[data-pointed] .panel-day-bar {
+  opacity: 1;
+}
+
+.panel-day-column[data-pointed] .panel-day-absent {
+  background: var(--panel-secondary);
+}
+
+.panel-day-column[data-pointed] .panel-day-label {
+  color: var(--panel-text);
+}
+
+/*
+ * The pills pay for their own separation with the block gap, less the gap the
+ * day block already puts between its parts, so a day with no split is
+ * unchanged to the point.
+ */
+.panel-pills {
+  display: flex;
+  gap: var(--panel-pill-gap);
+  margin-top: calc(var(--panel-block-gap) - 3 * var(--pt));
+}
+
+.panel-pill {
+  display: grid;
+  min-width: 0;
+  padding: var(--panel-pill-inset) var(--panel-pill-padding);
+  border-radius: var(--panel-pill-radius);
+  background: var(--panel-quaternary);
+  white-space: nowrap;
+}
+
+.panel-pill-name {
+  overflow: hidden;
+  font-size: var(--panel-pill-name);
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+.panel-pill-reading {
+  font-size: var(--panel-pill-reading);
   color: var(--panel-secondary);
 }
 
