@@ -18,7 +18,7 @@ repository and is the reference for everything the site draws.
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
   on the page, `page.ts` carries which page that is and how one is opened,
-  `pages/` holds one component per page (Overview, Provider, Stats,
+  `pages/` holds one component per page (Overview, Provider, Effort, Stats,
   Identities),
   `components/` the pieces they share, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
@@ -64,7 +64,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`,
   `Panel.tsx` mirrors `UsagePanelView.Page`, `pages/Overview.tsx` mirrors
   `PanelOverview.swift`, `pages/Provider.tsx` mirrors `PanelProviderPage.swift`,
-  `pages/Stats.tsx` mirrors `PanelStats.swift`, `pages/Identities.tsx` mirrors
+  `pages/Effort.tsx` mirrors `PanelEffortPage.swift`, `pages/Stats.tsx` mirrors `PanelStats.swift`, `pages/Identities.tsx` mirrors
   `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
   mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
   mirrors `ForgeRowView`, `metrics.css` mirrors
@@ -134,10 +134,15 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the only one; every other panel on the page is the same markup rendered
   inert. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
-  line, the commit identity line and the back control, and nothing else — the
-  picker, refresh, settings, the projects label, `Show all` and `Copy the fix`
-  stay drawn and dead. The identity line opens its page on the repository it
-  names, as the app does when exactly one is wrong. The one gesture that is not
+  line, the commit identity line, the `By effort` row where it is a door, and
+  the back control, and nothing else — the picker, refresh, settings, the
+  projects label, `Show all` and `Copy the fix` stay drawn and dead. The
+  identity line opens its page on the repository it names, as the app does
+  when exactly one is wrong. `By effort` is a door only where the app makes it
+  one, when some model leads on another effort or leads by less than
+  `effortWholeShare`: Codex's row opens and Claude's two do not, which is the
+  split the app's own docs measured. Back returns focus to the row each page
+  was opened from, one level at a time. The one gesture that is not
   a route is the day strip's hover, which the same switch turns on: pointing at
   a bar swaps the strip's header and the model pills to that day, as
   `PanelDayBlock` does, and an inert strip keeps the window's header over
@@ -175,7 +180,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **The fixture stays internally consistent, and it carries every figure
   rather than working one out.** The three accounts sum to the headline, each
   account's projects sum to its day, each project's rows across the accounts
-  sum to its line on the Overview, and the processes on the Stats page each
+  sum to its line on the Overview or to the fold standing for it there, each
+  account's efforts sum to its strip's models over the covered days, and the
+  processes on the Stats page each
   belong to a project on their own account's page. A day strip obeys
   `UsagePanelSnapshot.dayStrip`: a bar is its day's cost over the costliest
   day's, and the total under the label is the bars above it summed. A window's
@@ -304,9 +311,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   A chevron on a row is what the app draws; it is not a promise the site makes.
   The forge block is drawn, with one connected account per vendor, and its two
   rows are never summed — each vendor counts its own thing, so a total across
-  them would be a third number belonging to neither. The identity alert and the
-  credits stay omitted rather than faked, and so does `By effort`, until
-  xsmyile/sissy#236 settles which page it belongs on. The identity block draws both halves
+  them would be a third number belonging to neither. The credits stay omitted
+  rather than faked. A project list past three rows keeps two and folds the
+  rest into one row that names no owner and no forge, and its label counts
+  every project rather than the rows, which is why `projectCount` is a field.
+  The identity block draws both halves
   of one state and never both at once: `Use in CLI` on an account the CLI is
   not on, the `· in CLI` badge on the one it is and only where a second account
   exists to tell it from, which is what `inCLI` and `switchable` carry.
