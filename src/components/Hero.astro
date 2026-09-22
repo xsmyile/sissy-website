@@ -115,7 +115,7 @@ const timing = [
      * is not the rare collision it looks like, because the panel blinks when it
      * opens a page and opening one means clicking a row, so the pointer is on
      * the panel and tilting it every time. The tilt already has the rotation
-     * and both drop shadows to speak with; the light is hers.
+     * and both shadows to speak with; the light is hers.
      */
     --rim: calc(0.22 * var(--lights));
 
@@ -293,19 +293,22 @@ const timing = [
     transform-style: preserve-3d;
     transform: rotateX(calc(var(--tilt-y, 0) * var(--tilt-max-x) * -1))
       rotateY(calc(var(--tilt-x, 0) * var(--tilt-max-y)));
-    filter: drop-shadow(10px -5px 12px rgba(0, 0, 0, 0.42))
-      drop-shadow(30px -20px 64px rgba(0, 0, 0, 0.6));
   }
 
   /*
    * She sits below the panel's left corner, so the edges facing her are the
-   * left and the bottom, and the dark one is the top.
+   * left and the bottom, and the dark one is the top. The shadow falls the
+   * other way as two box shadows rather than two chained drop shadows: a
+   * chained second shadow darkens the first one too, and on the graphite
+   * ground the pair spread into a cloud some 130 px wide.
    */
   .lit :global(.panel) {
     box-shadow:
       inset 1px 0 0 rgba(199, 218, 232, var(--rim)),
       inset 0 -1px 0 rgba(199, 218, 232, calc(0.07 * var(--lights))),
-      inset 0 1px 0 rgba(0, 0, 0, 0.35);
+      inset 0 1px 0 rgba(0, 0, 0, 0.35),
+      4px -2px 8px rgba(0, 0, 0, 0.3),
+      16px -10px 32px rgba(0, 0, 0, 0.28);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -492,12 +495,9 @@ const timing = [
       box-shadow:
         inset 0 1px 0 rgba(199, 218, 232, var(--rim)),
         inset -1px 0 0 rgba(199, 218, 232, calc(0.07 * var(--lights))),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.35);
-    }
-
-    .lit :global(.hero-panel) {
-      filter: drop-shadow(-6px 10px 12px rgba(0, 0, 0, 0.42))
-        drop-shadow(-20px 34px 64px rgba(0, 0, 0, 0.6));
+        inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+        -2px 4px 8px rgba(0, 0, 0, 0.3),
+        -10px 16px 32px rgba(0, 0, 0, 0.28);
     }
 
     .invitation {

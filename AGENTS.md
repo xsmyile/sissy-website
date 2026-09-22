@@ -106,7 +106,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   pointer had left it, between 0.12 and 0.32. That collision is the normal case
   rather than an edge one, because the panel blinks when it opens a page and
   opening a page means clicking a row, so the pointer is on the panel and
-  tilting it every time. The tilt keeps the rotation and both drop shadows,
+  tilting it every time. The tilt keeps the rotation and both shadows,
   which is enough for it to be felt. Her eye lands under the download button, so
   the one light on the page falls on the one thing the page asks for. Her
   interior is untouched, because the replica stays in macOS neutrals.
