@@ -84,8 +84,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   a plain fraction, because the hero's furniture — nav, words, cue, gaps —
   costs the same on every screen: a plain fraction keeps the panel growing on a
   short window where that constant is most of the fold, and the cue is what
-  falls off the bottom. Measured, it clears the fold from 600 px of viewport
-  height up. That size is what the words being one block in their own column
+  falls off the bottom. Measured on the wide scene, with the identity line in
+  the Overview, it clears the fold from 600 px of viewport height up; the
+  stacked scene puts the panel under the words and makes no such claim. That size is what the words being one block in their own column
   buys: the title no longer spans the scene with the panel taking what is left
   under it, so the panel has a column for the whole height of the stack.
 - **The hero is Sissy, and her eye is the one light.** On a wide scene she sits
@@ -139,7 +140,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   names, as the app does when exactly one is wrong. The one gesture that is not
   a route is the day strip's hover, which the same switch turns on: pointing at
   a bar swaps the strip's header and the model pills to that day, as
-  `PanelDayBlock` does, and an inert strip rests on today. A gauge row is named
+  `PanelDayBlock` does, and an inert strip keeps the window's header over
+  today's pills. A gauge row is named
   the way the app names it, with `legendHelp` as an accessibility label and the
   reading beside it as a description, so the name does not swallow the figures.
   The agents and identity rows take no label at all, because the app gives each
