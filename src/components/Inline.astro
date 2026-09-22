@@ -1,0 +1,30 @@
+---
+import { inlineSegments } from "../content/inline";
+
+interface Props {
+  text: string;
+}
+
+const segments = inlineSegments(Astro.props.text);
+---
+
+{
+  segments.map((segment) => {
+    if (segment.kind === "code") return <code>{segment.text}</code>;
+    if (segment.kind === "em") return <em>{segment.text}</em>;
+    return segment.text;
+  })
+}
+
+<style>
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--text);
+  }
+
+  em {
+    font-style: italic;
+    color: var(--text);
+  }
+</style>

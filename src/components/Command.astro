@@ -1,0 +1,93 @@
+---
+interface Props {
+  command: string;
+  highlight?: string;
+}
+
+const { command, highlight } = Astro.props;
+const [before, after] = highlight ? command.split(highlight) : [command, undefined];
+---
+
+<span class="command">
+  <span class="prompt">$</span>
+  <code>{before}{highlight && <span class="highlight">{highlight}</span>}{after}</code>
+  <button type="button" data-copy={command}>Copy</button>
+</span>
+
+<script>
+  const FEEDBACK_FOR_MS = 1400;
+  const COPIED = "Copied";
+  const FAILED = "Copy failed";
+
+  async function copy(text: string): Promise<string> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return COPIED;
+    } catch {
+      return FAILED;
+    }
+  }
+
+  for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy]")) {
+    const label = button.textContent;
+    let restore = 0;
+
+    button.addEventListener("click", async () => {
+      window.clearTimeout(restore);
+      button.textContent = await copy(button.dataset.copy ?? "");
+      restore = window.setTimeout(() => {
+        button.textContent = label;
+      }, FEEDBACK_FOR_MS);
+    });
+  }
+</script>
+
+<style>
+  .command {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    padding: 10px 12px 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-2);
+  }
+
+  .prompt {
+    color: var(--muted);
+  }
+
+  code {
+    flex: 1 1 auto;
+    min-width: 0;
+    font: inherit;
+    overflow-wrap: anywhere;
+  }
+
+  button {
+    flex: none;
+  }
+
+  .highlight {
+    color: var(--text);
+  }
+
+  button {
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--surface-2);
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    color: var(--text-2);
+    cursor: pointer;
+  }
+
+  button:hover {
+    color: var(--text);
+  }
+</style>

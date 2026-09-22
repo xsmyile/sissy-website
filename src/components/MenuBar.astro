@@ -1,0 +1,86 @@
+---
+import { MENU_BAR_CLOCK, symbolHref } from "../content/site";
+---
+
+<div class="menubar" aria-hidden="true">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+    <path d="M2 6.5a8.5 8.5 0 0 1 12 0M4.2 9a5.4 5.4 0 0 1 7.6 0M6.4 11.4a2.3 2.3 0 0 1 3.2 0" />
+    <circle cx="8" cy="13.4" r=".6" fill="currentColor" />
+  </svg>
+  <svg viewBox="0 0 20 16" fill="none" stroke="currentColor" stroke-width="1.3">
+    <rect x="1" y="3.5" width="15" height="9" rx="2.5" />
+    <rect x="2.6" y="5.1" width="10" height="5.8" rx="1.2" fill="currentColor" stroke="none" />
+    <path d="M17.2 6.5v3" stroke-linecap="round" />
+  </svg>
+  <span class="sissy" data-menubar-sissy>
+    <svg class="body"><use href={symbolHref("sissy-body")} /></svg>
+    <svg class="eye"><use href={symbolHref("sissy-eye")} /></svg>
+  </span>
+  <span class="clock">{MENU_BAR_CLOCK}</span>
+</div>
+
+<style>
+  .menubar {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    height: 30px;
+    padding-inline: 14px 12px;
+    background: rgba(40, 40, 44, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", var(--font-sans);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .menubar > svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+
+  .sissy {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 22px;
+    margin-inline: -4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .sissy svg {
+    position: absolute;
+    top: 2.5px;
+    left: 4.5px;
+    width: 17px;
+    height: 17px;
+  }
+
+  .body {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .eye {
+    color: #0a84ff;
+  }
+
+  .clock {
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sissy {
+      animation: item-press 160ms ease-out 420ms both;
+    }
+  }
+
+  @keyframes item-press {
+    from {
+      background: transparent;
+    }
+  }
+</style>

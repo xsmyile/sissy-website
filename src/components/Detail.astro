@@ -1,0 +1,161 @@
+---
+import { DETAIL } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { ProjectsCrop } from "../panel/Panel";
+import Disclosure from "./Disclosure.astro";
+import Inline from "./Inline.astro";
+import Section from "./Section.astro";
+---
+
+<Section
+  id={DETAIL.id}
+  eyebrow={DETAIL.eyebrow}
+  title={DETAIL.title}
+  lede={DETAIL.lede}
+  layout="stack"
+  tier="detail"
+>
+  <div class="two-up">
+    <div class="side">
+      <h3>{DETAIL.projects.title}</h3>
+      <p>{DETAIL.projects.body}</p>
+      <div class="stage">
+        <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={DETAIL.projects.panelLabel} />
+      </div>
+      <p class="note">{DETAIL.projects.note}</p>
+    </div>
+    <div class="side">
+      <dl class="points">
+        {
+          DETAIL.points.map((point) => (
+            <div class="point">
+              <dt>{point.title}</dt>
+              <dd><Inline text={point.body} /></dd>
+            </div>
+          ))
+        }
+      </dl>
+      <Disclosure summary={DETAIL.readsSummary}>
+        <dl class="sources">
+          {
+            DETAIL.sources.map((source) => (
+              <div class="source">
+                <dt>{source.name}</dt>
+                <dd><Inline text={source.where} /></dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="note">{DETAIL.readsNote}</p>
+      </Disclosure>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .two-up {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px 64px;
+    align-items: start;
+  }
+
+  .side {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .note {
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+
+  .stage {
+    --panel-pt: 1.2px;
+
+    display: flex;
+    justify-content: center;
+    padding: 12px 0;
+  }
+
+  .points {
+    display: grid;
+    gap: 18px;
+    margin: 0;
+  }
+
+  .point {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  dt {
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  .sources {
+    display: grid;
+    margin: 0;
+  }
+
+  .source {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 5fr);
+    gap: 24px;
+    padding-block: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 14.5px;
+  }
+
+  .source:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .source dt {
+    margin-bottom: 0;
+    color: var(--text);
+  }
+
+  @media (max-width: 920px) {
+    .two-up {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+
+    .stage {
+      --panel-pt: 1px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .source {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 6px;
+    }
+  }
+</style>

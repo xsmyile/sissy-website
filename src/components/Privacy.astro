@@ -1,0 +1,189 @@
+---
+import { PRIVACY } from "../content/sections";
+import Disclosure from "./Disclosure.astro";
+import Inline from "./Inline.astro";
+import Section from "./Section.astro";
+---
+
+<Section
+  id={PRIVACY.id}
+  eyebrow={PRIVACY.eyebrow}
+  title={PRIVACY.title}
+  lede={PRIVACY.lede}
+  layout="stack"
+  tier="lead"
+>
+  <div class="facts">
+    {
+      PRIVACY.facts.map((fact) => (
+        <article>
+          <h3>{fact.title}</h3>
+          <p>{fact.body}</p>
+        </article>
+      ))
+    }
+  </div>
+  <Disclosure summary={PRIVACY.detailsSummary}>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">{PRIVACY.columns.host}</th>
+          <th scope="col">{PRIVACY.columns.purpose}</th>
+          <th scope="col">{PRIVACY.columns.off}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          PRIVACY.hosts.map((row) => (
+            <tr>
+              <td data-label={PRIVACY.columns.host}><Inline text={row.host} /></td>
+              <td data-label={PRIVACY.columns.purpose}><Inline text={row.purpose} /></td>
+              <td data-label={PRIVACY.columns.off}><Inline text={row.off} /></td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+    <div class="notes">
+      <div>
+        <h3>{PRIVACY.keepsTitle}</h3>
+        <p><Inline text={PRIVACY.keeps} /></p>
+      </div>
+      <div>
+        <h3>{PRIVACY.writesTitle}</h3>
+        <p><Inline text={PRIVACY.writes} /></p>
+      </div>
+    </div>
+  </Disclosure>
+  <a class="security" href={PRIVACY.securityLink.href}>{PRIVACY.securityLink.label} →</a>
+</Section>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px 40px;
+    margin-bottom: 40px;
+  }
+
+  article {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  th {
+    padding: 0 20px 12px 0;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  td {
+    padding: 14px 20px 14px 0;
+    border-top: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text-2);
+  }
+
+  td:first-child {
+    width: 34%;
+  }
+
+  td:last-child,
+  th:last-child {
+    padding-right: 0;
+  }
+
+  .notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 64px;
+  }
+
+  .security {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .security:hover {
+    color: var(--accent-bright);
+  }
+
+  @media (max-width: 920px) {
+    .facts {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    table,
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: auto;
+    }
+
+    tr {
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    td,
+    td:first-child {
+      width: auto;
+      padding: 4px 0;
+      border: 0;
+    }
+
+    td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .notes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
