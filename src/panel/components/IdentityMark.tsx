@@ -14,7 +14,7 @@ export function IdentityMarkGlyph({ mark }: { mark: IdentityMark }): ReactElemen
     case "unexpected":
       return <ExclamationmarkTriangleFill className="panel-mark-warning" />;
     case "unjudged":
-      return <span>—</span>;
+      return <span className="panel-mark-unjudged">—</span>;
   }
 }
 

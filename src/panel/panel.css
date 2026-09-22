@@ -461,6 +461,10 @@ svg[data-glyph="chevron.down"] {
   color: var(--panel-system-orange);
 }
 
+.panel-mark-unjudged {
+  color: var(--panel-tertiary);
+}
+
 .panel-identities-footer {
   font-size: var(--panel-caption);
   font-weight: 400;
