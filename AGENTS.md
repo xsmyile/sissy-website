@@ -19,7 +19,10 @@ repository and is the reference for everything the site draws.
   on the page, `page.ts` carries which page that is and how one is opened,
   `pages/` holds one component per page (Overview, Provider, Stats),
   `components/` the pieces they share, `data.ts` the one fixture every number
-  on the replica comes from. `HeroPanel.tsx` is the only hydrated island: it
+  on the replica comes from. Beside `Panel` it exports the crops a page section
+  enlarges one block with: `ProjectsCrop`, `ForgeCrop` and `IdentityCrop`, each
+  the same markup the page it belongs to draws, in the panel's own frame and
+  never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
   the panel is rendered to static HTML. `motion.ts` carries the blink's timing
   and `blink.ts` plays it on whatever eyes a surface hands it.
