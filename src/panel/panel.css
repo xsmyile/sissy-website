@@ -93,6 +93,58 @@
   gap: calc(8 * var(--pt));
 }
 
+/* Glyphs */
+
+/*
+ * A glyph is as wide as its symbol is at the point size the app gives it, and
+ * as tall as its own viewBox then makes it. Two of these are a point apart on
+ * purpose: `UsagePanelView` draws the cup at 11 and the gear at 12 so the pair
+ * weighs the same.
+ */
+svg[data-glyph] {
+  height: auto;
+}
+
+svg[data-glyph="chevron.right"] {
+  width: calc(4.6 * var(--pt));
+}
+
+svg[data-glyph="chevron.left"] {
+  width: calc(6.14 * var(--pt));
+}
+
+svg[data-glyph="chevron.up.chevron.down"] {
+  width: calc(6.35 * var(--pt));
+}
+
+svg[data-glyph="arrow.clockwise"] {
+  width: calc(9.66 * var(--pt));
+}
+
+svg[data-glyph="person.2"] {
+  width: calc(15.05 * var(--pt));
+}
+
+svg[data-glyph="cup.and.saucer.fill"] {
+  width: calc(14.4 * var(--pt));
+}
+
+svg[data-glyph="gearshape.fill"] {
+  width: calc(12.61 * var(--pt));
+}
+
+svg[data-glyph="arrow.trianglehead.merge"] {
+  width: calc(6.12 * var(--pt));
+}
+
+svg[data-glyph="smallcircle.filled.circle"] {
+  width: calc(10.19 * var(--pt));
+}
+
+svg[data-glyph="bubble.left"] {
+  width: calc(11.07 * var(--pt));
+}
+
 .panel-cat {
   position: relative;
   flex: none;
@@ -143,11 +195,6 @@
   color: var(--panel-text);
 }
 
-.panel-glass svg {
-  width: calc(13 * var(--pt));
-  height: calc(13 * var(--pt));
-}
-
 .panel-glass-held {
   background: var(--panel-held);
   color: var(--panel-held-glyph);
@@ -158,11 +205,6 @@
   color: var(--panel-secondary);
 }
 
-.panel-glass-quiet svg {
-  width: calc(11 * var(--pt));
-  height: calc(11 * var(--pt));
-}
-
 .panel-back {
   display: grid;
   flex: none;
@@ -170,11 +212,6 @@
   width: var(--panel-back);
   height: var(--panel-back);
   color: var(--panel-secondary);
-}
-
-.panel-back svg {
-  width: calc(12 * var(--pt));
-  height: calc(12 * var(--pt));
 }
 
 /* Headline */
@@ -213,7 +250,6 @@
 
 .panel-popup svg {
   width: calc(9 * var(--pt));
-  height: calc(12 * var(--pt));
   color: var(--panel-secondary);
 }
 
@@ -294,8 +330,6 @@
 
 .panel-chevron {
   flex: none;
-  width: calc(9 * var(--pt));
-  height: calc(9 * var(--pt));
   color: var(--panel-tertiary);
 }
 
@@ -479,14 +513,8 @@
   padding-top: calc(2 * var(--pt));
 }
 
-.panel-picker svg:first-child {
-  width: calc(16 * var(--pt));
-  height: calc(11 * var(--pt));
-}
-
 .panel-picker svg:last-child {
   width: calc(6 * var(--pt));
-  height: calc(8 * var(--pt));
   color: var(--panel-secondary);
 }
 
@@ -746,13 +774,6 @@
   display: grid;
   flex: none;
   place-items: center;
-  width: var(--panel-forge-glyph);
-  height: var(--panel-forge-glyph);
-}
-
-.panel-forge-mark svg {
-  width: 100%;
-  height: 100%;
 }
 
 .panel-forge-counter[data-counter="merged"] .panel-forge-mark {
