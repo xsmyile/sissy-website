@@ -19,6 +19,7 @@ export function Stats({ page, open }: { page: StatsPage; open?: OpenPage }): Rea
     <>
       <PageHeader
         title="Agents"
+        subtitle={page.reading}
         backLabel="Back to today"
         back={open && (() => open(OVERVIEW, BACK))}
       />

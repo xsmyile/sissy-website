@@ -470,8 +470,27 @@ svg[data-glyph="chevron.down"] {
   font-weight: 400;
 }
 
+.panel-identity-recap {
+  display: grid;
+  gap: calc(6 * var(--pt));
+}
+
 .panel-identity-verdict {
   font-size: var(--panel-row);
+}
+
+.panel-identity-counts {
+  display: flex;
+  gap: calc(10 * var(--pt));
+}
+
+.panel-identity-count {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+  font-size: var(--panel-headline-meta);
+  white-space: nowrap;
+  color: var(--panel-secondary);
 }
 
 .panel-identity-rows {

@@ -156,6 +156,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     summary: "acme/web commits under an unexpected name",
     repository: "acme-web",
   },
+  identitiesReading: "checked 3m ago",
   forge: [
     {
       id: "github",
@@ -585,6 +586,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     },
   ],
   stats: {
+    reading: "counted 12s ago",
     live: {
       line: { running: 3, footprint: "1.42 GB" },
       samples: [

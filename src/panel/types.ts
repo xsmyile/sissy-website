@@ -226,6 +226,8 @@ export interface ProviderCount {
 
 /** `AgentsBlock`, as `PanelStats` draws it: the live half and the counted one. */
 export interface StatsPage {
+  /** `agentsReading`: when the count on screen was taken, under the page's title. */
+  reading: string;
   live: {
     line: AgentsLine;
     samples: number[];
@@ -318,6 +320,8 @@ export interface PanelSnapshot {
   /** Every repository read, the ones that disagree with their forge first. */
   identities: IdentityRow[];
   identityLine: IdentityLine;
+  /** `identitiesReading`: when the repositories were last read, under the page's title. */
+  identitiesReading: string;
   forge: ForgeRow[];
   providerPages: ProviderPage[];
   stats: StatsPage;

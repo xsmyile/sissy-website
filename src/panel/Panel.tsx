@@ -48,7 +48,14 @@ function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
     case "stats":
       return <Stats page={snapshot.stats} open={open} />;
     case "identities":
-      return <Identities rows={snapshot.identities} focus={page.focus} open={open} />;
+      return (
+        <Identities
+          rows={snapshot.identities}
+          focus={page.focus}
+          reading={snapshot.identitiesReading}
+          open={open}
+        />
+      );
   }
 }
 

@@ -2,30 +2,33 @@ import type { ReactElement } from "react";
 import { ChevronDown, ChevronRight } from "../components/Glyph";
 import { IdentityMarkGlyph } from "../components/IdentityMark";
 import { PageHeader } from "../components/PageHeader";
-import { identityDisclosure, identityFooter } from "../format";
+import { identityCount, identityDisclosure, identityFooter, identityVerdict } from "../format";
 import { BACK, type OpenPage, OVERVIEW } from "../page";
-import type { IdentityRow } from "../types";
+import type { IdentityMark, IdentityRow } from "../types";
 
 const CAVEAT = "A commit made with -c, --author or GIT_AUTHOR_EMAIL set is not covered.";
-const VERDICT = "Every repository commits under the name its forge expects.";
+/** The order the rows sort in, which is the order the recap counts them in. */
+const MARKS: IdentityMark[] = ["unexpected", "agrees", "unjudged"];
 const HIDE = "Hide the rest";
 
 interface IdentitiesProps {
   rows: IdentityRow[];
   focus: string | null;
+  reading: string;
   open?: OpenPage;
 }
 
 /**
  * `PanelIdentities` under `identitiesHeader`: which repositories commit under
- * a name their forge does not expect. The page opens folded, on the findings
- * and the repository it was opened about.
+ * a name their forge does not expect. The header says when they were last
+ * read, and the page opens folded, on a recap and the findings.
  */
-export function Identities({ rows, focus, open }: IdentitiesProps): ReactElement {
+export function Identities({ rows, focus, reading, open }: IdentitiesProps): ReactElement {
   return (
     <>
       <PageHeader
         title="Identities"
+        subtitle={reading}
         backLabel="Back to today"
         back={open && (() => open(OVERVIEW, BACK))}
       />
@@ -48,9 +51,8 @@ export function IdentitiesBlock({
   focus: string | null;
   showsAll: boolean;
 }): ReactElement {
-  const standing = rows.filter((row) => row.mark !== "agrees" || row.id === focus);
-  const shown = showsAll ? rows : standing;
-  const verdict = rows.length > 0 && standing.length === 0 && !showsAll;
+  const standing = rows.filter((row) => row.mark === "unexpected");
+  const rest = rows.filter((row) => row.mark !== "unexpected");
   return (
     <div className="panel-section panel-identities">
       <div className="panel-label">
@@ -59,21 +61,58 @@ export function IdentitiesBlock({
           {identityFooter(rows.length)}
         </span>
       </div>
-      {verdict && <div className="panel-identity-verdict">{VERDICT}</div>}
-      {shown.length > 0 && (
-        <div className="panel-identity-rows">
-          {shown.map((row) => (
-            <IdentityRowView key={row.id} row={row} focused={row.id === focus} />
-          ))}
-        </div>
-      )}
-      {rows.length > standing.length && (
-        <div className="panel-disclosure">
-          {showsAll ? <ChevronDown /> : <ChevronRight />}
-          {showsAll ? HIDE : identityDisclosure(rows.length)}
-        </div>
+      {rows.length > 0 && <Recap rows={rows} />}
+      {standing.length > 0 && <IdentityRows rows={standing} focus={focus} />}
+      {rest.length > 0 && (
+        <>
+          <div className="panel-disclosure">
+            {showsAll ? <ChevronDown /> : <ChevronRight />}
+            {showsAll ? HIDE : identityDisclosure(rows.length)}
+          </div>
+          {showsAll && <IdentityRows rows={rest} focus={focus} />}
+        </>
       )}
       <div className="panel-identity-caveat">{CAVEAT}</div>
+    </div>
+  );
+}
+
+/**
+ * The recap that leads the page whatever is folded under it: whether anything
+ * is wrong, then a count per mark, so what the fold holds is said before it is
+ * opened. Marks no row carries are left out.
+ */
+function Recap({ rows }: { rows: IdentityRow[] }): ReactElement {
+  const count = (mark: IdentityMark): number => rows.filter((row) => row.mark === mark).length;
+  return (
+    <div className="panel-identity-recap">
+      <div className="panel-identity-verdict">
+        {identityVerdict(count("unexpected"), count("unjudged"))}
+      </div>
+      <div className="panel-identity-counts">
+        {MARKS.filter((mark) => count(mark) > 0).map((mark) => (
+          <span className="panel-identity-count" key={mark}>
+            <IdentityMarkGlyph mark={mark} />
+            {identityCount(mark, count(mark))}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function IdentityRows({
+  rows,
+  focus,
+}: {
+  rows: IdentityRow[];
+  focus: string | null;
+}): ReactElement {
+  return (
+    <div className="panel-identity-rows">
+      {rows.map((row) => (
+        <IdentityRowView key={row.id} row={row} focused={row.id === focus} />
+      ))}
     </div>
   );
 }
