@@ -4,6 +4,7 @@ import { ForgeSection } from "./components/ForgeSection";
 import { Identity } from "./components/Identity";
 import { ProjectsSection } from "./components/ProjectRow";
 import { type OpenPage, OVERVIEW, pageIdentity } from "./page";
+import { Identities, IdentitiesBlock } from "./pages/Identities";
 import { Overview } from "./pages/Overview";
 import { Provider } from "./pages/Provider";
 import { Stats } from "./pages/Stats";
@@ -31,6 +32,8 @@ function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
     }
     case "stats":
       return <Stats page={snapshot.stats} open={open} />;
+    case "identities":
+      return <Identities rows={snapshot.identities} focus={page.focus} open={open} />;
   }
 }
 
@@ -97,6 +100,24 @@ export function ForgeCrop({
   return (
     <Crop label={label}>
       <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+    </Crop>
+  );
+}
+
+/**
+ * The identities page's block on its own, unfolded, so the one repository
+ * that disagrees is read against the ones that agree.
+ */
+export function IdentitiesCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <IdentitiesBlock rows={snapshot.identities} focus={null} showsAll />
     </Crop>
   );
 }

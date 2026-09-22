@@ -18,10 +18,12 @@ repository and is the reference for everything the site draws.
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
   on the page, `page.ts` carries which page that is and how one is opened,
-  `pages/` holds one component per page (Overview, Provider, Stats),
+  `pages/` holds one component per page (Overview, Provider, Stats,
+  Identities),
   `components/` the pieces they share, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `ProjectsCrop`, `ForgeCrop` and `IdentityCrop`, each
+  enlarges one block with: `ProjectsCrop`, `ForgeCrop`, `IdentityCrop` and
+  `IdentitiesCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
@@ -62,7 +64,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`,
   `Panel.tsx` mirrors `UsagePanelView.Page`, `pages/Overview.tsx` mirrors
   `PanelOverview.swift`, `pages/Provider.tsx` mirrors `PanelProviderPage.swift`,
-  `pages/Stats.tsx` mirrors `PanelStats.swift`, `components/ForgeSection.tsx`
+  `pages/Stats.tsx` mirrors `PanelStats.swift`, `pages/Identities.tsx` mirrors
+  `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
+  mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
   mirrors `ForgeRowView`, `metrics.css` mirrors
   `PanelMetrics`, both in `PanelComponents.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
@@ -72,7 +76,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **One point is `--pt`.** Every panel measure is `calc(N * var(--pt))` with N
   the value `PanelMetrics` declares. A surface that wants the panel larger sets
   `--panel-pt` on an ancestor; nothing else scales it. The hero's is
-  `clamp(0.72px, calc(0.16svh - 0.2px), 1.25px)`: above native size on any
+  `clamp(0.68px, calc(0.16svh - 0.28px), 1.25px)`: above native size on any
   ordinary screen, because the replica is the subject of the hero and not an
   illustration beside the headline, and tied to the viewport because the scene
   owes the fold a whole hero and the panel is the tallest thing in it, so it is
@@ -129,12 +133,17 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the only one; every other panel on the page is the same markup rendered
   inert. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
-  line and the back control, and nothing else — the picker, refresh, settings,
-  the projects label and the day bars stay drawn and dead. A gauge row is named
+  line, the commit identity line and the back control, and nothing else — the
+  picker, refresh, settings, the projects label, `Show all` and `Copy the fix`
+  stay drawn and dead. The identity line opens its page on the repository it
+  names, as the app does when exactly one is wrong. The one gesture that is not
+  a route is the day strip's hover, which the same switch turns on: pointing at
+  a bar swaps the strip's header and the model pills to that day, as
+  `PanelDayBlock` does, and an inert strip rests on today. A gauge row is named
   the way the app names it, with `legendHelp` as an accessibility label and the
   reading beside it as a description, so the name does not swallow the figures.
-  The agents row takes no label at all, because the app gives that one a help
-  string and nothing else: its visible text is its name, which is also what
+  The agents and identity rows take no label at all, because the app gives each
+  a help string and nothing else: its visible text is its name, which is also what
   keeps the accessible name and the visible label the same words. Focus lands
   on the new page's back control when one opens and returns to the row it came
   from on Back. The island renders inert until it has mounted, so the served
@@ -292,7 +301,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   The forge block is drawn, with one connected account per vendor, and its two
   rows are never summed — each vendor counts its own thing, so a total across
   them would be a third number belonging to neither. The identity alert and the
-  credits stay omitted rather than faked. The identity block draws both halves
+  credits stay omitted rather than faked, and so does `By effort`, until
+  xsmyile/sissy#236 settles which page it belongs on. The identity block draws both halves
   of one state and never both at once: `Use in CLI` on an account the CLI is
   not on, the `· in CLI` badge on the one it is and only where a second account
   exists to tell it from, which is what `inCLI` and `switchable` carry.

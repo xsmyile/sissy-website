@@ -221,6 +221,42 @@ export interface ForgeRow {
   notice: string;
 }
 
+/**
+ * `IdentityMark`: a tick, a warning, or a dash for a repository that was read
+ * and not judged, because an empty mark would be a verdict.
+ */
+export type IdentityMark = "agrees" | "unexpected" | "unjudged";
+
+/**
+ * `IdentityRow`: who would sign the next commit in one repository, and, on a
+ * row that needs correcting, what its forge expects and where the wrong value
+ * comes from. `fix` is the `git config --unset-all` command, present only
+ * where the override is the repository's own.
+ */
+export interface IdentityRow {
+  id: string;
+  name: string;
+  mark: IdentityMark;
+  author: string;
+  origin: string | null;
+  expectation: string | null;
+  fix: string | null;
+}
+
+/** `IdentityLineState`: nothing read is its own state, never an agreement. */
+export type IdentityLineState = "unread" | "clean" | "findings";
+
+/**
+ * `IdentityLine`: the Overview's one line about commit identity, drawn on
+ * every frame. `repository` is the row the page opens on, set only when
+ * exactly one repository is wrong.
+ */
+export interface IdentityLine {
+  state: IdentityLineState;
+  summary: string;
+  repository: string | null;
+}
+
 export interface PanelSnapshot {
   header: HeaderReading;
   headline: Headline;
@@ -229,6 +265,9 @@ export interface PanelSnapshot {
   gaugeRows: GaugeRow[];
   agents: AgentsLine;
   projects: ProjectRow[];
+  /** Every repository read, the ones that disagree with their forge first. */
+  identities: IdentityRow[];
+  identityLine: IdentityLine;
   forge: ForgeRow[];
   providerPages: ProviderPage[];
   stats: StatsPage;
@@ -241,4 +280,5 @@ export interface PanelSnapshot {
 export type PanelPage =
   | { kind: "overview" }
   | { kind: "provider"; provider: ProviderId; account: string | null }
-  | { kind: "stats" };
+  | { kind: "stats" }
+  | { kind: "identities"; focus: string | null };

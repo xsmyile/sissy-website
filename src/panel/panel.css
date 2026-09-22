@@ -18,6 +18,7 @@
   --panel-held: rgba(10, 132, 255, 0.22);
   --panel-held-glyph: #6fb2ff;
   --panel-quaternary: rgba(255, 255, 255, 0.1);
+  --panel-system-orange: #ff9f0a;
 
   position: relative;
   width: var(--panel-width);
@@ -142,6 +143,18 @@ svg[data-glyph="smallcircle.filled.circle"] {
 
 svg[data-glyph="bubble.left"] {
   width: calc(11.07 * var(--pt));
+}
+
+svg[data-glyph="checkmark"] {
+  width: calc(8.79 * var(--pt));
+}
+
+svg[data-glyph="exclamationmark.triangle.fill"] {
+  width: calc(10.24 * var(--pt));
+}
+
+svg[data-glyph="chevron.down"] {
+  width: calc(7.9 * var(--pt));
 }
 
 .panel-cat {
@@ -422,6 +435,119 @@ svg[data-glyph="bubble.left"] {
 
 .panel-agents .panel-chevron {
   margin-left: auto;
+}
+
+/* Commit identity, the Overview's line and the page behind it */
+
+.panel-identity-summary {
+  overflow: hidden;
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--panel-secondary);
+}
+
+.panel-identity-summary[data-state="findings"] {
+  color: var(--panel-text);
+}
+
+.panel-mark-agrees {
+  flex: none;
+  color: var(--panel-secondary);
+}
+
+.panel-mark-warning {
+  flex: none;
+  color: var(--panel-system-orange);
+}
+
+.panel-identities-footer {
+  font-size: var(--panel-caption);
+  font-weight: 400;
+}
+
+.panel-identity-verdict {
+  font-size: var(--panel-row);
+}
+
+.panel-identity-rows {
+  display: grid;
+  gap: calc(12 * var(--pt));
+}
+
+.panel-identity-row {
+  display: grid;
+  grid-template-columns: calc(13 * var(--pt)) minmax(0, 1fr);
+  gap: calc(6 * var(--pt));
+  align-items: baseline;
+}
+
+.panel-identity-mark {
+  font-size: var(--panel-headline-meta);
+  color: var(--panel-secondary);
+}
+
+.panel-identity-detail {
+  display: grid;
+  justify-items: start;
+  gap: calc(3 * var(--pt));
+  min-width: 0;
+  font-size: var(--panel-headline-meta);
+}
+
+.panel-identity-name,
+.panel-identity-author,
+.panel-identity-origin {
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-identity-name {
+  font-size: var(--panel-row);
+  font-weight: 500;
+}
+
+.panel-identity-row[data-focused] .panel-identity-name {
+  font-weight: 600;
+}
+
+.panel-identity-author,
+.panel-identity-expectation {
+  color: var(--panel-secondary);
+}
+
+.panel-identity-author[data-unexpected] {
+  color: var(--panel-text);
+}
+
+.panel-identity-origin {
+  color: var(--panel-tertiary);
+}
+
+.panel-small-button {
+  margin-top: calc(2 * var(--pt));
+  padding: calc(1.5 * var(--pt)) calc(7 * var(--pt));
+  border-radius: calc(5 * var(--pt));
+  background: var(--panel-glass);
+  box-shadow: inset 0 0 0 0.5px var(--panel-border);
+  color: var(--panel-text);
+}
+
+.panel-disclosure {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+  font-size: var(--panel-headline-meta);
+  font-weight: 500;
+  color: var(--panel-secondary);
+}
+
+.panel-identity-caveat {
+  padding-top: calc(2 * var(--pt));
+  font-size: var(--panel-headline-meta);
+  color: var(--panel-tertiary);
 }
 
 /* Projects, as a wash behind each row */

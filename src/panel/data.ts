@@ -1,4 +1,4 @@
-import type { PanelSnapshot, ProjectRow } from "./types";
+import type { IdentityRow, PanelSnapshot, ProjectRow } from "./types";
 
 const SISSY: ProjectRow = {
   id: "sissy",
@@ -40,11 +40,52 @@ const ACME_WEB: ProjectRow = {
   share: 0.018,
 };
 
+const PERSONAL = "Smyile <dev@example.com>";
+const WORK = "Acme Dev <dev@acme.example>";
+
+/**
+ * Six repositories, ordered the way `makeIdentities` orders them: the one that
+ * disagrees first, then by name. Acme's GitLab account has three, two of them
+ * committing as the work identity, which is what makes that name the
+ * expectation and `acme/web`, set to the personal one in its own config, the
+ * finding. Only a local override carries a fix.
+ */
+const IDENTITIES: IdentityRow[] = [
+  {
+    id: "acme-web",
+    name: "acme/web",
+    mark: "unexpected",
+    author: PERSONAL,
+    origin: "local · /Users/dev/work/acme-web/.git/config",
+    expectation: "gitlab.com · 2 repositories there commit as Acme Dev",
+    fix: "git -C '/Users/dev/work/acme-web' config --unset-all user.name && git -C '/Users/dev/work/acme-web' config --unset-all user.email",
+  },
+  ...[
+    ["acme-api", "acme/api", WORK],
+    ["acme-infra", "acme/infra", WORK],
+    ["homebrew-sissy", "xsmyile/homebrew-sissy", PERSONAL],
+    ["sissy", "xsmyile/sissy", PERSONAL],
+    ["sissy-website", "xsmyile/sissy-website", PERSONAL],
+  ].map(
+    ([id, name, author]): IdentityRow => ({
+      id,
+      name,
+      mark: "agrees",
+      author,
+      origin: null,
+      expectation: null,
+      fix: null,
+    }),
+  ),
+];
+
 /**
  * One day of demo readings, internally consistent: the three accounts sum to
  * the headline, each account's projects sum to its day, each project's rows
  * across the accounts sum to its line on the Overview, and the stats page
  * counts the same three processes the Overview's agents line does. Every
+ * repository the identities page reads is one Sissy has seen an agent in, and
+ * the Overview's line names the one that disagrees. Every
  * account's gauge reads the window `binding` would pick for its page.
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
@@ -87,6 +128,12 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
   ],
   agents: { running: 3, footprint: "1.42 GB" },
   projects: [SISSY, HOMEBREW, ACME_API, ACME_WEB],
+  identities: IDENTITIES,
+  identityLine: {
+    state: "findings",
+    summary: "acme/web commits under an unexpected name",
+    repository: "acme-web",
+  },
   forge: [
     {
       id: "github",

@@ -51,7 +51,7 @@ export const HERO_PANEL_LABEL = "Sissy's panel";
  * rather than a rule the page would break twice.
  */
 export const PANEL_INVITATION =
-  "A provider's row opens that account, and the agents line opens the page behind it.";
+  "The provider rows, the agents line and the identity line open the pages behind them.";
 
 /**
  * What the money on the panel is. Sissy counts the tokens out of the logs and

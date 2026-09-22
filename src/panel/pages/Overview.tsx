@@ -1,6 +1,7 @@
 import { type ReactElement, type ReactNode, useId } from "react";
 import { ForgeSection } from "../components/ForgeSection";
 import { ChevronRight, ChevronUpDown } from "../components/Glyph";
+import { IdentityLineMark } from "../components/IdentityMark";
 import { PanelHeader } from "../components/PanelHeader";
 import { ProjectsSection } from "../components/ProjectRow";
 import { ShareBar } from "../components/ShareBar";
@@ -19,9 +20,11 @@ const legendHelp = (row: GaugeRow): string => `Open ${row.name}`;
 
 const AGENTS_HELP = "How many sessions and agents have run, and what they are holding now";
 const AGENTS_TARGET = "agents";
+const IDENTITY_HELP = "Show every repository's commit identity";
+const IDENTITY_TARGET = "identities";
 
 export function Overview({ snapshot, open }: OverviewProps): ReactElement {
-  const { header, headline, gaugeRows, agents, projects, forge } = snapshot;
+  const { header, headline, gaugeRows, agents, projects, identityLine, forge } = snapshot;
   const ids = useId();
   const readingId = (id: string): string => `${ids}${id}`;
   return (
@@ -96,6 +99,22 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
           <ProjectsSection label="By project · today" rows={projects} />
         </>
       )}
+      <div className="panel-divider" />
+      <Row
+        className="panel-agents panel-identity-line"
+        target={IDENTITY_TARGET}
+        title={IDENTITY_HELP}
+        press={
+          open &&
+          (() => open({ kind: "identities", focus: identityLine.repository }, IDENTITY_TARGET))
+        }
+      >
+        <IdentityLineMark state={identityLine.state} />
+        <span className="panel-identity-summary" data-state={identityLine.state}>
+          {identityLine.summary}
+        </span>
+        <ChevronRight className="panel-chevron" />
+      </Row>
       {forge.length > 0 && (
         <>
           <div className="panel-divider" />
@@ -115,9 +134,10 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
  *
  * A gauge row is named the way the app names it, with `legendHelp` as an
  * accessibility label, and keeps its reading as a description so the name does
- * not swallow the figures beside it. The agents row takes no label, because
- * the app gives that one a help string and nothing else: its visible text is
- * its name, which is also what keeps the name and the label the same words.
+ * not swallow the figures beside it. The agents and identity rows take no
+ * label, because the app gives each a help string and nothing else: its
+ * visible text is its name, which is also what keeps the name and the label
+ * the same words.
  */
 function Row({
   className,
