@@ -74,7 +74,7 @@ export const GIT = {
   eyebrow: "Git",
   title: "Catch the wrong name before you push.",
   lede: "The work repository you are about to push under your personal name, or the other way round. For every repository your agents have worked in, Sissy asks git who would sign the next commit, and compares it with the other repositories on the same forge account.",
-  body: "Findings come first, with the name it would commit under, what its forge expects and the file the wrong value comes from. Where that file is the repository's own, *Copy the fix* puts the `git config --unset` command on the clipboard. Sissy never writes to a repository or to any git config.",
+  body: "Findings come first, with the name it would commit under, what its forge expects and the file the wrong value comes from. Where that file is the repository's own, *Copy the fix* puts the `git config --unset-all` command on the clipboard. Sissy never writes to a repository or to any git config.",
   panelLabel: "The Identities page, every repository shown",
   blocks: {
     projects: {
