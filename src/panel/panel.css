@@ -908,7 +908,7 @@ svg[data-glyph="chevron.down"] {
 
 .panel-effort-bar {
   display: flex;
-  gap: 1px;
+  gap: calc(1 * var(--pt));
   overflow: hidden;
   height: calc(10 * var(--pt));
   border-radius: calc(3 * var(--pt));

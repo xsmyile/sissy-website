@@ -39,11 +39,11 @@ function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
       return <Provider page={providerPage(page, snapshot)} header={snapshot.header} open={open} />;
     case "effort": {
       const found = providerPage(page, snapshot);
-      const rows = found.effort?.rows;
-      if (rows === undefined || rows === null) {
+      const reading = found.effort;
+      if (reading === null || reading.rows === null) {
         throw new Error(`The fixture's "${pageIdentity(page)}" has no effort page to open`);
       }
-      return <Effort page={found} rows={rows} open={open} />;
+      return <Effort page={found} reading={{ ...reading, rows: reading.rows }} open={open} />;
     }
     case "stats":
       return <Stats page={snapshot.stats} open={open} />;

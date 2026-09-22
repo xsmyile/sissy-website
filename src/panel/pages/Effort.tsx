@@ -1,11 +1,14 @@
 import type { CSSProperties, ReactElement } from "react";
 import { PageHeader } from "../components/PageHeader";
 import { BACK, type OpenPage } from "../page";
-import type { EffortRow, EffortSegment, ProviderPage } from "../types";
+import type { EffortReading, EffortRow, EffortSegment, ProviderPage } from "../types";
+
+/** The provider page's reading, on the one kind of row that is a door. */
+type OpenEffort = EffortReading & { rows: EffortRow[] };
 
 interface EffortProps {
   page: ProviderPage;
-  rows: EffortRow[];
+  reading: OpenEffort;
   open?: OpenPage;
 }
 
@@ -18,7 +21,7 @@ interface EffortProps {
  * Its header is `providerHeader` pointing back at the provider page, which
  * names no reading under the title.
  */
-export function Effort({ page, rows, open }: EffortProps): ReactElement {
+export function Effort({ page, reading, open }: EffortProps): ReactElement {
   return (
     <>
       <PageHeader
@@ -32,10 +35,10 @@ export function Effort({ page, rows, open }: EffortProps): ReactElement {
       />
       <div className="panel-effort-head">
         <span className="panel-label">By effort</span>
-        <span className="panel-caption panel-label-end">{page.effort?.window}</span>
+        <span className="panel-caption panel-label-end">{reading.window}</span>
       </div>
       <div className="panel-effort-models" data-tint={page.provider}>
-        {rows.map((row) => (
+        {reading.rows.map((row) => (
           <EffortModel row={row} key={row.id} />
         ))}
       </div>
