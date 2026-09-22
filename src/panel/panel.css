@@ -428,6 +428,7 @@ svg[data-glyph="chevron.down"] {
 .panel-label-text {
   overflow: hidden;
   min-width: 0;
+  margin-right: calc(14 * var(--pt));
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -439,7 +440,7 @@ svg[data-glyph="chevron.down"] {
   gap: calc(6 * var(--pt));
   width: auto;
   margin: calc(-6 * var(--pt)) 0 calc(-6 * var(--pt)) auto;
-  padding: calc(6 * var(--pt)) 0 calc(6 * var(--pt)) calc(2 * var(--pt));
+  padding: calc(6 * var(--pt)) 0;
   font-weight: 400;
   color: var(--panel-secondary);
 }
@@ -1070,7 +1071,7 @@ svg[data-glyph="chevron.down"] {
 
 .panel-process {
   overflow: hidden;
-  padding-right: calc(2 * var(--pt));
+  padding-right: calc(14 * var(--pt));
   white-space: nowrap;
   text-overflow: ellipsis;
 }
