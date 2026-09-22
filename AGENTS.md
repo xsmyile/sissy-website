@@ -206,6 +206,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   colours are the popover material's, its font stack starts with the system
   font, and the cat's eye inside it is `systemBlue`, because the app draws it so
   (`SissyArtwork.holdTint`). The page around it uses `tokens.css`.
+- **An inert panel sits on the page; only the hero's floats.** The popover's
+  long shadow is the one macOS throws under a window above the desktop, and on
+  the graphite ground it bloomed into a dark cloud some 80 px wide around every
+  crop. So `.panel` carries only its contact shadow, and the hero, which is the
+  one panel presented as floating, draws its own light over it.
 - **The palette is the seal point Siamese the app is named after.** Graphite
   ground from the icon's gradient, cream text from her coat, the pale glacial
   blue of her eyes as the one accent. Coral `#d97757` appears only inside the

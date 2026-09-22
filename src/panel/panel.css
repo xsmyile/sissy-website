@@ -33,9 +33,7 @@
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   border-radius: var(--panel-radius);
-  box-shadow:
-    0 calc(24 * var(--pt)) calc(60 * var(--pt)) rgba(0, 0, 0, 0.55),
-    0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4);
+  box-shadow: 0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4);
 }
 
 @media (prefers-reduced-motion: no-preference) {
