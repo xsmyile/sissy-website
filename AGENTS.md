@@ -8,12 +8,12 @@ repository and is the reference for everything the site draws.
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
-  `Agents`, `Projects`, `Yours`, `Privacy`, `Detail`, `Install` and `Footer`
-  are the page in order, which is the order the Overview itself reads in:
-  gauges, accounts, agents, projects, contributions. `Section` is the frame the
-  middle ones share (eyebrow, title, lede, an `aside` slot under them, a
-  `split`, `reverse` or `stack` layout, and the `tier` that says how it
-  arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
+  `Agents`, `Git`, `Privacy`, `Detail`, `Install` and `Footer` are the page in
+  order, which is the order the Overview itself reads in: gauges, accounts,
+  agents, then the repositories. `Section` is the frame the middle ones share
+  (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
+  both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
+  says how it arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
   `Inline` are the pieces. `Nav` is rendered inside `Hero`, not beside it, and
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
@@ -149,17 +149,19 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
   the same Overview with nothing on it that looks pressable.
-- **`Yours` draws the block and owns no control.** The section is the
-  Contributions block beside its copy, as `Projects` is its own block, and the
-  body says what a switch does rather than drawing it. It had three switches of
-  its own before, and they were the one thing on the page that mirrored
-  nothing: `ForgeSettings` draws that control as a macOS switch in a grouped
-  `Form` and says why in a comment, *"a window that answered that question two
-  ways would be asking the reader which one meant what"*, so a checkbox on the
-  site was the app contradicted rather than narrowed. A second copy of the
-  block with the counters off replaced them for one pass and was dropped too:
-  removing the switches was meant to give the section its height back, and a
-  second panel spent it again.
+- **`Git` is the repositories, one section rather than one per block.** The
+  commit-identity check leads it, because it is the one thing on the page few
+  other tools do, and the Overview's projects and contributions blocks follow
+  it at native size, a sentence each, in the `after` slot. They were a section
+  each before, and a screen per block is the opposite of a page that shows the
+  main things and lets the rest be inferred. Projects belong here because the
+  app collects them as repositories. The identities crop is drawn unfolded, so
+  the one repository that disagrees is read against the ones that agree. The
+  contributions sentence says what a switch does rather than drawing one: the
+  section had three switches of its own once, and they were the one thing on
+  the page that mirrored nothing, since `ForgeSettings` draws that control as a
+  macOS switch in a grouped `Form` and says why, *"a window that answered that
+  question two ways would be asking the reader which one meant what"*.
 - **The band opens Limits; it is not a section.** The 69% is the Overview's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
@@ -181,8 +183,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
   three account pages, two vendors.
 - **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
-  Privacy and Install carry the decision and rise on arrival; Agents, Projects
-  and Yours support them and barely settle; How it works does not move. A section does not
+  Git, Privacy and Install carry the decision and rise on arrival; Agents
+  supports them and barely settles; How it works does not move. A section does not
   arrive as one object: `reveal.ts` springs its parts in, and the tier is
   whether they land as a sequence or as one settle. That difference is
   categorical rather than a matter of degree, because sections arrive seconds
@@ -220,8 +222,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   that is narrower than its column sits on the edge facing them rather than in
   the middle of the track. Top-aligned and centred in its column, a small crop
   left the gap below it and the gap beside it to be read as one empty cell.
-  `Projects` and `Yours` both keep the panel on the right, since both are one
-  block of the Overview at page scale.
+  `Git`'s pair below takes the same two columns, so its second block starts
+  where the page above it does.
 - **An inert panel sits on the page; only the hero's floats.** The popover's
   long shadow is the one macOS throws under a window above the desktop, and on
   the graphite ground it bloomed into a dark cloud some 80 px wide around every

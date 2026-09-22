@@ -23,6 +23,13 @@ const { id, eyebrow, title, lede, layout = "split", tier = "support" } = Astro.p
   <div class="body">
     <slot />
   </div>
+  {
+    Astro.slots.has("after") && (
+      <div class="after">
+        <slot name="after" />
+      </div>
+    )
+  }
 </section>
 
 <style>
@@ -64,6 +71,11 @@ const { id, eyebrow, title, lede, layout = "split", tier = "support" } = Astro.p
     display: grid;
     gap: 14px;
     align-content: start;
+  }
+
+  /* What follows the pair of head and body, across both columns. */
+  .after {
+    grid-column: 1 / -1;
   }
 
   .stack .head {

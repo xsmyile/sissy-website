@@ -39,12 +39,17 @@ const isTier = (value: string | undefined): value is Tier => value !== undefined
 
 /**
  * The parts of a section that arrive, in the order they arrive: whatever the
- * section marks itself, or its head's children followed by its body.
+ * section marks itself, or its head's children, then its body, then each of
+ * the parts that follow the two.
  */
 function partsOf(section: HTMLElement): HTMLElement[] {
   const marked = section.querySelectorAll<HTMLElement>("[data-reveal]");
   if (marked.length > 0) return [...marked];
-  return [...section.querySelectorAll<HTMLElement>(":scope > .head > *, :scope > .body")];
+  return [
+    ...section.querySelectorAll<HTMLElement>(
+      ":scope > .head > *, :scope > .body, :scope > .after > * > *",
+    ),
+  ];
 }
 
 function revealSection(section: HTMLElement, { lift, gap }: Arrival): void {

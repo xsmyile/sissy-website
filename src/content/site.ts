@@ -27,6 +27,7 @@ export const REQUIREMENTS = [
 export const NAV_LINKS = [
   { label: "Limits", href: "#limits" },
   { label: "Accounts", href: "#accounts" },
+  { label: "Git", href: "#git" },
   { label: "Privacy", href: "#privacy" },
   { label: "Install", href: "#install" },
 ] as const;
