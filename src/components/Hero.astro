@@ -107,7 +107,17 @@ const timing = [
    */
   .scene {
     --lights: calc(var(--eye-lights) * var(--scroll-lights));
-    --rim: calc((0.22 + var(--tilt-x, 0) * -0.1) * var(--lights));
+
+    /*
+     * The rim is the light's and nothing else's. It used to carry the tilt as
+     * well, and the two gestures then multiplied on one value: a blink cut it
+     * to 42% of wherever the pointer had left it, between 0.12 and 0.32. That
+     * is not the rare collision it looks like, because the panel blinks when it
+     * opens a page and opening one means clicking a row, so the pointer is on
+     * the panel and tilting it every time. The tilt already has the rotation
+     * and both drop shadows to speak with; the light is hers.
+     */
+    --rim: calc(0.22 * var(--lights));
 
     position: relative;
     isolation: isolate;
