@@ -32,6 +32,16 @@ export function agentsRunning(line: AgentsLine): string {
   return `${line.running} ${noun}${SEPARATOR}${line.footprint}`;
 }
 
+/** The fold under the agent rows, carrying what the folded rows hold. */
+export function agentsFolded(folded: AgentsLine): string {
+  return `${folded.running} more${SEPARATOR}${folded.footprint}`;
+}
+
+/** One agent's CPU as a percentage of one core, which is why it can pass 100%. */
+export function cpuLoad(cores: number): string {
+  return `${Math.round(cores * 100)}%`;
+}
+
 export function projectsCount(count: number): string {
   return count === 1 ? "1 project" : `${count} projects`;
 }

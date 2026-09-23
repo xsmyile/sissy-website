@@ -53,8 +53,8 @@ export const AGENTS_SCENE = {
   id: "agents",
   eyebrow: "Agents",
   title: "What is running right now, and what it holds.",
-  lede: "A rate limit and the Mac's memory are the two things that stop work now, so the Overview keeps one line about agents next to the gauges. Click it for the page behind it.",
-  body: "Every running session with its memory and how long it has been up, named after the repository it is working in, and under them the day: how many sessions and agents it has had, how long it was worked, and when.",
+  lede: "A rate limit and the Mac's memory are the two things that stop work now, so the Overview keeps a count of the agents on the label above the gauges. Click it for the page behind it.",
+  body: "First the day: how many sessions and agents it has had, how long it was worked and when, how much of the input the cache answered, and the longest turn. Under it every running session with its memory, its CPU and how long it has been up, named after the repository it is working in.",
   panelLabel: "Sissy's Agents page",
 } as const;
 

@@ -423,7 +423,33 @@ svg[data-glyph="chevron.down"] {
   background: var(--panel-system-red);
 }
 
-/* Agents line */
+/* The agents door, at the end of the providers label */
+
+.panel-label-text {
+  overflow: hidden;
+  min-width: 0;
+  margin-right: calc(14 * var(--pt));
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-agents-door {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: calc(6 * var(--pt));
+  width: auto;
+  margin: calc(-6 * var(--pt)) 0 calc(-6 * var(--pt)) auto;
+  padding: calc(6 * var(--pt)) 0;
+  font-weight: 400;
+  color: var(--panel-secondary);
+}
+
+.panel-agents-door [data-running="true"] {
+  color: var(--panel-text);
+}
+
+/* An Overview line that opens a page */
 
 .panel-agents {
   display: flex;
@@ -1000,16 +1026,41 @@ svg[data-glyph="chevron.down"] {
   gap: calc(8 * var(--pt));
 }
 
-.panel-sparkline-row {
-  display: flex;
-  align-items: center;
-  gap: calc(8 * var(--pt));
+.panel-chart {
+  display: grid;
+  gap: calc(3 * var(--pt));
 }
 
-.panel-sparkline {
-  flex: 1 1 auto;
-  height: var(--panel-sparkline);
-  color: var(--panel-system-blue);
+.panel-chart-plot {
+  display: block;
+  width: 100%;
+  height: var(--panel-agent-chart);
+  fill: var(--panel-system-blue);
+}
+
+.panel-chart-plot [data-rest] {
+  fill: var(--panel-secondary);
+}
+
+.panel-chart-tick {
+  stroke: var(--panel-secondary);
+  stroke-width: var(--pt);
+}
+
+.panel-chart-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(8 * var(--pt));
+  font-size: var(--panel-agent-axis);
+  color: var(--panel-tertiary);
+}
+
+.panel-lane {
+  flex: none;
+  width: var(--panel-lane-width);
+  height: var(--panel-lane-height);
+  margin-left: auto;
+  fill: var(--panel-system-blue);
 }
 
 .panel-stats-rows {
@@ -1020,12 +1071,22 @@ svg[data-glyph="chevron.down"] {
 
 .panel-process {
   overflow: hidden;
+  padding-right: calc(14 * var(--pt));
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .panel-stats-rows .panel-value {
   font-size: var(--panel-row);
+}
+
+.panel-stats-rows .panel-lane + .panel-value,
+.panel-stats-rows .panel-load + .panel-value {
+  margin-left: 0;
+}
+
+.panel-load[data-busy="true"] {
+  color: var(--panel-system-orange);
 }
 
 .panel-figures-row {
@@ -1037,6 +1098,10 @@ svg[data-glyph="chevron.down"] {
 .panel-figure {
   display: grid;
   gap: calc(1 * var(--pt));
+}
+
+.panel-figure .panel-money[data-empty] {
+  color: var(--panel-secondary);
 }
 
 .panel-activity {

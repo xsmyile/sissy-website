@@ -42,58 +42,52 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
           <ChevronUpDown />
         </span>
       </div>
-      {gaugeRows.length > 0 && (
-        <>
-          <div className="panel-divider" />
-          <div className="panel-section">
-            <div className="panel-label">
-              {providersLabel(snapshot.usedToday, snapshot.meteringProviders)}
-            </div>
-            {gaugeRows.map((row) => (
-              <Row
-                key={row.id}
-                className="panel-row panel-gauge"
-                target={row.id}
-                title={legendHelp(row)}
-                label={legendHelp(row)}
-                describedBy={readingId(row.id)}
-                press={
-                  open &&
-                  (() =>
-                    open(
-                      { kind: "provider", provider: row.provider, account: row.account },
-                      row.id,
-                    ))
-                }
-              >
-                <div className="panel-line">
-                  <ProviderMark provider={row.provider} />
-                  <span className="panel-name">{row.name}</span>
-                  <span className="panel-value" id={open && readingId(row.id)}>
-                    {gaugeReading(row)}
-                  </span>
-                  <ChevronRight className="panel-chevron" />
-                </div>
-                <ShareBar
-                  share={row.usedFraction}
-                  tint={row.provider}
-                  expected={row.expectedFraction}
-                />
-              </Row>
-            ))}
-          </div>
-        </>
-      )}
       <div className="panel-divider" />
-      <Row
-        className="panel-agents"
-        target={AGENTS_TARGET}
-        title={AGENTS_HELP}
-        press={open && (() => open({ kind: "stats" }, AGENTS_TARGET))}
-      >
-        <span>{agentsRunning(agents)}</span>
-        <ChevronRight className="panel-chevron" />
-      </Row>
+      <div className="panel-section">
+        <div className="panel-label">
+          <span className="panel-label-text">
+            {providersLabel(snapshot.usedToday, snapshot.meteringProviders)}
+          </span>
+          <Row
+            className="panel-agents-door"
+            target={AGENTS_TARGET}
+            title={AGENTS_HELP}
+            press={open && (() => open({ kind: "stats" }, AGENTS_TARGET))}
+          >
+            <span data-running={agents.running > 0}>{agentsRunning(agents)}</span>
+            <ChevronRight className="panel-chevron" />
+          </Row>
+        </div>
+        {gaugeRows.map((row) => (
+          <Row
+            key={row.id}
+            className="panel-row panel-gauge"
+            target={row.id}
+            title={legendHelp(row)}
+            label={legendHelp(row)}
+            describedBy={readingId(row.id)}
+            press={
+              open &&
+              (() =>
+                open({ kind: "provider", provider: row.provider, account: row.account }, row.id))
+            }
+          >
+            <div className="panel-line">
+              <ProviderMark provider={row.provider} />
+              <span className="panel-name">{row.name}</span>
+              <span className="panel-value" id={open && readingId(row.id)}>
+                {gaugeReading(row)}
+              </span>
+              <ChevronRight className="panel-chevron" />
+            </div>
+            <ShareBar
+              share={row.usedFraction}
+              tint={row.provider}
+              expected={row.expectedFraction}
+            />
+          </Row>
+        ))}
+      </div>
       {projects.length > 0 && (
         <>
           <div className="panel-divider" />
@@ -135,8 +129,8 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
  *
  * A gauge row is named the way the app names it, with `legendHelp` as an
  * accessibility label, and keeps its reading as a description so the name does
- * not swallow the figures beside it. The agents and identity rows take no
- * label, because the app gives each a help string and nothing else: its
+ * not swallow the figures beside it. The agents door and the identity row take
+ * no label, because the app gives each a help string and nothing else: its
  * visible text is its name, which is also what keeps the name and the label
  * the same words.
  */

@@ -134,9 +134,10 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   the only one; every other panel on the page is the same markup rendered
   inert. A panel is given `open` or it is not, and that single switch decides
   whether its rows are buttons. The routes are the three gauge rows, the agents
-  line, the commit identity line, the `By effort` row where it is a door, and
+  door at the end of the providers label, the commit identity line, the `By effort` row where it is a door, and
   the back control, and nothing else — the picker, refresh, settings, the
-  projects label, `Show all` and `Copy the fix` stay drawn and dead. The
+  projects label, `Show all`, the agents fold and `Copy the fix` stay drawn
+  and dead. The
   identity line opens its page on the repository it names, as the app does
   when exactly one is wrong. `By effort` is a door only where the app makes it
   one, when some model leads on another effort or leads by less than
@@ -146,10 +147,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   a route is the day strip's hover, which the same switch turns on: pointing at
   a bar swaps the strip's header and the model pills to that day, as
   `PanelDayBlock` does, and an inert strip keeps the window's header over
-  today's pills. A gauge row is named
+  today's pills. The agents chart's hover is not mirrored: its caption stays
+  the hour's, and the lanes draw no cursor. A gauge row is named
   the way the app names it, with `legendHelp` as an accessibility label and the
   reading beside it as a description, so the name does not swallow the figures.
-  The agents and identity rows take no label at all, because the app gives each
+  The agents door and the identity row take no label at all, because the app gives each
   a help string and nothing else: its visible text is its name, which is also what
   keeps the accessible name and the visible label the same words. Focus lands
   on the new page's back control when one opens and returns to the row it came
