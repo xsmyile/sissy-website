@@ -45,8 +45,9 @@ repository and is the reference for everything the site draws.
   `LICENSE.md`. `src/assets/marks/` holds the vendor and forge marks the panel
   draws (Claude, Codex, GitHub, GitLab), each with `fill="currentColor"` on its
   root so the sprite's symbol takes the colour of the row it sits on.
-- `public/`: favicons and touch icons rendered from the icon, and `sprite.svg`,
-  which `scripts/build-sprite.mjs` generates from `src/assets`.
+- `public/`: favicons and touch icons rendered from the icon, `sprite.svg`,
+  which `scripts/build-sprite.mjs` generates from `src/assets`, and
+  `appcast.xml`, the app's update feed, once the first release has written it.
 
 ## Common commands
 
@@ -321,6 +322,13 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   of one state and never both at once: `Use in CLI` on an account the CLI is
   not on, the `· in CLI` badge on the one it is and only where a second account
   exists to tell it from, which is what `inCLI` and `switchable` carry.
+- **`public/appcast.xml` is the app's update feed, and only the app's release
+  workflow writes it.** `release.yml` in the app repository adds each release to
+  it with Sparkle's `generate_appcast` and pushes it here, and every copy of Sissy
+  checks it daily. The feed and each item carry an EdDSA signature the app
+  verifies, so an edit by hand or a rewrite by the build makes every installed
+  Sissy refuse it; Biome already skips `public/`. It is served `no-cache` so a release
+  reaches the next check rather than the next cache expiry.
 - **No runtime requests to third parties.** Fonts are downloaded at build time
   by Astro's fonts API and served from the site's own origin. The app's whole
   pitch is that nothing leaves the machine; the site does not undercut it.
