@@ -1,8 +1,29 @@
-<?xml version="1.0" standalone="yes"?><!-- sparkle-sign-warning:
+<?xml version="1.0" standalone="yes"?>
+<!-- sparkle-sign-warning:
 IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
---><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+-->
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Sissy</title>
+        <item>
+            <title>0.2.6</title>
+            <pubDate>Thu, 24 Sep 2026 14:28:09 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>718</sparkle:version>
+            <sparkle:shortVersionString>0.2.6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.2.6: Update checks you can watch
+
+- Check for Updates in About now checks in place: a spinner, then the answer
+  under the button (up to date, a new version, or a check that could not
+  reach the feed), with no window in the way. A new version turns the button
+  into Update to it, which opens the usual update alert.
+- The notice about a Claude Code sign-in Sissy does not read is now a short,
+  clearly marked warning, and it no longer appears for a folder you stopped
+  using weeks ago.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.6/Sissy-0.2.6.dmg" length="6044981" type="application/octet-stream" sparkle:edSignature="pofZgLXqrifINx9g2Mb3rmj/cZRcKseppeFRoc4mZSOd15zsEpILI7kbuJIZT44qWMZY02Lc4dU90C7YH9k4Dw=="/>
+        </item>
         <item>
             <title>0.2.5</title>
             <pubDate>Thu, 24 Sep 2026 09:02:08 +0000</pubDate>
@@ -21,10 +42,11 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
   itself, so download 0.2.5 once and later versions arrive through Sissy.
 - About's links stay blue and the sheet ends on the copyright line.
 ]]></description>
-            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.5/Sissy-0.2.5.dmg" length="6032796" type="application/octet-stream" sparkle:edSignature="FylURikMoYgMgycIZrFhI+JYIpJlNUciXAmQZ9p2i5Re0fkrU3l8A7FYHZFfPhLm4K6dR+e7gVnIh5yjT3l9Bw=="></enclosure>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.5/Sissy-0.2.5.dmg" length="6032796" type="application/octet-stream" sparkle:edSignature="FylURikMoYgMgycIZrFhI+JYIpJlNUciXAmQZ9p2i5Re0fkrU3l8A7FYHZFfPhLm4K6dR+e7gVnIh5yjT3l9Bw=="/>
         </item>
     </channel>
-</rss><!-- sparkle-signatures:
-edSignature: L2JBi6yag2LdtJT53O8tK6BgE1iEzCc6ccKgYp1Odq8u3nDGSDnr3d5LaBPtyP4BX/3FqsqZESm8BCPLHUJrAA==
-length: 1698
+</rss>
+<!-- sparkle-signatures:
+edSignature: y2DBzp3qErdv1Np5GNgSQBZMbEH9GDBUTZstV93cM3Ttk743hSidZJFmiZYwWP4UPwZWiDmqddx/2SOOprv1Aw==
+length: 2907
 -->
