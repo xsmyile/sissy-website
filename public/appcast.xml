@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Sissy</title>
+        <item>
+            <title>0.2.5</title>
+            <pubDate>Thu, 24 Sep 2026 09:02:08 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>716</sparkle:version>
+            <sparkle:shortVersionString>0.2.5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.2.5: Sissy updates itself
+
+- Sissy checks for new versions on its own and installs one only when you
+  say so. The controls sit at the foot of About: the current version, a
+  Check for Updates button, and a switch for automatic checks.
+- Updates are signed and notarized, and Sissy verifies each one before
+  installing it.
+- This is the last version you install by hand: 0.2.4 cannot update
+  itself, so download 0.2.5 once and later versions arrive through Sissy.
+- About's links stay blue and the sheet ends on the copyright line.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.5/Sissy-0.2.5.dmg" length="6032796" type="application/octet-stream" sparkle:edSignature="FylURikMoYgMgycIZrFhI+JYIpJlNUciXAmQZ9p2i5Re0fkrU3l8A7FYHZFfPhLm4K6dR+e7gVnIh5yjT3l9Bw=="></enclosure>
+        </item>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: L2JBi6yag2LdtJT53O8tK6BgE1iEzCc6ccKgYp1Odq8u3nDGSDnr3d5LaBPtyP4BX/3FqsqZESm8BCPLHUJrAA==
+length: 1698
+-->
