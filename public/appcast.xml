@@ -6,6 +6,23 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.2.7</title>
+            <pubDate>Fri, 25 Sep 2026 14:26:17 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>724</sparkle:version>
+            <sparkle:shortVersionString>0.2.7</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.2.7: Spend a Codex reset from Sissy
+
+- The Codex page now shows the resets your account holds and when the next
+  one expires. Once OpenAI would apply one, when a window is nearly used up,
+  a Use… button spends it for the account the page is showing.
+- Sissy asks before spending, and trying again after an answer that never
+  arrived cannot spend a second reset.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.7/Sissy-0.2.7.dmg" length="6119682" type="application/octet-stream" sparkle:edSignature="9QufLrLWbdu87PF1cLyKpzACgHj4MLuLMmHGBOBKgqbb17e5612zFWk4xCxqrZ+JRDybcBVF0oFl0Io9498GDA=="/>
+        </item>
+        <item>
             <title>0.2.6</title>
             <pubDate>Thu, 24 Sep 2026 14:28:09 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -47,6 +64,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: y2DBzp3qErdv1Np5GNgSQBZMbEH9GDBUTZstV93cM3Ttk743hSidZJFmiZYwWP4UPwZWiDmqddx/2SOOprv1Aw==
-length: 2907
+edSignature: 9ejWyJA7sJdHLxl4lSEIam9Q6xq0f5ecn6zVXdt+81S3nylDyIJYnIiOHR0aIb74CTPtGzgl+Dez3CM3LCtEBA==
+length: 4001
 -->
