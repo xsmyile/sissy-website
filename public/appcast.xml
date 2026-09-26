@@ -6,6 +6,24 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.2.8</title>
+            <pubDate>Sat, 26 Sep 2026 08:53:11 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>729</sparkle:version>
+            <sparkle:shortVersionString>0.2.8</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.2.8: Link a Claude account with Google or email
+
+- Continue with Google on the claude.ai sign-in now works: its popup opens
+  over the page in the same window and hands the sign-in back when it closes.
+- Signing in with email no longer leaves you on claude.ai's own app inside
+  the window without linking the account.
+- The window that asks which organisation to link, or says a link failed, is
+  sized to what it says rather than drawn as tall as the screen.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.8/Sissy-0.2.8.dmg" length="6123222" type="application/octet-stream" sparkle:edSignature="i/RGrDfC7x5kjo1AOP46Fy2j+lAtPwcuqmOgyeLoH6z2/hJALXRUbD068mHBMNkMlDaJdaYa38fgkQEdDrZVAA=="/>
+        </item>
+        <item>
             <title>0.2.7</title>
             <pubDate>Fri, 25 Sep 2026 14:26:17 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -64,6 +82,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: 9ejWyJA7sJdHLxl4lSEIam9Q6xq0f5ecn6zVXdt+81S3nylDyIJYnIiOHR0aIb74CTPtGzgl+Dez3CM3LCtEBA==
-length: 4001
+edSignature: 4t5pHzkM5KAjjj/yrDDoTrRyPJ11P9Qdw22VpvoqIA/Zc5/iPVXdjN0MLamxWUWMUd1lWhdDVAvHMqb6ujBwAA==
+length: 5189
 -->
