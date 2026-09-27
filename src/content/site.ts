@@ -49,10 +49,17 @@ export const HERO_PANEL_LABEL = "Sissy's panel";
  * What the panel invites. The README says every row with a chevron opens the
  * page behind it, which is true of the app; the replica draws chevrons on two
  * rows it leaves inert, so the invitation names the routes this panel has
- * rather than a rule the page would break twice.
+ * rather than a rule the page would break twice. It leads with the verb,
+ * because a replica that looks like a screenshot is read as one until
+ * something says otherwise.
  */
-export const PANEL_INVITATION =
-  "The provider rows, the agents count on their label and the identity line open the pages behind them.";
+export const PANEL_INVITATION = "Try it: click an account, the agents count or the identity line.";
+
+/** The hero panel's anchor, which the menu bar's Sissy at the foot of the page links back to. */
+export const PANEL_ANCHOR = "panel";
+
+/** What the menu bar's Sissy is called, on the pointer and to a screen reader. */
+export const MENU_BAR_OPEN = "Open Sissy's panel";
 
 /**
  * What the money on the panel is. Sissy counts the tokens out of the logs and

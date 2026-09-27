@@ -4,6 +4,7 @@ import {
   COST_NOTE,
   HERO_PANEL_LABEL,
   LEDE,
+  PANEL_ANCHOR,
   PANEL_INVITATION,
   REQUIREMENTS,
   SCROLL_CUE,
@@ -64,8 +65,8 @@ const timing = [
         </div>
       </div>
 
-      <div class="lit">
-        <HeroPanel client:load label={HERO_PANEL_LABEL} />
+      <div class="lit" id={PANEL_ANCHOR}>
+        <HeroPanel client:load label={HERO_PANEL_LABEL} anchor={PANEL_ANCHOR} />
         <p class="invitation">{PANEL_INVITATION}</p>
       </div>
     </div>
@@ -283,9 +284,9 @@ const timing = [
   .invitation {
     max-width: calc(340 * var(--panel-pt));
     margin: 0;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.45;
-    color: var(--muted);
+    color: var(--text-2);
     text-wrap: pretty;
   }
 

@@ -1,4 +1,4 @@
-import { animate } from "motion";
+import { animate, inView } from "motion";
 import {
   type ReactElement,
   useCallback,
@@ -31,6 +31,12 @@ const EYES = "[data-sissy-eye], .panel-cat-eye";
 /** Stiff enough to read as a popover resizing, damped enough not to wobble. */
 const PANEL_SPRING = { type: "spring", stiffness: 210, damping: 26 } as const;
 
+/** How much of the panel has to be on screen before a summons presents it. */
+const SUMMONED_IN_VIEW = 0.6;
+
+/** The row the Overview leads with, which is where a summons leaves focus. */
+const FIRST_ROW = DEMO_SNAPSHOT.gaugeRows[0]?.id ?? null;
+
 /**
  * Opening a page moves focus inside the panel, and the page it sits on must
  * not move with it: `html` scrolls smoothly, so a row below the fold would
@@ -56,7 +62,7 @@ interface View {
  * to itself, because the cat is the light's source and counter-drifts against
  * the panel's rotation.
  */
-export function HeroPanel({ label }: { label: string }): ReactElement {
+export function HeroPanel({ label, anchor }: { label: string; anchor: string }): ReactElement {
   const [view, setView] = useState<View>({ page: OVERVIEW, focus: null });
   const [live, setLive] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -68,6 +74,18 @@ export function HeroPanel({ label }: { label: string }): ReactElement {
     const focus = back ? (originsRef.current.pop() ?? null) : BACK;
     if (!back) originsRef.current.push(from);
     setView({ page: next, focus });
+  }, []);
+
+  const present = useCallback(() => {
+    originsRef.current = [];
+    setView({ page: OVERVIEW, focus: FIRST_ROW });
+    const wrap = rootRef.current?.querySelector<HTMLElement>(".panel-wrap") ?? null;
+    if (wrap === null || window.matchMedia(REDUCED_MOTION).matches) return;
+    animate(
+      wrap,
+      { opacity: [0, 1], transform: ["translateY(-8px) scale(0.97)", "translateY(0px) scale(1)"] },
+      PANEL_SPRING,
+    ).then(() => clearInline([wrap]));
   }, []);
 
   useEffect(() => setLive(true), []);
@@ -96,6 +114,7 @@ export function HeroPanel({ label }: { label: string }): ReactElement {
   }, [view]);
 
   useTilt(rootRef);
+  useSummons(rootRef, anchor, present);
   usePanelTransition(rootRef, pageIdentity(view.page));
 
   return (
@@ -108,6 +127,54 @@ export function HeroPanel({ label }: { label: string }): ReactElement {
       />
     </div>
   );
+}
+
+/**
+ * Brings the panel back from a link elsewhere on the page that names its
+ * anchor, which is the menu bar's Sissy at the foot of the page: in macOS a
+ * click on the status item opens the popover, and the popover on this page is
+ * the one up here.
+ *
+ * The scroll centres the panel rather than landing on its top edge, so the
+ * stacked scene shows the whole of it too. The presentation waits until the
+ * panel is mostly on screen, because a blink played while it is still out of
+ * view is a blink nobody sees. Without JavaScript the link is a plain anchor
+ * and still lands on the panel.
+ */
+function useSummons(
+  ref: React.RefObject<HTMLDivElement | null>,
+  anchor: string,
+  present: () => void,
+): void {
+  useEffect(() => {
+    const root = ref.current;
+    if (root === null) return;
+    const selector = `a[href="#${anchor}"]`;
+    let arrival: (() => void) | null = null;
+
+    const onClick = (event: MouseEvent): void => {
+      if (!(event.target instanceof Element) || event.target.closest(selector) === null) return;
+      event.preventDefault();
+      const reduced = window.matchMedia(REDUCED_MOTION).matches;
+      root.scrollIntoView({ block: "center", behavior: reduced ? "instant" : "smooth" });
+      arrival?.();
+      arrival = inView(
+        root,
+        () => {
+          arrival?.();
+          arrival = null;
+          present();
+        },
+        { amount: SUMMONED_IN_VIEW },
+      );
+    };
+
+    document.addEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("click", onClick);
+      arrival?.();
+    };
+  }, [ref, anchor, present]);
 }
 
 /**
