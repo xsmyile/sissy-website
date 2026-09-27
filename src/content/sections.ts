@@ -30,6 +30,10 @@ export const LIMITS = {
  * afresh: the sentence about a running session putting its own account back is
  * the part a reader cannot work out, and the app already says it before the
  * write. A site that sold the switch without it would be selling a footgun.
+ *
+ * `Link another` is the two vendors' own ⓘ in Settings ▸ Providers
+ * (`ClaudeAccountLinkCopy.detail`, `CodexAccountLinkCopy.detail`) said once
+ * for both, since the README only names the tab.
  */
 export const ACCOUNTS = {
   id: "accounts",
@@ -45,8 +49,14 @@ export const ACCOUNTS = {
       title: "Use in CLI",
       body: "On Claude, the account you are reading is one you can hand the CLI. Sissy asks before it writes anything, keeps the account you are leaving, and says the part you cannot work out for yourself: your next `claude` starts as it, and a session that is already open will switch it back when it next refreshes its token, so quit that one first.",
     },
+    {
+      title: "Link another",
+      body: "Sissy reads the account each CLI is signed into for free. Linking another signs in once, in a window of its own, and reads its limits beside it. Your terminal stays on the account it is on.",
+    },
   ],
   panelLabel: "A Claude account's identity block, with the switch",
+  settingsLabel:
+    "Settings, Providers: two linked Claude accounts, and Add account under each vendor",
 } as const;
 
 export const AGENTS_SCENE = {
@@ -84,8 +94,9 @@ export const GIT = {
     },
     contributions: {
       title: "Contributions",
-      body: "What you pushed on each forge you connected. Every counter has a switch in Settings, and one switched off is not asked for.",
+      body: "What you pushed on each forge you connected. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
       panelLabel: "The Overview's Contributions block",
+      settingsLabel: "Settings, Forge: GitHub and GitLab connected, and Connect",
     },
   },
 } as const;

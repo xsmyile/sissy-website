@@ -1,4 +1,5 @@
-import type { IdentityRow, PanelSnapshot, ProjectRow } from "./types";
+import type { CredentialRowData, SettingsSnapshot } from "../settings/types";
+import type { ForgeHost, IdentityRow, PanelSnapshot, ProjectRow, ProviderId } from "./types";
 
 const SISSY: ProjectRow = {
   id: "sissy",
@@ -894,5 +895,73 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       cache: { share: "98.1%", saved: "$5418.62" },
       longestTurn: "5m 29s",
     },
+  },
+};
+
+/** `ForgeConnection.address`: the host a connection is titled by. */
+const FORGE_ADDRESS: Record<ForgeHost, string> = { github: "github.com", gitlab: "gitlab.com" };
+
+/**
+ * The Claude accounts linked in Settings: both of them, the one the CLI is on
+ * included, because a linked session is what reads an account's credits.
+ * Codex links none, since the one account it has is the CLI's and is read for
+ * free.
+ */
+const LINKED_CLAUDE = ["xsmyile", "group935"] as const;
+
+/**
+ * `LinkedAccountRowSnapshot` for one of the fixture's pages: titled by the
+ * address, since the fixture names no person, with the organisation under it
+ * and the plan at the end of the title line, where the panel puts it too.
+ */
+function linkedAccount(provider: ProviderId, account: string): CredentialRowData {
+  const page = DEMO_SNAPSHOT.providerPages.find(
+    (entry) => entry.provider === provider && entry.account === account,
+  );
+  if (page === undefined) {
+    throw new Error(`Settings links "${provider}:${account}", which the fixture has no page for`);
+  }
+  const { email, organization, plan } = page.identity;
+  return {
+    id: `${provider}:${account}`,
+    title: email,
+    badge: plan,
+    subtitle: organization,
+    lead: { kind: "monogram", name: organization ?? email, provider },
+  };
+}
+
+/**
+ * Settings, drawn from the same readings as the panel: every linked account is
+ * one the panel has a page for, and every forge connection is a row of the
+ * Overview's contributions block, titled by its host with the login and the
+ * age the panel prints under it. Rows are ordered by what they are titled
+ * with, as `sortedAccounts` orders them.
+ */
+export const DEMO_SETTINGS: SettingsSnapshot = {
+  providers: [
+    {
+      provider: "claude-code",
+      name: "Claude Code",
+      detail: "1284 session files in ~/.claude/projects",
+      accounts: LINKED_CLAUDE.map((account) => linkedAccount("claude-code", account)).sort(
+        (left, right) => left.title.localeCompare(right.title),
+      ),
+    },
+    {
+      provider: "codex",
+      name: "Codex",
+      detail: "212 session files in ~/.codex/sessions",
+      accounts: [],
+    },
+  ],
+  forge: {
+    connections: DEMO_SNAPSHOT.forge.map((row) => ({
+      id: row.id,
+      title: FORGE_ADDRESS[row.host],
+      badge: null,
+      subtitle: `${row.login} · ${row.notice}`,
+      lead: { kind: "forge", host: row.host },
+    })),
   },
 };

@@ -1,7 +1,8 @@
 ---
 import { ACCOUNTS } from "../content/sections";
-import { DEMO_SNAPSHOT } from "../panel/data";
+import { DEMO_SETTINGS, DEMO_SNAPSHOT } from "../panel/data";
 import { IdentityCrop } from "../panel/Panel";
+import { ProvidersCrop } from "../settings/Settings";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
@@ -20,38 +21,40 @@ if (switchable === undefined) {
   eyebrow={ACCOUNTS.eyebrow}
   title={ACCOUNTS.title}
   lede={ACCOUNTS.lede}
-  layout="stack"
   tier="lead"
 >
-  <div class="stage">
-    <IdentityCrop identity={switchable.identity} label={ACCOUNTS.panelLabel} />
-  </div>
-  <dl class="points">
+  <dl class="points" slot="aside">
     {
       ACCOUNTS.points.map((point) => (
         <div class="point">
           <dt>{point.title}</dt>
-          <dd><Inline text={point.body} /></dd>
+          <dd>
+            <Inline text={point.body} />
+          </dd>
         </div>
       ))
     }
   </dl>
+  <div class="stage">
+    <IdentityCrop identity={switchable.identity} label={ACCOUNTS.panelLabel} />
+    <ProvidersCrop settings={DEMO_SETTINGS} label={ACCOUNTS.settingsLabel} />
+  </div>
 </Section>
 
 <style>
   .stage {
-    --panel-pt: 1.45px;
+    --panel-pt: 1.2px;
 
-    display: flex;
-    justify-content: center;
-    padding-bottom: 44px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    justify-items: start;
   }
 
   .points {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 32px 64px;
-    margin: 0;
+    gap: 20px;
+    margin: 8px 0 0;
   }
 
   .point {
@@ -60,28 +63,21 @@ if (switchable === undefined) {
   }
 
   dt {
-    margin-bottom: 8px;
-    font-size: 16px;
+    margin-bottom: 6px;
+    font-size: 15.5px;
     font-weight: 600;
   }
 
   dd {
     margin: 0;
-    font-size: 15px;
+    font-size: 14.5px;
     color: var(--text-2);
     text-wrap: pretty;
   }
 
   @media (max-width: 920px) {
     .stage {
-      --panel-pt: 1.15px;
-
-      padding-bottom: 32px;
-    }
-
-    .points {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 24px;
+      --panel-pt: 1px;
     }
   }
 </style>
