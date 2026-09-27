@@ -15,7 +15,7 @@ const { projects, contributions } = GIT.blocks;
     <IdentitiesCrop snapshot={DEMO_SNAPSHOT} label={GIT.panelLabel} />
   </div>
   <div class="after" slot="after">
-    <figure>
+    <figure class="projects">
       <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={projects.panelLabel} />
       <figcaption><b>{projects.title}</b> {projects.body}</figcaption>
     </figure>
@@ -49,19 +49,17 @@ const { projects, contributions } = GIT.blocks;
   }
 
   /*
-   * The two blocks that follow take the section's own columns, so the second
-   * starts where the page above it does. The contributions block rides up
-   * over the identities page's frame, never far enough to cut its last line,
-   * and Settings ▸ Forge rides over the block in turn, down and to the right:
-   * three surfaces of one app stacked the way their windows would be. A
-   * surface laid over another carries a short shadow of its own, because on
-   * the graphite ground two contact shadows alone do not say which edge is on
-   * top.
+   * The three blocks that follow touch, the way three windows of one app lie
+   * on a desktop: the contributions block rides up over the identities page's
+   * frame and over the projects block's edge, and Settings ▸ Forge rides over
+   * the block in turn, down and to the right. Each covers only frame, never a
+   * line a reader is meant to finish. A surface laid over another carries a
+   * short shadow of its own, because on the graphite ground two contact
+   * shadows alone do not say which edge is on top.
    */
   .after {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 40px 64px;
+    display: flex;
+    align-items: flex-start;
   }
 
   figure {
@@ -72,25 +70,33 @@ const { projects, contributions } = GIT.blocks;
     gap: 16px;
     align-content: start;
     justify-items: start;
+    flex: none;
     margin: 0;
+  }
+
+  .projects {
+    width: calc((100% - 64px) * 5 / 12);
+    justify-items: end;
+  }
+
+  .projects figcaption {
+    width: calc(340 * var(--panel-pt));
   }
 
   .contributions {
     position: relative;
-    margin-top: -52px;
+    margin: -52px 0 0 calc(-8 * var(--panel-pt));
   }
 
   .cascade {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     justify-items: start;
-    margin-left: 48px;
   }
 
   .over {
     position: relative;
-    max-width: calc(100% - 72px);
-    margin: -28px 0 0 72px;
+    margin: -28px 0 0 112px;
   }
 
   .cascade :global(.panel),
@@ -118,20 +124,26 @@ const { projects, contributions } = GIT.blocks;
     }
 
     .after {
-      grid-template-columns: minmax(0, 1fr);
+      flex-direction: column;
+      gap: 40px;
     }
 
     .contributions {
-      margin-top: 0;
+      margin: 0;
     }
 
-    .cascade {
-      margin-left: 0;
+    .projects {
+      width: auto;
+      justify-items: start;
+    }
+
+    .projects figcaption {
+      width: auto;
     }
 
     .over {
       max-width: calc(100% - 24px);
-      margin-left: 24px;
+      margin: -12px 0 0 24px;
     }
   }
 </style>
