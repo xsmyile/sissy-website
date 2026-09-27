@@ -14,14 +14,18 @@ const { projects, contributions } = GIT.blocks;
   <div class="stage">
     <IdentitiesCrop snapshot={DEMO_SNAPSHOT} label={GIT.panelLabel} />
   </div>
-  <div class="pair" slot="after">
+  <div class="after" slot="after">
     <figure>
       <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={projects.panelLabel} />
       <figcaption><b>{projects.title}</b> {projects.body}</figcaption>
     </figure>
-    <figure>
-      <ForgeCrop snapshot={DEMO_SNAPSHOT} label={contributions.panelLabel} />
-      <ForgeSettingsCrop forge={DEMO_SETTINGS.forge} label={contributions.settingsLabel} />
+    <figure class="contributions">
+      <div class="cascade">
+        <ForgeCrop snapshot={DEMO_SNAPSHOT} label={contributions.panelLabel} />
+        <div class="over">
+          <ForgeSettingsCrop forge={DEMO_SETTINGS.forge} label={contributions.settingsLabel} />
+        </div>
+      </div>
       <figcaption><b>{contributions.title}</b> <Inline text={contributions.body} /></figcaption>
     </figure>
   </div>
@@ -45,27 +49,55 @@ const { projects, contributions } = GIT.blocks;
   }
 
   /*
-   * The two blocks that follow are one row at native size, each over its own
-   * sentence, so they read as belonging to the section above rather than as
-   * two sections of their own. They take the section's own columns, so the
-   * second starts where the page above it does.
+   * The two blocks that follow take the section's own columns, so the second
+   * starts where the page above it does. The contributions block rides up
+   * over the identities page's frame, never far enough to cut its last line,
+   * and Settings ▸ Forge rides over the block in turn, down and to the right:
+   * three surfaces of one app stacked the way their windows would be. A
+   * surface laid over another carries a short shadow of its own, because on
+   * the graphite ground two contact shadows alone do not say which edge is on
+   * top.
    */
-  .pair {
-    --panel-pt: 1px;
-
+  .after {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: 40px 64px;
-    padding-top: 16px;
   }
 
   figure {
+    --panel-pt: 1px;
+
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     align-content: start;
     justify-items: start;
     margin: 0;
+  }
+
+  .contributions {
+    position: relative;
+    margin-top: -52px;
+  }
+
+  .cascade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+    margin-left: 48px;
+  }
+
+  .over {
+    position: relative;
+    max-width: calc(100% - 72px);
+    margin: -28px 0 0 72px;
+  }
+
+  .cascade :global(.panel),
+  .over :global(.settings) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
   }
 
   figcaption {
@@ -85,8 +117,21 @@ const { projects, contributions } = GIT.blocks;
       --panel-pt: 1.05px;
     }
 
-    .pair {
+    .after {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contributions {
+      margin-top: 0;
+    }
+
+    .cascade {
+      margin-left: 0;
+    }
+
+    .over {
+      max-width: calc(100% - 24px);
+      margin-left: 24px;
     }
   }
 </style>
