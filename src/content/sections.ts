@@ -1,14 +1,16 @@
 import { GITHUB_URL } from "./site";
 
 /**
- * The band and the page behind it, as one section.
+ * The band and the limits behind it, as one section.
  *
  * The band is the Overview's first gauge drawn at page scale, and every figure
  * on it comes from that row. It opens the section rather than standing as one
  * of its own: the figure is already in the hero's panel, and a screen that
  * restates it is a screen the page spends saying nothing new. Here it is the
- * demonstration the section's own claim needs, and the panel under it is where
- * that claim is paid off.
+ * demonstration the section's own claim needs, and the two crops under it are
+ * where that claim is paid off: the limits of the page the gauge opens, and
+ * Codex's, which carry the resets. The rest of that page is the hero's to
+ * show, one click away.
  */
 export const LIMITS = {
   id: "limits",
@@ -16,11 +18,22 @@ export const LIMITS = {
   title: "See how close you are before the CLI stops you.",
   lede: "The Overview shows one gauge per account, on the window it is closest to running out of.",
   rowId: "claude-xsmyile",
+  resetsProvider: "codex",
   paceBody:
     "The mark on the bar is where even spending would have reached by now, so being ahead of pace is visible instead of calculated.",
   paceLabel: "Pace at this hour",
-  body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects. A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
-  panelLabel: "Sissy's panel, one account's page",
+  blocks: {
+    windows: {
+      title: "Session and week",
+      body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets.",
+      panelLabel: "One Claude account's limits: the session and the week",
+    },
+    resets: {
+      title: "Resets",
+      body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
+      panelLabel: "Codex's limits, with one reset available",
+    },
+  },
 } as const;
 
 /**

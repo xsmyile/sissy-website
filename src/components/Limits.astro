@@ -1,7 +1,7 @@
 ---
 import { LIMITS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
-import { Panel } from "../panel/Panel";
+import { LimitsCrop } from "../panel/Panel";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
@@ -10,6 +10,7 @@ if (row === undefined) {
   throw new Error(`The fixture has no gauge row "${LIMITS.rowId}" for the pace band to read`);
 }
 
+const { windows, resets } = LIMITS.blocks;
 const used = Math.round(row.usedFraction * 100);
 const expected = row.expectedFraction * 100;
 ---
@@ -36,14 +37,24 @@ const expected = row.expectedFraction * 100;
   </div>
 
   <div class="page">
-    <p class="body">{LIMITS.body}</p>
-    <div class="stage">
-      <Panel
+    <figure>
+      <LimitsCrop
         snapshot={DEMO_SNAPSHOT}
-        page={{ kind: "provider", provider: row.provider, account: row.account }}
-        label={LIMITS.panelLabel}
+        provider={row.provider}
+        account={row.account}
+        label={windows.panelLabel}
       />
-    </div>
+      <figcaption><b>{windows.title}</b> {windows.body}</figcaption>
+    </figure>
+    <figure>
+      <LimitsCrop
+        snapshot={DEMO_SNAPSHOT}
+        provider={LIMITS.resetsProvider}
+        account={null}
+        label={resets.panelLabel}
+      />
+      <figcaption><b>{resets.title}</b> {resets.body}</figcaption>
+    </figure>
   </div>
 </Section>
 
@@ -128,27 +139,37 @@ const expected = row.expectedFraction * 100;
     vertical-align: -1px;
   }
 
+  /*
+   * The two crops take the columns the sections around them do, so the second
+   * starts where a side-by-side section's panel would.
+   */
   .page {
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     gap: 40px 64px;
-    align-items: start;
   }
 
-  .body {
+  figure {
+    --panel-pt: 1.12px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
     margin: 0;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    font-size: 15px;
-    color: var(--text-2);
+  }
+
+  figcaption {
+    max-width: calc(340 * var(--panel-pt));
+    font-size: 14.5px;
+    color: var(--muted);
     text-wrap: pretty;
   }
 
-  .stage {
-    --panel-pt: 1.12px;
-
-    display: flex;
-    justify-content: center;
+  figcaption b {
+    font-weight: 600;
+    color: var(--text);
   }
 
   @media (max-width: 920px) {
@@ -160,10 +181,10 @@ const expected = row.expectedFraction * 100;
 
     .page {
       grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
+      gap: 32px;
     }
 
-    .stage {
+    figure {
       --panel-pt: 1px;
     }
   }

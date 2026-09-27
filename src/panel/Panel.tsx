@@ -7,7 +7,7 @@ import { type OpenPage, OVERVIEW, pageIdentity } from "./page";
 import { Effort } from "./pages/Effort";
 import { Identities, IdentitiesBlock } from "./pages/Identities";
 import { Overview } from "./pages/Overview";
-import { Provider } from "./pages/Provider";
+import { Provider, ProviderHeader, ProviderLimits } from "./pages/Provider";
 import { Stats } from "./pages/Stats";
 import type { AccountIdentity, PanelPage, PanelSnapshot, ProviderId, ProviderPage } from "./types";
 
@@ -87,6 +87,31 @@ export function Panel({
         </section>
       )}
     </div>
+  );
+}
+
+/**
+ * The top of one account's page: whose page it is, and the limits under it,
+ * with Codex's resets where the account has them. The header stays because
+ * it is what says which vendor the windows belong to.
+ */
+export function LimitsCrop({
+  snapshot,
+  provider,
+  account,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  provider: ProviderId;
+  account: string | null;
+  label: string;
+}): ReactElement {
+  const page = providerPage({ provider, account }, snapshot);
+  return (
+    <Crop label={label}>
+      <ProviderHeader page={page} header={snapshot.header} />
+      <ProviderLimits page={page} />
+    </Crop>
   );
 }
 
