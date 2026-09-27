@@ -32,45 +32,10 @@ interface ProviderProps {
 export function Provider({ page, header, open }: ProviderProps): ReactElement {
   return (
     <>
-      <PageHeader
-        title={page.name}
-        subtitle={`updated ${header.updated}`}
-        provider={page.provider}
-        backLabel="Back to today"
-        back={open && (() => open(OVERVIEW, BACK))}
-      />
+      <ProviderHeader page={page} header={header} back={open && (() => open(OVERVIEW, BACK))} />
       <Identity identity={page.identity} />
       <div className="panel-divider" />
-      <div className="panel-section panel-limits">
-        <div className="panel-label">
-          Limits
-          <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
-        </div>
-        {page.windows.map((window) => (
-          <div
-            className="panel-window"
-            key={window.id}
-            data-binding={window.id === page.binding || undefined}
-          >
-            <div className="panel-line">
-              <span className="panel-window-label">{window.label}</span>
-              <span className="panel-window-reading">{window.reading}</span>
-            </div>
-            <ShareBar
-              share={window.usedFraction}
-              tint={page.provider}
-              expected={window.expectedFraction}
-            />
-            <div className="panel-caption">{window.caption}</div>
-          </div>
-        ))}
-      </div>
-      {page.resets !== null && (
-        <>
-          <div className="panel-divider" />
-          <Resets resets={page.resets} />
-        </>
-      )}
+      <ProviderLimits page={page} />
       <div className="panel-divider" />
       <DayBlock
         today={page.today}
@@ -109,6 +74,68 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
         <span className="panel-caption">{page.status.checked}</span>
         <ChevronRight className="panel-chevron" />
       </div>
+    </>
+  );
+}
+
+/** `providerHeader`: the way back, whose page this is, and when it was read. */
+export function ProviderHeader({
+  page,
+  header,
+  back,
+}: {
+  page: ProviderPage;
+  header: HeaderReading;
+  back?: () => void;
+}): ReactElement {
+  return (
+    <PageHeader
+      title={page.name}
+      subtitle={`updated ${header.updated}`}
+      provider={page.provider}
+      backLabel="Back to today"
+      back={back}
+    />
+  );
+}
+
+/**
+ * `PanelProviderPage`'s limits: each window with its bar, its pace mark and
+ * its caption, and Codex's resets under the windows they clear.
+ */
+export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
+  return (
+    <>
+      <div className="panel-section panel-limits">
+        <div className="panel-label">
+          Limits
+          <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
+        </div>
+        {page.windows.map((window) => (
+          <div
+            className="panel-window"
+            key={window.id}
+            data-binding={window.id === page.binding || undefined}
+          >
+            <div className="panel-line">
+              <span className="panel-window-label">{window.label}</span>
+              <span className="panel-window-reading">{window.reading}</span>
+            </div>
+            <ShareBar
+              share={window.usedFraction}
+              tint={page.provider}
+              expected={window.expectedFraction}
+            />
+            <div className="panel-caption">{window.caption}</div>
+          </div>
+        ))}
+      </div>
+      {page.resets !== null && (
+        <>
+          <div className="panel-divider" />
+          <Resets resets={page.resets} />
+        </>
+      )}
     </>
   );
 }
