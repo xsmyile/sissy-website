@@ -198,7 +198,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
   other tools do, and the Overview's projects and contributions blocks follow
-  it at native size, a sentence each, in the `after` slot. They were a section
+  it at native size, a sentence each, in the `after` slot, the contributions
+  block cascading up over the identities page with Settings ▸ Forge over it. They were a section
   each before, and a screen per block is the opposite of a page that shows the
   main things and lets the rest be inferred. Projects belong here because the
   app collects them as repositories. The identities crop is drawn unfolded, so
@@ -283,7 +284,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   long shadow is the one macOS throws under a window above the desktop, and on
   the graphite ground it bloomed into a dark cloud some 80 px wide around every
   crop. So `.panel` carries only its contact shadow, and the hero, which is the
-  one panel presented as floating, draws its own light over it.
+  one panel presented as floating, draws its own light over it. The one
+  exception is a surface laid over another: in `Git` the contributions block
+  rides over the identities page's frame and Settings ▸ Forge over the block,
+  and each of those two carries a short shadow of its own, because two contact
+  shadows alone do not say which edge is on top. An overlap covers a frame or
+  a caption and never a line of text a reader is meant to finish.
 - **The palette is the seal point Siamese the app is named after.** Graphite
   ground from the icon's gradient, cream text from her coat, the pale glacial
   blue of her eyes as the one accent. Coral `#d97757` appears only inside the
