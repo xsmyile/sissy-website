@@ -1,11 +1,11 @@
 export const SITE_NAME = "Sissy";
-export const SITE_TITLE = "Sissy · The numbers you keep checking, in the macOS menu bar";
+export const SITE_TITLE = "Sissy · The menu bar companion for developers who code with agents";
 export const SITE_DESCRIPTION =
-  "What Claude Code and Codex cost today, how close each account is to a rate limit, and where the work went. One panel in the macOS menu bar, read from the logs already on your Mac. No account, no telemetry.";
+  "The menu bar companion for developers who code with agents: spend, rate limits, accounts, agents, projects and git, read from what is already on your Mac and the services you connect. No account of its own, no telemetry.";
 
 export const TAGLINE = "The numbers you keep checking, one click away.";
 export const LEDE =
-  "What Claude Code and Codex cost today, and how close each account is to a rate limit. One panel in the macOS menu bar.";
+  "The menu bar companion for developers who code with agents. Everything is read from what is already on your Mac and the services you connect.";
 
 export const GITHUB_URL = "https://github.com/xsmyile/sissy";
 export const DOWNLOAD_URL = `${GITHUB_URL}/releases/latest/download/Sissy.dmg`;
