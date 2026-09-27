@@ -194,6 +194,12 @@
   color: var(--settings-secondary);
 }
 
+.settings-caption {
+  font-size: calc(12 * var(--pt));
+  line-height: calc(15 * var(--pt));
+  color: var(--settings-secondary);
+}
+
 .settings-menu {
   display: flex;
   flex: none;

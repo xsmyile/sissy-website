@@ -82,7 +82,7 @@ export function ForgeSettingsCrop({
             <span className="settings-headline">{FORGE_LABEL}</span>
             <InfoCircle className="settings-info" />
           </div>
-          <div className="settings-subtitle">{FORGE_CAPTION}</div>
+          <div className="settings-caption">{FORGE_CAPTION}</div>
         </div>
         {forge.connections.map((row) => (
           <CredentialRow key={row.id} row={row} />
