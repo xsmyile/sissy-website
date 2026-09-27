@@ -37,7 +37,7 @@ const expected = row.expectedFraction * 100;
   </div>
 
   <div class="page">
-    <figure>
+    <figure class="under">
       <LimitsCrop
         snapshot={DEMO_SNAPSHOT}
         provider={row.provider}
@@ -46,7 +46,7 @@ const expected = row.expectedFraction * 100;
       />
       <figcaption><b>{windows.title}</b> {windows.body}</figcaption>
     </figure>
-    <figure>
+    <figure class="over">
       <LimitsCrop
         snapshot={DEMO_SNAPSHOT}
         provider={LIMITS.resetsProvider}
@@ -140,13 +140,16 @@ const expected = row.expectedFraction * 100;
   }
 
   /*
-   * The two crops take the columns the sections around them do, so the second
-   * starts where a side-by-side section's panel would.
+   * Codex's limits lie over Claude's, down and to the right, the way two
+   * pages of one panel would stack, and cover only the edge of Claude's frame
+   * that carries no text. Its caption sits beside it rather than under it,
+   * which is what keeps the pair no taller than one crop and a caption. The
+   * crop on top carries a short shadow of its own, because two contact
+   * shadows alone do not say which edge is on top.
    */
   .page {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 40px 64px;
+    display: flex;
+    align-items: flex-start;
   }
 
   figure {
@@ -157,7 +160,25 @@ const expected = row.expectedFraction * 100;
     gap: 16px;
     align-content: start;
     justify-items: start;
+    flex: none;
     margin: 0;
+  }
+
+  .over {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    min-width: 0;
+    margin: 48px 0 0 calc(-6 * var(--panel-pt));
+  }
+
+  .over :global(.panel) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
   }
 
   figcaption {
@@ -165,6 +186,14 @@ const expected = row.expectedFraction * 100;
     font-size: 14.5px;
     color: var(--muted);
     text-wrap: pretty;
+  }
+
+  .under figcaption {
+    max-width: calc(310 * var(--panel-pt));
+  }
+
+  .over figcaption {
+    flex: 1 1 220px;
   }
 
   figcaption b {
@@ -180,12 +209,26 @@ const expected = row.expectedFraction * 100;
     }
 
     .page {
-      grid-template-columns: minmax(0, 1fr);
+      flex-direction: column;
       gap: 32px;
     }
 
     figure {
       --panel-pt: 1px;
+    }
+
+    .over {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .under figcaption {
+      max-width: calc(340 * var(--panel-pt));
+    }
+
+    .over figcaption {
+      flex: none;
     }
   }
 </style>
