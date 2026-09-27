@@ -128,8 +128,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   `SissyMenuBarMotion.blink` — *"Sissy noticing new numbers"* — so the page
   plays it when a figure arrives, on the app's own timing and
   `dataBlinkCooldown`, never on a loop. The page blinks on the panel's first
-  presentation, when the menu bar's Sissy at the foot of the page presents it
-  again, and when the panel opens a page, which is a deliberate widening
+  presentation, when the menu bar's Sissy at the foot of the page has brought
+  it back into view, and when the panel opens a page, which is a deliberate widening
   of the app's rule — the app blinks on a data frame — because opening a page
   is when new figures reach the screen here. It does not blink on the pace band
   scrolling back into view: an unchanged figure re-entering the viewport is not
@@ -173,15 +173,28 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   on the new page's back control when one opens and returns to the row it came
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
-  the same Overview with nothing on it that looks pressable. **The menu bar's
-  Sissy is the way back to it.** In macOS a click on the status item opens the
-  popover, and the popover on this page is the hero's, so the icon in
-  `Install`'s menu bar links to `#panel`: the page scrolls the panel to the
-  middle of the viewport, and once most of it is on screen the island puts it
-  back on the Overview, springs it in as a popover appearing, blinks and leaves
-  focus on the first gauge row. Without JavaScript the link is a plain anchor.
-  It is the only control in that menu bar; the rest stays hidden from assistive
-  technology as decoration.
+  the same Overview with nothing on it that looks pressable. **One row pulses
+  until it has been tried.** A replica reads as a screenshot until something
+  says otherwise, and the invitation under it is words, so the island marks
+  one door at a time with `data-hint`, which the hero draws as a ring and a
+  wash in the page's accent, outside the row: the first account, then the
+  agents count, then the identity line, each giving way to the next once its
+  kind of door has been opened, and nothing once all three have. It is the
+  site's own gesture, set on the DOM rather than passed through the pages,
+  because the app has no such thing. Under Reduce Motion the ring stays and
+  does not pulse. **The menu bar's Sissy is the way back to the panel.** In
+  macOS a click on the status item opens the popover, and the popover on this
+  page is the hero's, so the icon in `Install`'s menu bar links to `#panel`.
+  The press puts the panel back on the Overview at once, while it is off
+  screen, and scrolls it to the middle of the viewport; nothing else moves
+  until `scrollend` (or a two-second fallback), when she blinks and focus lands
+  on the first gauge row. An arrival started on the panel coming into view
+  played during the scroll's long deceleration and read as a late glitch,
+  which is why it waits. The icon is drawn unpressed, lit on hover and pressed
+  on click, as a status item is, and the sentence beside the menu bar says
+  what it does. Without JavaScript the link is a plain anchor. It is the only
+  control in that menu bar; the rest stays hidden from assistive technology as
+  decoration.
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
   other tools do, and the Overview's projects and contributions blocks follow
