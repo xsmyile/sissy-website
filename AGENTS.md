@@ -29,6 +29,13 @@ repository and is the reference for everything the site draws.
   owns the page state, the focus, the blink and the tilt. Every other use of
   the panel is rendered to static HTML. `motion.ts` carries the blink's timing
   and `blink.ts` plays it on whatever eyes a surface hands it.
+- `src/settings/`: the replica of the parts of the Settings window the page
+  shows, in React and never operable. `Settings.tsx` exports `ProvidersCrop`
+  (Settings ▸ Providers, drawn in `Accounts`) and `ForgeSettingsCrop` (the
+  first section of Settings ▸ Forge, drawn in `Git`), `CredentialRow.tsx` the
+  row every linked account and forge connection takes, and `settings.css` the
+  grouped `Form`. Its fixture is `DEMO_SETTINGS` in `src/panel/data.ts`,
+  derived from the panel's own readings.
 - `src/motion/`: how the page arrives, and the only script it ships besides the
   island. `reveal.ts` reads a section's `data-tier`, hides what is still below
   the fold, and springs the parts in on `motion`'s `inView`; `settle.ts` puts
@@ -71,9 +78,15 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   mirrors `ForgeRowView`, `metrics.css` mirrors
   `PanelMetrics`, both in `PanelComponents.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
-  `SissyMenuBarMotion.swift`. When the app changes a page, diff those pairs
-  first, then update `data.ts`. Do not restyle the replica from a screenshot;
-  read the Swift.
+  `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
+  `ProvidersSettingsView.swift` and the first section of `ForgeSettings.swift`,
+  and `CredentialRow.tsx` mirrors `SettingsCredentialRow.swift`. When the app
+  changes a page, diff those pairs first, then update `data.ts`. Do not restyle
+  the replica from a screenshot; read the Swift. The one exception is what the
+  Swift leaves to the system: the grouped `Form`'s card, separators, switch and
+  type sizes are not declared anywhere in the app, so `settings.css` takes them
+  from a `Form` with the same rows rendered offscreen at 2x in the dark
+  appearance, which is the system's drawing rather than a screenshot of it.
 - **One point is `--pt`.** Every panel measure is `calc(N * var(--pt))` with N
   the value `PanelMetrics` declares. A surface that wants the panel larger sets
   `--panel-pt` on an ancestor; nothing else scales it. The hero's is
@@ -115,7 +128,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   `SissyMenuBarMotion.blink` — *"Sissy noticing new numbers"* — so the page
   plays it when a figure arrives, on the app's own timing and
   `dataBlinkCooldown`, never on a loop. The page blinks on the panel's first
-  presentation and when the panel opens a page, which is a deliberate widening
+  presentation, when the menu bar's Sissy at the foot of the page presents it
+  again, and when the panel opens a page, which is a deliberate widening
   of the app's rule — the app blinks on a data frame — because opening a page
   is when new figures reach the screen here. It does not blink on the pace band
   scrolling back into view: an unchanged figure re-entering the viewport is not
@@ -137,8 +151,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   whether its rows are buttons. The routes are the three gauge rows, the agents
   door at the end of the providers label, the commit identity line, the `By effort` row where it is a door, and
   the back control, and nothing else — the picker, refresh, settings, the
-  projects label, `Show all`, the agents fold and `Copy the fix` stay drawn
-  and dead. The
+  projects label, `Show all`, the agents fold, `Copy the fix` and Codex's
+  `Use…` stay drawn and dead, because spending a reset is a write and not a
+  route. The
   identity line opens its page on the repository it names, as the app does
   when exactly one is wrong. `By effort` is a door only where the app makes it
   one, when some model leads on another effort or leads by less than
@@ -158,7 +173,15 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   on the new page's back control when one opens and returns to the row it came
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
-  the same Overview with nothing on it that looks pressable.
+  the same Overview with nothing on it that looks pressable. **The menu bar's
+  Sissy is the way back to it.** In macOS a click on the status item opens the
+  popover, and the popover on this page is the hero's, so the icon in
+  `Install`'s menu bar links to `#panel`: the page scrolls the panel to the
+  middle of the viewport, and once most of it is on screen the island puts it
+  back on the Overview, springs it in as a popover appearing, blinks and leaves
+  focus on the first gauge row. Without JavaScript the link is a plain anchor.
+  It is the only control in that menu bar; the rest stays hidden from assistive
+  technology as decoration.
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
   other tools do, and the Overview's projects and contributions blocks follow
@@ -167,11 +190,13 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   main things and lets the rest be inferred. Projects belong here because the
   app collects them as repositories. The identities crop is drawn unfolded, so
   the one repository that disagrees is read against the ones that agree. The
-  contributions sentence says what a switch does rather than drawing one: the
-  section had three switches of its own once, and they were the one thing on
-  the page that mirrored nothing, since `ForgeSettings` draws that control as a
-  macOS switch in a grouped `Form` and says why, *"a window that answered that
-  question two ways would be asking the reader which one meant what"*.
+  contributions block is followed by Settings ▸ Forge's connections, so the
+  reader sees where a forge is connected, and its sentence says what a counter
+  switch does rather than drawing one: the section had three switches of its
+  own once, and they were the one thing on the page that mirrored nothing,
+  since `ForgeSettings` draws that control as a macOS switch in a grouped
+  `Form` and says why, *"a window that answered that question two ways would
+  be asking the reader which one meant what"*.
 - **The band opens Limits; it is not a section.** The 69% is the Overview's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
@@ -193,7 +218,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   is the gap between the two fractions. The binding window is a field, not a
   derivation — the app picks it by projected exhaustion, which is not a figure
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
-  three account pages, two vendors.
+  three account pages, two vendors. Codex's session sits at 94%, past the point
+  OpenAI applies a reset, because that is the only state in which the app draws
+  `Use…`: a Codex further from its limits would show the count and a hint and
+  no button. Settings is derived rather than written: every linked account is
+  one the panel has a page for, and every forge connection is a row of the
+  contributions block, titled by its host.
 - **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
   Git, Privacy and Install carry the decision and rise on arrival; Agents
   supports them and barely settles; How it works does not move. A section does not
