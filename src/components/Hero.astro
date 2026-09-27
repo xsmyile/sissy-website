@@ -304,26 +304,26 @@ const timing = [
     position: absolute;
     inset: calc(-3 * var(--pt)) calc(-5 * var(--pt));
     border-radius: calc(6 * var(--pt));
-    box-shadow: 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 35%, transparent);
+    box-shadow: 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 30%, transparent);
     pointer-events: none;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .lit :global(.panel-live[data-hint]::after) {
-      animation: hint-pulse 3.6s ease-in-out 1.2s infinite both;
+      animation: hint-pulse 2.4s ease-out 1.2s infinite both;
     }
   }
 
   @keyframes hint-pulse {
-    0%,
-    100% {
-      background: transparent;
-      box-shadow: 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 15%, transparent);
+    0% {
+      background: color-mix(in srgb, var(--accent) 5%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 32%, transparent);
     }
 
-    50% {
-      background: color-mix(in srgb, var(--accent) 6%, transparent);
-      box-shadow: 0 0 0 calc(3 * var(--pt)) color-mix(in srgb, var(--accent) 30%, transparent);
+    70%,
+    100% {
+      background: transparent;
+      box-shadow: 0 0 0 calc(7 * var(--pt)) color-mix(in srgb, var(--accent) 0%, transparent);
     }
   }
 
