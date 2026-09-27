@@ -7,9 +7,12 @@ import { ProjectsSection } from "../components/ProjectRow";
 import { ShareBar } from "../components/ShareBar";
 import { SEPARATOR } from "../format";
 import { BACK, type OpenPage, OVERVIEW } from "../page";
-import type { EffortReading, HeaderReading, ProviderPage } from "../types";
+import type { EffortReading, HeaderReading, ProviderPage, ResetsRow } from "../types";
 
 const EFFORT_HELP = "Show each model's split by effort";
+const RESETS_LABEL = "Resets";
+const RESETS_USE = "Use…";
+const RESETS_NOT_YET = "Ready once a window is nearly used up";
 const EFFORT_TARGET = "effort";
 
 interface ProviderProps {
@@ -22,45 +25,17 @@ interface ProviderProps {
  * `PanelProviderPage`: what one account is doing. Identity, the limits it is
  * closest to, its day against the week behind it with the split by model
  * under it, its own projects, the week's effort in one row, and the vendor's
- * own status line at the foot. The credits bar is not drawn, because the
- * fixture's accounts hold no credits.
+ * own status line at the foot. Codex's resets sit under the limits they clear.
+ * The credits bar is not drawn, because the fixture's accounts hold no
+ * credits.
  */
 export function Provider({ page, header, open }: ProviderProps): ReactElement {
   return (
     <>
-      <PageHeader
-        title={page.name}
-        subtitle={`updated ${header.updated}`}
-        provider={page.provider}
-        backLabel="Back to today"
-        back={open && (() => open(OVERVIEW, BACK))}
-      />
+      <ProviderHeader page={page} header={header} back={open && (() => open(OVERVIEW, BACK))} />
       <Identity identity={page.identity} />
       <div className="panel-divider" />
-      <div className="panel-section panel-limits">
-        <div className="panel-label">
-          Limits
-          <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
-        </div>
-        {page.windows.map((window) => (
-          <div
-            className="panel-window"
-            key={window.id}
-            data-binding={window.id === page.binding || undefined}
-          >
-            <div className="panel-line">
-              <span className="panel-window-label">{window.label}</span>
-              <span className="panel-window-reading">{window.reading}</span>
-            </div>
-            <ShareBar
-              share={window.usedFraction}
-              tint={page.provider}
-              expected={window.expectedFraction}
-            />
-            <div className="panel-caption">{window.caption}</div>
-          </div>
-        ))}
-      </div>
+      <ProviderLimits page={page} />
       <div className="panel-divider" />
       <DayBlock
         today={page.today}
@@ -100,6 +75,90 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
         <ChevronRight className="panel-chevron" />
       </div>
     </>
+  );
+}
+
+/** `providerHeader`: the way back, whose page this is, and when it was read. */
+export function ProviderHeader({
+  page,
+  header,
+  back,
+}: {
+  page: ProviderPage;
+  header: HeaderReading;
+  back?: () => void;
+}): ReactElement {
+  return (
+    <PageHeader
+      title={page.name}
+      subtitle={`updated ${header.updated}`}
+      provider={page.provider}
+      backLabel="Back to today"
+      back={back}
+    />
+  );
+}
+
+/**
+ * `PanelProviderPage`'s limits: each window with its bar, its pace mark and
+ * its caption, and Codex's resets under the windows they clear.
+ */
+export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
+  return (
+    <>
+      <div className="panel-section panel-limits">
+        <div className="panel-label">
+          Limits
+          <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
+        </div>
+        {page.windows.map((window) => (
+          <div
+            className="panel-window"
+            key={window.id}
+            data-binding={window.id === page.binding || undefined}
+          >
+            <div className="panel-line">
+              <span className="panel-window-label">{window.label}</span>
+              <span className="panel-window-reading">{window.reading}</span>
+            </div>
+            <ShareBar
+              share={window.usedFraction}
+              tint={page.provider}
+              expected={window.expectedFraction}
+            />
+            <div className="panel-caption">{window.caption}</div>
+          </div>
+        ))}
+      </div>
+      {page.resets !== null && (
+        <>
+          <div className="panel-divider" />
+          <Resets resets={page.resets} />
+        </>
+      )}
+    </>
+  );
+}
+
+/**
+ * `PanelProviderPage.resets`: the count, the soonest reset's name and lapse,
+ * and `Use…` while the vendor would apply one. The app's press only asks, in
+ * the page itself; here the button is drawn and inert like `Copy the fix`,
+ * because spending is not a route.
+ */
+function Resets({ resets }: { resets: ResetsRow }): ReactElement {
+  return (
+    <div className="panel-section panel-resets">
+      <div className="panel-label">
+        {RESETS_LABEL}
+        <span className="panel-label-end panel-resets-headline">{resets.headline}</span>
+      </div>
+      <div className="panel-line">
+        <span className="panel-caption panel-resets-caption">{resets.caption}</span>
+        {resets.usable && <span className="panel-small-button">{RESETS_USE}</span>}
+      </div>
+      {!resets.usable && <div className="panel-resets-hint">{RESETS_NOT_YET}</div>}
+    </div>
   );
 }
 

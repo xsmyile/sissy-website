@@ -1,4 +1,5 @@
-import type { IdentityRow, PanelSnapshot, ProjectRow } from "./types";
+import type { CredentialRowData, SettingsSnapshot } from "../settings/types";
+import type { ForgeHost, IdentityRow, PanelSnapshot, ProjectRow, ProviderId } from "./types";
 
 const SISSY: ProjectRow = {
   id: "sissy",
@@ -58,11 +59,12 @@ const PERSONAL = "Smyile <smyile@example.com>";
 const WORK = "Billy Handsome <billy@group935.example>";
 
 /**
- * Seven repositories, ordered the way `makeIdentities` orders them: the one
+ * Four repositories, ordered the way `makeIdentities` orders them: the one
  * that disagrees first, then by name. Group 935's GitLab account has three, two
  * of them committing as the work identity, which is what makes that name the
  * expectation and `group935/buried`, set to the personal one in its own config,
- * the finding. Only a local override carries a fix.
+ * the finding. Only a local override carries a fix. One personal repository
+ * is enough to read the finding against; more only made the page taller.
  */
 const IDENTITIES: IdentityRow[] = [
   {
@@ -77,10 +79,7 @@ const IDENTITIES: IdentityRow[] = [
   ...[
     ["group935-origins", "group935/origins", WORK],
     ["group935-tranzit", "group935/tranzit", WORK],
-    ["billy", "xsmyile/billy", PERSONAL],
-    ["homebrew-sissy", "xsmyile/homebrew-sissy", PERSONAL],
     ["sissy", "xsmyile/sissy", PERSONAL],
-    ["sissy-website", "xsmyile/sissy-website", PERSONAL],
   ].map(
     ([id, name, author]): IdentityRow => ({
       id,
@@ -102,13 +101,20 @@ const IDENTITIES: IdentityRow[] = [
  * hold the seven processes the Overview's agents door counts. The chart's bands
  * end on those rows' footprints, the fold's two and an agent that exited
  * mid-hour making the rest, and each row's lane ends on its load. Every
- * repository the identities page reads is one Sissy has seen an agent in, and
- * the Overview's line names the one that disagrees. Every
+ * repository the identities page reads is one Sissy has seen an agent in on
+ * some day, not only this one, because the app checks every repository
+ * `ProjectLedger` has banked: that is why `group935/tranzit` is checked without
+ * a row under By project. The Overview's line names the one that disagrees. Every
  * account's gauge reads the window `binding` would pick for its page.
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
  * over the costliest day's, and the total under the label is the bars above it
- * summed. A window's reset is what is left of it at its own pace mark.
+ * summed. A window's reset is what is left of it at its own pace mark, and it
+ * runs out when what is left of the window meets the rate spent so far.
+ *
+ * Codex's session is past the point OpenAI applies a reset, which is what makes
+ * its one reset usable: an account whose windows are further from their end
+ * holds the count and is offered no button.
  *
  * Every account's effort reading is of its strip's window: each model's
  * efforts sum to what the pills give that model across the covered days, and
@@ -145,9 +151,9 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       provider: "codex",
       account: null,
       name: "Codex",
-      window: "Weekly",
-      usedFraction: 0.46,
-      expectedFraction: 0.55,
+      window: "Session",
+      usedFraction: 0.94,
+      expectedFraction: 0.61,
     },
   ],
   agents: { running: 7, footprint: "2.22 GB" },
@@ -197,6 +203,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
+      resets: null,
       windows: [
         {
           id: "session",
@@ -330,6 +337,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
+      resets: null,
       windows: [
         {
           id: "session",
@@ -452,15 +460,20 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         switchable: false,
       },
       limitsCaption: "Read 14:29",
-      binding: "weekly",
+      binding: "session",
+      resets: {
+        headline: "1 available",
+        caption: "Full reset (Weekly + 5 hr) · expires Oct 21",
+        usable: true,
+      },
       windows: [
         {
           id: "session",
           label: "Session",
-          reading: "38%",
-          usedFraction: 0.38,
+          reading: "94%",
+          usedFraction: 0.94,
           expectedFraction: 0.61,
-          caption: "23% in reserve · Lasts until reset · resets in 1h 57m",
+          caption: "33% in deficit · Runs out in 11m · resets in 1h 57m",
         },
         {
           id: "weekly",
@@ -882,5 +895,73 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       cache: { share: "98.1%", saved: "$5418.62" },
       longestTurn: "5m 29s",
     },
+  },
+};
+
+/** `ForgeConnection.address`: the host a connection is titled by. */
+const FORGE_ADDRESS: Record<ForgeHost, string> = { github: "github.com", gitlab: "gitlab.com" };
+
+/**
+ * The Claude accounts linked in Settings: both of them, the one the CLI is on
+ * included, because a linked session is what reads an account's credits.
+ * Codex links none, since the one account it has is the CLI's and is read for
+ * free.
+ */
+const LINKED_CLAUDE = ["xsmyile", "group935"] as const;
+
+/**
+ * `LinkedAccountRowSnapshot` for one of the fixture's pages: titled by the
+ * address, since the fixture names no person, with the organisation under it
+ * and the plan at the end of the title line, where the panel puts it too.
+ */
+function linkedAccount(provider: ProviderId, account: string): CredentialRowData {
+  const page = DEMO_SNAPSHOT.providerPages.find(
+    (entry) => entry.provider === provider && entry.account === account,
+  );
+  if (page === undefined) {
+    throw new Error(`Settings links "${provider}:${account}", which the fixture has no page for`);
+  }
+  const { email, organization, plan } = page.identity;
+  return {
+    id: `${provider}:${account}`,
+    title: email,
+    badge: plan,
+    subtitle: organization,
+    lead: { kind: "monogram", name: organization ?? email, provider },
+  };
+}
+
+/**
+ * Settings, drawn from the same readings as the panel: every linked account is
+ * one the panel has a page for, and every forge connection is a row of the
+ * Overview's contributions block, titled by its host with the login and the
+ * age the panel prints under it. Rows are ordered by what they are titled
+ * with, as `sortedAccounts` orders them.
+ */
+export const DEMO_SETTINGS: SettingsSnapshot = {
+  providers: [
+    {
+      provider: "claude-code",
+      name: "Claude Code",
+      detail: "1284 session files in ~/.claude/projects",
+      accounts: LINKED_CLAUDE.map((account) => linkedAccount("claude-code", account)).sort(
+        (left, right) => left.title.localeCompare(right.title),
+      ),
+    },
+    {
+      provider: "codex",
+      name: "Codex",
+      detail: "212 session files in ~/.codex/sessions",
+      accounts: [],
+    },
+  ],
+  forge: {
+    connections: DEMO_SNAPSHOT.forge.map((row) => ({
+      id: row.id,
+      title: FORGE_ADDRESS[row.host],
+      badge: null,
+      subtitle: `${row.login} · ${row.notice}`,
+      lead: { kind: "forge", host: row.host },
+    })),
   },
 };

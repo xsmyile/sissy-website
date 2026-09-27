@@ -1,0 +1,235 @@
+/*
+ * The Settings window's grouped Form, as macOS 26 draws it in the dark
+ * appearance. The app declares none of these measures: they are the system's,
+ * read off a `Form` with the same rows rendered offscreen at 2x, so one point
+ * here is one point there. Like the panel, every measure is `calc(N * var(--pt))`
+ * and a surface that wants it larger sets `--panel-pt` on an ancestor.
+ */
+.settings-wrap {
+  --pt: var(--panel-pt, 1px);
+  --settings-window: #1e1e1e;
+  --settings-card: #252525;
+  --settings-separator: #2f2f2f;
+  --settings-border: rgba(255, 255, 255, 0.1);
+  --settings-text: rgba(255, 255, 255, 0.85);
+  --settings-secondary: rgba(255, 255, 255, 0.55);
+  --settings-quaternary: rgba(255, 255, 255, 0.1);
+  --settings-accent: #3478f6;
+  --settings-claude: #d97757;
+
+  width: calc(380 * var(--pt));
+  max-width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", var(--font-sans);
+  font-size: calc(13 * var(--pt));
+  line-height: calc(16 * var(--pt));
+  color: var(--settings-text);
+}
+
+.settings {
+  display: grid;
+  gap: calc(12 * var(--pt));
+  padding: calc(12 * var(--pt));
+  background: var(--settings-window);
+  border: 1px solid var(--settings-border);
+  border-radius: calc(16 * var(--pt));
+  box-shadow: 0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4);
+}
+
+.settings-section {
+  padding-inline: calc(10 * var(--pt));
+  background: var(--settings-card);
+  border-radius: calc(12 * var(--pt));
+}
+
+.settings-row {
+  display: flex;
+  gap: calc(10 * var(--pt));
+  align-items: flex-start;
+  padding-block: calc(10 * var(--pt));
+}
+
+.settings-row + .settings-row {
+  border-top: calc(1 * var(--pt)) solid var(--settings-separator);
+}
+
+.settings-heading {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+}
+
+.settings-headline {
+  font-weight: 700;
+}
+
+.settings-provider-mark {
+  display: flex;
+  margin-right: calc(6.5 * var(--pt));
+}
+
+.settings-provider-mark svg {
+  width: calc(18 * var(--pt));
+  height: calc(18 * var(--pt));
+}
+
+.settings-provider-mark svg[data-provider="claude-code"] {
+  color: var(--settings-claude);
+}
+
+.settings-provider-mark svg[data-provider="codex"] {
+  color: var(--settings-text);
+}
+
+.settings-info {
+  color: var(--settings-secondary);
+}
+
+.settings-provider-lines {
+  display: grid;
+  flex: 1;
+  gap: calc(2 * var(--pt));
+  min-width: 0;
+}
+
+.settings-detail {
+  font-size: calc(11 * var(--pt));
+  line-height: calc(14 * var(--pt));
+  color: var(--settings-secondary);
+}
+
+.settings-switch {
+  position: relative;
+  flex: none;
+  width: calc(36 * var(--pt));
+  height: calc(18 * var(--pt));
+  border-radius: 999px;
+  background: var(--settings-accent);
+}
+
+.settings-switch::after {
+  content: "";
+  position: absolute;
+  top: calc(2 * var(--pt));
+  right: calc(2 * var(--pt));
+  width: calc(21 * var(--pt));
+  height: calc(14 * var(--pt));
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 calc(1 * var(--pt)) calc(2 * var(--pt)) rgba(0, 0, 0, 0.25);
+}
+
+.settings-disc {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: calc(28 * var(--pt));
+  height: calc(28 * var(--pt));
+  border-radius: 50%;
+  font-size: calc(11 * var(--pt));
+  font-weight: 600;
+}
+
+.settings-disc[data-tint="claude-code"] {
+  background: color-mix(in srgb, var(--settings-claude) 18%, transparent);
+  color: var(--settings-claude);
+}
+
+.settings-disc[data-tint="codex"] {
+  background: color-mix(in srgb, var(--settings-text) 18%, transparent);
+  color: var(--settings-text);
+}
+
+.settings-disc[data-tint="secondary"] {
+  background: color-mix(in srgb, var(--settings-secondary) 18%, transparent);
+  color: var(--settings-text);
+}
+
+.settings-disc svg {
+  width: calc(11 * var(--pt));
+  height: calc(11 * var(--pt));
+  color: inherit;
+}
+
+.settings-credential-lines {
+  display: grid;
+  flex: 1;
+  gap: calc(1 * var(--pt));
+  min-width: 0;
+}
+
+.settings-credential-title {
+  display: flex;
+  gap: calc(6 * var(--pt));
+  align-items: center;
+  min-width: 0;
+}
+
+.settings-title {
+  min-width: 0;
+  overflow: hidden;
+  margin-right: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.settings-badge {
+  flex: none;
+  margin-left: calc(2 * var(--pt));
+  padding: calc(1 * var(--pt)) calc(5 * var(--pt));
+  border-radius: 999px;
+  background: var(--settings-quaternary);
+  font-size: calc(10 * var(--pt));
+  font-weight: 500;
+  line-height: calc(12 * var(--pt));
+  white-space: nowrap;
+  color: var(--settings-secondary);
+}
+
+.settings-subtitle {
+  overflow: hidden;
+  font-size: calc(12 * var(--pt));
+  line-height: calc(15 * var(--pt));
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--settings-secondary);
+}
+
+.settings-caption {
+  font-size: calc(12 * var(--pt));
+  line-height: calc(15 * var(--pt));
+  color: var(--settings-secondary);
+}
+
+.settings-menu {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: calc(16 * var(--pt));
+  padding-inline: calc(4.5 * var(--pt));
+  color: var(--settings-text);
+}
+
+.settings-add {
+  gap: calc(12 * var(--pt));
+  align-items: center;
+  padding-left: calc(1.5 * var(--pt));
+  color: var(--settings-accent);
+}
+
+.settings-forge-heading {
+  display: grid;
+  gap: calc(2 * var(--pt));
+}
+
+svg[data-glyph="plus.circle"],
+svg[data-glyph="info.circle"] {
+  flex: none;
+  width: calc(12.95 * var(--pt));
+  height: auto;
+}
+
+svg[data-glyph="ellipsis"] {
+  flex: none;
+  width: calc(11.84 * var(--pt));
+  height: auto;
+}

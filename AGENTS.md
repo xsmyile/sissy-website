@@ -22,13 +22,20 @@ repository and is the reference for everything the site draws.
   Identities),
   `components/` the pieces they share, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `ProjectsCrop`, `ForgeCrop`, `IdentityCrop` and
-  `IdentitiesCrop`, each
+  enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
+  `IdentityCrop` and `IdentitiesCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
   the panel is rendered to static HTML. `motion.ts` carries the blink's timing
   and `blink.ts` plays it on whatever eyes a surface hands it.
+- `src/settings/`: the replica of the parts of the Settings window the page
+  shows, in React and never operable. `Settings.tsx` exports `ProvidersCrop`
+  (Settings ▸ Providers, drawn in `Accounts`) and `ForgeSettingsCrop` (the
+  first section of Settings ▸ Forge, drawn in `Git`), `CredentialRow.tsx` the
+  row every linked account and forge connection takes, and `settings.css` the
+  grouped `Form`. Its fixture is `DEMO_SETTINGS` in `src/panel/data.ts`,
+  derived from the panel's own readings.
 - `src/motion/`: how the page arrives, and the only script it ships besides the
   island. `reveal.ts` reads a section's `data-tier`, hides what is still below
   the fold, and springs the parts in on `motion`'s `inView`; `settle.ts` puts
@@ -71,9 +78,15 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   mirrors `ForgeRowView`, `metrics.css` mirrors
   `PanelMetrics`, both in `PanelComponents.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
-  `SissyMenuBarMotion.swift`. When the app changes a page, diff those pairs
-  first, then update `data.ts`. Do not restyle the replica from a screenshot;
-  read the Swift.
+  `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
+  `ProvidersSettingsView.swift` and the first section of `ForgeSettings.swift`,
+  and `CredentialRow.tsx` mirrors `SettingsCredentialRow.swift`. When the app
+  changes a page, diff those pairs first, then update `data.ts`. Do not restyle
+  the replica from a screenshot; read the Swift. The one exception is what the
+  Swift leaves to the system: the grouped `Form`'s card, separators, switch and
+  type sizes are not declared anywhere in the app, so `settings.css` takes them
+  from a `Form` with the same rows rendered offscreen at 2x in the dark
+  appearance, which is the system's drawing rather than a screenshot of it.
 - **One point is `--pt`.** Every panel measure is `calc(N * var(--pt))` with N
   the value `PanelMetrics` declares. A surface that wants the panel larger sets
   `--panel-pt` on an ancestor; nothing else scales it. The hero's is
@@ -115,7 +128,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   `SissyMenuBarMotion.blink` — *"Sissy noticing new numbers"* — so the page
   plays it when a figure arrives, on the app's own timing and
   `dataBlinkCooldown`, never on a loop. The page blinks on the panel's first
-  presentation and when the panel opens a page, which is a deliberate widening
+  presentation, when the menu bar's Sissy at the foot of the page has brought
+  it back into view, and when the panel opens a page, which is a deliberate widening
   of the app's rule — the app blinks on a data frame — because opening a page
   is when new figures reach the screen here. It does not blink on the pace band
   scrolling back into view: an unchanged figure re-entering the viewport is not
@@ -137,8 +151,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   whether its rows are buttons. The routes are the three gauge rows, the agents
   door at the end of the providers label, the commit identity line, the `By effort` row where it is a door, and
   the back control, and nothing else — the picker, refresh, settings, the
-  projects label, `Show all`, the agents fold and `Copy the fix` stay drawn
-  and dead. The
+  projects label, `Show all`, the agents fold, `Copy the fix` and Codex's
+  `Use…` stay drawn and dead, because spending a reset is a write and not a
+  route. The
   identity line opens its page on the repository it names, as the app does
   when exactly one is wrong. `By effort` is a door only where the app makes it
   one, when some model leads on another effort or leads by less than
@@ -158,25 +173,57 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   on the new page's back control when one opens and returns to the row it came
   from on Back. The island renders inert until it has mounted, so the served
   HTML and the first client render agree and a page without JavaScript shows
-  the same Overview with nothing on it that looks pressable.
+  the same Overview with nothing on it that looks pressable. **One row pulses
+  until it has been tried.** A replica reads as a screenshot until something
+  says otherwise, and the invitation under it is words, so the island marks
+  one door at a time with `data-hint`, which the hero draws as a ring and a
+  wash in the page's accent, outside the row: the first account, then the
+  agents count, then the identity line, each giving way to the next once its
+  kind of door has been opened, and nothing once all three have. It is the
+  site's own gesture, set on the DOM rather than passed through the pages,
+  because the app has no such thing. Under Reduce Motion the ring stays and
+  does not pulse. **The menu bar's Sissy is the way back to the panel.** In
+  macOS a click on the status item opens the popover, and the popover on this
+  page is the hero's, so the icon in `Install`'s menu bar links to `#panel`.
+  The press puts the panel back on the Overview at once, while it is off
+  screen, and scrolls it to the middle of the viewport; nothing else moves
+  until `scrollend` (or a two-second fallback), when she blinks and focus lands
+  on the first gauge row. An arrival started on the panel coming into view
+  played during the scroll's long deceleration and read as a late glitch,
+  which is why it waits. The icon is drawn unpressed, lit on hover and pressed
+  on click, as a status item is, and the sentence beside the menu bar says
+  what it does. Without JavaScript the link is a plain anchor. It is the only
+  control in that menu bar; the rest stays hidden from assistive technology as
+  decoration.
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
   other tools do, and the Overview's projects and contributions blocks follow
-  it at native size, a sentence each, in the `after` slot. They were a section
+  it at native size, a sentence each, in the `after` slot, the three touching:
+  the projects block ends on the edge of its column, the contributions block
+  starts there and rides up over the identities page's frame and over the
+  projects block's edge, and Settings ▸ Forge lies over the contributions block
+  in turn. They were a section
   each before, and a screen per block is the opposite of a page that shows the
   main things and lets the rest be inferred. Projects belong here because the
   app collects them as repositories. The identities crop is drawn unfolded, so
   the one repository that disagrees is read against the ones that agree. The
-  contributions sentence says what a switch does rather than drawing one: the
-  section had three switches of its own once, and they were the one thing on
-  the page that mirrored nothing, since `ForgeSettings` draws that control as a
-  macOS switch in a grouped `Form` and says why, *"a window that answered that
-  question two ways would be asking the reader which one meant what"*.
+  contributions block is followed by Settings ▸ Forge's connections, so the
+  reader sees where a forge is connected, and its sentence says what a counter
+  switch does rather than drawing one: the section had three switches of its
+  own once, and they were the one thing on the page that mirrored nothing,
+  since `ForgeSettings` draws that control as a macOS switch in a grouped
+  `Form` and says why, *"a window that answered that question two ways would
+  be asking the reader which one meant what"*.
 - **The band opens Limits; it is not a section.** The 69% is the Overview's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
   restating the hero. Under the title it is the demonstration the section's
-  claim needs, and the panel below it is where that claim is paid off. The
+  claim needs, and the two crops below it are where that claim is paid off:
+  the limits of the page the gauge opens, and Codex's, which carry the resets.
+  They are `LimitsCrop`, the page's header and its limits and nothing under
+  them, because a section draws the block it describes: the whole page was
+  drawn here once, and its day, projects and effort sat beside copy that
+  named none of them, a screen restating what the hero opens in one click. The
   figure still counts up on `[data-pace-band]`, and the blink still does not
   fire for it, because an unchanged figure re-entering the viewport is not new
   data.
@@ -193,7 +240,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   is the gap between the two fractions. The binding window is a field, not a
   derivation — the app picks it by projected exhaustion, which is not a figure
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
-  three account pages, two vendors.
+  three account pages, two vendors. Codex's session sits at 94%, past the point
+  OpenAI applies a reset, because that is the only state in which the app draws
+  `Use…`: a Codex further from its limits would show the count and a hint and
+  no button. Settings is derived rather than written: every linked account is
+  one the panel has a page for, and every forge connection is a row of the
+  contributions block, titled by its host.
 - **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
   Git, Privacy and Install carry the decision and rise on arrival; Agents
   supports them and barely settles; How it works does not move. A section does not
@@ -234,13 +286,22 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   that is narrower than its column sits on the edge facing them rather than in
   the middle of the track. Top-aligned and centred in its column, a small crop
   left the gap below it and the gap beside it to be read as one empty cell.
-  `Git`'s pair below takes the same two columns, so its second block starts
-  where the page above it does.
+  `Git`'s blocks below meet on the line between the two columns, so the chain
+  starts under the copy and never runs beneath it.
 - **An inert panel sits on the page; only the hero's floats.** The popover's
   long shadow is the one macOS throws under a window above the desktop, and on
   the graphite ground it bloomed into a dark cloud some 80 px wide around every
   crop. So `.panel` carries only its contact shadow, and the hero, which is the
-  one panel presented as floating, draws its own light over it.
+  one panel presented as floating, draws its own light over it. The one
+  exception is a surface laid over another: in `Limits` Codex's limits over
+  Claude's, in `Git` the contributions block over the identities page and the
+  projects block, and Settings ▸ Forge over the contributions block. Each
+  surface on top carries a short shadow of its own, because two contact
+  shadows alone do not say which edge is on top. An overlap covers a frame or
+  a caption and never a line of text a reader is meant to finish, at any
+  width: below 920 px Limits' pair and Git's first two blocks stack, and
+  Settings ▸ Forge lies over no more than the contributions block's bottom
+  margin, because a column that narrow has no other frame left to lie over.
 - **The palette is the seal point Siamese the app is named after.** Graphite
   ground from the icon's gradient, cream text from her coat, the pale glacial
   blue of her eyes as the one accent. Coral `#d97757` appears only inside the

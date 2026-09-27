@@ -182,6 +182,18 @@ export interface EffortReading {
   rows: EffortRow[] | null;
 }
 
+/**
+ * `UsagePanelSnapshot.ResetsRow`: how many resets the account holds, the
+ * vendor's name for the soonest and when it lapses, and whether a press would
+ * spend one now. `usable` is false while OpenAI would apply none, which keeps
+ * the count on the page and the button off it.
+ */
+export interface ResetsRow {
+  headline: string;
+  caption: string;
+  usable: boolean;
+}
+
 /** `ProviderRow`, as `PanelProviderPage` draws it for one account. */
 export interface ProviderPage {
   provider: ProviderId;
@@ -197,6 +209,12 @@ export interface ProviderPage {
    * holds, so deriving it here could only ever approximate the app.
    */
   binding: string;
+  /**
+   * `ProviderRow.resets`: what the vendor lets this account spend to clear its
+   * windows early. Null for every provider but Codex, and for an account
+   * holding none, which draws no block at all.
+   */
+  resets: ResetsRow | null;
   today: string;
   /** Today's split by model, which the pills draw while the pointer is on no bar. */
   models: ModelRow[];

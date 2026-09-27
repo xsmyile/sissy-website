@@ -1,7 +1,8 @@
 ---
 import { GIT } from "../content/sections";
-import { DEMO_SNAPSHOT } from "../panel/data";
+import { DEMO_SETTINGS, DEMO_SNAPSHOT } from "../panel/data";
 import { ForgeCrop, IdentitiesCrop, ProjectsCrop } from "../panel/Panel";
+import { ForgeSettingsCrop } from "../settings/Settings";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
@@ -13,14 +14,19 @@ const { projects, contributions } = GIT.blocks;
   <div class="stage">
     <IdentitiesCrop snapshot={DEMO_SNAPSHOT} label={GIT.panelLabel} />
   </div>
-  <div class="pair" slot="after">
-    <figure>
+  <div class="after" slot="after">
+    <figure class="projects">
       <ProjectsCrop snapshot={DEMO_SNAPSHOT} label={projects.panelLabel} />
       <figcaption><b>{projects.title}</b> {projects.body}</figcaption>
     </figure>
-    <figure>
-      <ForgeCrop snapshot={DEMO_SNAPSHOT} label={contributions.panelLabel} />
-      <figcaption><b>{contributions.title}</b> {contributions.body}</figcaption>
+    <figure class="contributions">
+      <div class="cascade">
+        <ForgeCrop snapshot={DEMO_SNAPSHOT} label={contributions.panelLabel} />
+        <div class="over">
+          <ForgeSettingsCrop forge={DEMO_SETTINGS.forge} label={contributions.settingsLabel} />
+        </div>
+      </div>
+      <figcaption><b>{contributions.title}</b> <Inline text={contributions.body} /></figcaption>
     </figure>
   </div>
 </Section>
@@ -43,26 +49,61 @@ const { projects, contributions } = GIT.blocks;
   }
 
   /*
-   * The two blocks that follow are one row at native size, each over its own
-   * sentence, so they read as belonging to the section above rather than as
-   * two sections of their own. They take the section's own columns, so the
-   * second starts where the page above it does.
+   * The three blocks that follow touch, the way three windows of one app lie
+   * on a desktop: the contributions block rides up over the identities page's
+   * frame and over the projects block's edge, and Settings ▸ Forge rides over
+   * the block in turn, down and to the right. Each covers only frame, never a
+   * line a reader is meant to finish. A surface laid over another carries a
+   * short shadow of its own, because on the graphite ground two contact
+   * shadows alone do not say which edge is on top.
    */
-  .pair {
-    --panel-pt: 1px;
-
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 40px 64px;
-    padding-top: 16px;
+  .after {
+    display: flex;
+    align-items: flex-start;
   }
 
   figure {
+    --panel-pt: 1px;
+
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
     align-content: start;
     justify-items: start;
+    flex: none;
     margin: 0;
+  }
+
+  .projects {
+    width: calc((100% - 64px) * 5 / 12);
+    justify-items: end;
+  }
+
+  .projects figcaption {
+    width: calc(340 * var(--panel-pt));
+  }
+
+  .contributions {
+    position: relative;
+    margin: -52px 0 0 calc(-8 * var(--panel-pt));
+  }
+
+  .cascade {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  .over {
+    position: relative;
+    margin: -28px 0 0 112px;
+  }
+
+  .cascade :global(.panel),
+  .over :global(.settings) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
   }
 
   figcaption {
@@ -82,8 +123,27 @@ const { projects, contributions } = GIT.blocks;
       --panel-pt: 1.05px;
     }
 
-    .pair {
-      grid-template-columns: minmax(0, 1fr);
+    .after {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .contributions {
+      margin: 0;
+    }
+
+    .projects {
+      width: auto;
+      justify-items: start;
+    }
+
+    .projects figcaption {
+      width: auto;
+    }
+
+    .over {
+      max-width: calc(100% - 24px);
+      margin: -12px 0 0 24px;
     }
   }
 </style>

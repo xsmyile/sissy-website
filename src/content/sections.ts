@@ -1,14 +1,16 @@
 import { GITHUB_URL } from "./site";
 
 /**
- * The band and the page behind it, as one section.
+ * The band and the limits behind it, as one section.
  *
  * The band is the Overview's first gauge drawn at page scale, and every figure
  * on it comes from that row. It opens the section rather than standing as one
  * of its own: the figure is already in the hero's panel, and a screen that
  * restates it is a screen the page spends saying nothing new. Here it is the
- * demonstration the section's own claim needs, and the panel under it is where
- * that claim is paid off.
+ * demonstration the section's own claim needs, and the two crops under it are
+ * where that claim is paid off: the limits of the page the gauge opens, and
+ * Codex's, which carry the resets. The rest of that page is the hero's to
+ * show, one click away.
  */
 export const LIMITS = {
   id: "limits",
@@ -16,11 +18,22 @@ export const LIMITS = {
   title: "See how close you are before the CLI stops you.",
   lede: "The Overview shows one gauge per account, on the window it is closest to running out of.",
   rowId: "claude-xsmyile",
+  resetsProvider: "codex",
   paceBody:
     "The mark on the bar is where even spending would have reached by now, so being ahead of pace is visible instead of calculated.",
   paceLabel: "Pace at this hour",
-  body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects.",
-  panelLabel: "Sissy's panel, one account's page",
+  blocks: {
+    windows: {
+      title: "Session and week",
+      body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets.",
+      panelLabel: "One Claude account's limits: the session and the week",
+    },
+    resets: {
+      title: "Resets",
+      body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
+      panelLabel: "Codex's limits, with one reset available",
+    },
+  },
 } as const;
 
 /**
@@ -30,6 +43,10 @@ export const LIMITS = {
  * afresh: the sentence about a running session putting its own account back is
  * the part a reader cannot work out, and the app already says it before the
  * write. A site that sold the switch without it would be selling a footgun.
+ *
+ * `Link another` is the two vendors' own ⓘ in Settings ▸ Providers
+ * (`ClaudeAccountLinkCopy.detail`, `CodexAccountLinkCopy.detail`) said once
+ * for both, since the README only names the tab.
  */
 export const ACCOUNTS = {
   id: "accounts",
@@ -45,8 +62,14 @@ export const ACCOUNTS = {
       title: "Use in CLI",
       body: "On Claude, the account you are reading is one you can hand the CLI. Sissy asks before it writes anything, keeps the account you are leaving, and says the part you cannot work out for yourself: your next `claude` starts as it, and a session that is already open will switch it back when it next refreshes its token, so quit that one first.",
     },
+    {
+      title: "Link another",
+      body: "Sissy reads the account each CLI is signed into for free. Linking another signs in once, in a window of its own, and reads its limits beside it. Your terminal stays on the account it is on.",
+    },
   ],
   panelLabel: "A Claude account's identity block, with the switch",
+  settingsLabel:
+    "Settings, Providers: two linked Claude accounts, and Add account under each vendor",
 } as const;
 
 export const AGENTS_SCENE = {
@@ -84,8 +107,9 @@ export const GIT = {
     },
     contributions: {
       title: "Contributions",
-      body: "What you pushed on each forge you connected. Every counter has a switch in Settings, and one switched off is not asked for.",
+      body: "What you pushed on each forge you connected. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
       panelLabel: "The Overview's Contributions block",
+      settingsLabel: "Settings, Forge: GitHub and GitLab connected, and Connect",
     },
   },
 } as const;
@@ -102,7 +126,7 @@ export const PRIVACY = {
     },
     {
       title: "Every request has a switch",
-      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page. Each has an off switch of its own, the way the counters above do.",
+      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page, its own update feed. Each has an off switch of its own, the way the counters above do. The one request that is not a reading, spending a Codex reset, waits for you to press and confirm it.",
     },
     {
       title: "Off until you say so",
@@ -129,7 +153,7 @@ export const PRIVACY = {
     },
     {
       host: "`chatgpt.com`",
-      purpose: "The Codex usage endpoint",
+      purpose: "The Codex usage endpoint, and a reset you confirm spending",
       off: "Switch the Codex provider off, or unlink",
     },
     {
@@ -146,6 +170,16 @@ export const PRIVACY = {
       host: "`status.claude.com`, `status.openai.com`",
       purpose: "Each vendor's public status page",
       off: "`statusChecks: false`",
+    },
+    {
+      host: "`sissy.smyile.com`",
+      purpose: "The update feed, daily",
+      off: "Settings ▸ About ▸ *Check for updates automatically*",
+    },
+    {
+      host: "`github.com`",
+      purpose: "Downloading an update you, or *Install updates automatically*, accepted",
+      off: "Decline the update",
     },
   ],
   keepsTitle: "What Sissy keeps",
@@ -212,9 +246,9 @@ export const INSTALL = {
   title: "Put the numbers in the menu bar.",
   requirements: "macOS 26 or later, Apple Silicon or Intel. Free and open source.",
   reassurance:
-    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing.",
+    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
   menuBar:
-    "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar.",
+    "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar. The Sissy in this one takes you back to the panel at the top.",
   github: { label: "Source on GitHub", href: GITHUB_URL },
   uninstallSummary: "Uninstall",
   uninstallCommand: "brew uninstall --cask sissy",

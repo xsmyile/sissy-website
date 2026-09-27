@@ -1,7 +1,7 @@
 ---
 import { LIMITS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
-import { Panel } from "../panel/Panel";
+import { LimitsCrop } from "../panel/Panel";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
@@ -10,6 +10,7 @@ if (row === undefined) {
   throw new Error(`The fixture has no gauge row "${LIMITS.rowId}" for the pace band to read`);
 }
 
+const { windows, resets } = LIMITS.blocks;
 const used = Math.round(row.usedFraction * 100);
 const expected = row.expectedFraction * 100;
 ---
@@ -36,14 +37,24 @@ const expected = row.expectedFraction * 100;
   </div>
 
   <div class="page">
-    <p class="body">{LIMITS.body}</p>
-    <div class="stage">
-      <Panel
+    <figure class="under">
+      <LimitsCrop
         snapshot={DEMO_SNAPSHOT}
-        page={{ kind: "provider", provider: row.provider, account: row.account }}
-        label={LIMITS.panelLabel}
+        provider={row.provider}
+        account={row.account}
+        label={windows.panelLabel}
       />
-    </div>
+      <figcaption><b>{windows.title}</b> {windows.body}</figcaption>
+    </figure>
+    <figure class="over">
+      <LimitsCrop
+        snapshot={DEMO_SNAPSHOT}
+        provider={LIMITS.resetsProvider}
+        account={null}
+        label={resets.panelLabel}
+      />
+      <figcaption><b>{resets.title}</b> {resets.body}</figcaption>
+    </figure>
   </div>
 </Section>
 
@@ -128,27 +139,66 @@ const expected = row.expectedFraction * 100;
     vertical-align: -1px;
   }
 
+  /*
+   * Codex's limits lie over Claude's, down and to the right, the way two
+   * pages of one panel would stack, and cover only the edge of Claude's frame
+   * that carries no text. Its caption sits beside it rather than under it,
+   * which is what keeps the pair no taller than one crop and a caption. The
+   * crop on top carries a short shadow of its own, because two contact
+   * shadows alone do not say which edge is on top.
+   */
   .page {
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: 40px 64px;
-    align-items: start;
+    display: flex;
+    align-items: flex-start;
   }
 
-  .body {
+  figure {
+    --panel-pt: 1.12px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
+    flex: none;
     margin: 0;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    font-size: 15px;
-    color: var(--text-2);
+  }
+
+  .over {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    min-width: 0;
+    margin: 48px 0 0 calc(-6 * var(--panel-pt));
+  }
+
+  .over :global(.panel) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  figcaption {
+    max-width: calc(340 * var(--panel-pt));
+    font-size: 14.5px;
+    color: var(--muted);
     text-wrap: pretty;
   }
 
-  .stage {
-    --panel-pt: 1.12px;
+  .under figcaption {
+    max-width: calc(310 * var(--panel-pt));
+  }
 
-    display: flex;
-    justify-content: center;
+  .over figcaption {
+    flex: 1 1 220px;
+  }
+
+  figcaption b {
+    font-weight: 600;
+    color: var(--text);
   }
 
   @media (max-width: 920px) {
@@ -159,12 +209,26 @@ const expected = row.expectedFraction * 100;
     }
 
     .page {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 28px;
+      flex-direction: column;
+      gap: 32px;
     }
 
-    .stage {
+    figure {
       --panel-pt: 1px;
+    }
+
+    .over {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .under figcaption {
+      max-width: calc(340 * var(--panel-pt));
+    }
+
+    .over figcaption {
+      flex: none;
     }
   }
 </style>
