@@ -198,8 +198,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
   other tools do, and the Overview's projects and contributions blocks follow
-  it at native size, a sentence each, in the `after` slot, the contributions
-  block cascading up over the identities page with Settings ▸ Forge over it. They were a section
+  it at native size, a sentence each, in the `after` slot, the three touching:
+  the projects block ends on the edge of its column, the contributions block
+  starts there and rides up over the identities page's frame and over the
+  projects block's edge, and Settings ▸ Forge lies over the contributions block
+  in turn. They were a section
   each before, and a screen per block is the opposite of a page that shows the
   main things and lets the rest be inferred. Projects belong here because the
   app collects them as repositories. The identities crop is drawn unfolded, so
@@ -283,18 +286,22 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   that is narrower than its column sits on the edge facing them rather than in
   the middle of the track. Top-aligned and centred in its column, a small crop
   left the gap below it and the gap beside it to be read as one empty cell.
-  `Git`'s pair below takes the same two columns, so its second block starts
-  where the page above it does.
+  `Git`'s blocks below meet on the line between the two columns, so the chain
+  starts under the copy and never runs beneath it.
 - **An inert panel sits on the page; only the hero's floats.** The popover's
   long shadow is the one macOS throws under a window above the desktop, and on
   the graphite ground it bloomed into a dark cloud some 80 px wide around every
   crop. So `.panel` carries only its contact shadow, and the hero, which is the
   one panel presented as floating, draws its own light over it. The one
-  exception is a surface laid over another: in `Git` the contributions block
-  rides over the identities page's frame and Settings ▸ Forge over the block,
-  and each of those two carries a short shadow of its own, because two contact
+  exception is a surface laid over another: in `Limits` Codex's limits over
+  Claude's, in `Git` the contributions block over the identities page and the
+  projects block, and Settings ▸ Forge over the contributions block. Each
+  surface on top carries a short shadow of its own, because two contact
   shadows alone do not say which edge is on top. An overlap covers a frame or
-  a caption and never a line of text a reader is meant to finish.
+  a caption and never a line of text a reader is meant to finish, at any
+  width: below 920 px Limits' pair and Git's first two blocks stack, and
+  Settings ▸ Forge lies over no more than the contributions block's bottom
+  margin, because a column that narrow has no other frame left to lie over.
 - **The palette is the seal point Siamese the app is named after.** Graphite
   ground from the icon's gradient, cream text from her coat, the pale glacial
   blue of her eyes as the one accent. Coral `#d97757` appears only inside the
