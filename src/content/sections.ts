@@ -102,7 +102,7 @@ export const PRIVACY = {
     },
     {
       title: "Every request has a switch",
-      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page. Each has an off switch of its own, the way the counters above do.",
+      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page, its own update feed. Each has an off switch of its own, the way the counters above do. The one request that is not a reading, spending a Codex reset, waits for you to press and confirm it.",
     },
     {
       title: "Off until you say so",
@@ -129,7 +129,7 @@ export const PRIVACY = {
     },
     {
       host: "`chatgpt.com`",
-      purpose: "The Codex usage endpoint",
+      purpose: "The Codex usage endpoint, and a reset you confirm spending",
       off: "Switch the Codex provider off, or unlink",
     },
     {
@@ -146,6 +146,16 @@ export const PRIVACY = {
       host: "`status.claude.com`, `status.openai.com`",
       purpose: "Each vendor's public status page",
       off: "`statusChecks: false`",
+    },
+    {
+      host: "`sissy.smyile.com`",
+      purpose: "The update feed, daily",
+      off: "Settings ▸ About ▸ *Check for updates automatically*",
+    },
+    {
+      host: "`github.com`",
+      purpose: "Downloading an update you, or *Install updates automatically*, accepted",
+      off: "Decline the update",
     },
   ],
   keepsTitle: "What Sissy keeps",
@@ -212,7 +222,7 @@ export const INSTALL = {
   title: "Put the numbers in the menu bar.",
   requirements: "macOS 26 or later, Apple Silicon or Intel. Free and open source.",
   reassurance:
-    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing.",
+    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
   menuBar:
     "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar.",
   github: { label: "Source on GitHub", href: GITHUB_URL },
