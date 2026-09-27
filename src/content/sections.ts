@@ -19,7 +19,7 @@ export const LIMITS = {
   paceBody:
     "The mark on the bar is where even spending would have reached by now, so being ahead of pace is visible instead of calculated.",
   paceLabel: "Pace at this hour",
-  body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects.",
+  body: "Click the gauge for that account's own page: the session and the week, each with what is used, how far off pace it is, when it runs out at this rate and when it resets. Under them, today against the days before it, and this account's own projects. A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
   panelLabel: "Sissy's panel, one account's page",
 } as const;
 

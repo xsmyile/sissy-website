@@ -735,6 +735,33 @@ svg[data-glyph="chevron.down"] {
   font-size: var(--panel-caption);
 }
 
+.panel-resets {
+  gap: calc(3 * var(--pt));
+}
+
+.panel-resets-headline {
+  font-size: var(--panel-row);
+  font-weight: 400;
+  color: var(--panel-text);
+}
+
+.panel-resets-caption {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--panel-caption);
+}
+
+.panel-resets .panel-small-button {
+  flex: none;
+  margin-top: 0;
+  font-size: var(--panel-headline-meta);
+}
+
+.panel-resets-hint {
+  font-size: var(--panel-headline-meta);
+  color: var(--panel-secondary);
+}
+
 .panel-day {
   gap: calc(3 * var(--pt));
 }

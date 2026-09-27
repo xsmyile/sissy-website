@@ -7,9 +7,12 @@ import { ProjectsSection } from "../components/ProjectRow";
 import { ShareBar } from "../components/ShareBar";
 import { SEPARATOR } from "../format";
 import { BACK, type OpenPage, OVERVIEW } from "../page";
-import type { EffortReading, HeaderReading, ProviderPage } from "../types";
+import type { EffortReading, HeaderReading, ProviderPage, ResetsRow } from "../types";
 
 const EFFORT_HELP = "Show each model's split by effort";
+const RESETS_LABEL = "Resets";
+const RESETS_USE = "Use…";
+const RESETS_NOT_YET = "Ready once a window is nearly used up";
 const EFFORT_TARGET = "effort";
 
 interface ProviderProps {
@@ -22,8 +25,9 @@ interface ProviderProps {
  * `PanelProviderPage`: what one account is doing. Identity, the limits it is
  * closest to, its day against the week behind it with the split by model
  * under it, its own projects, the week's effort in one row, and the vendor's
- * own status line at the foot. The credits bar is not drawn, because the
- * fixture's accounts hold no credits.
+ * own status line at the foot. Codex's resets sit under the limits they clear.
+ * The credits bar is not drawn, because the fixture's accounts hold no
+ * credits.
  */
 export function Provider({ page, header, open }: ProviderProps): ReactElement {
   return (
@@ -61,6 +65,12 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
           </div>
         ))}
       </div>
+      {page.resets !== null && (
+        <>
+          <div className="panel-divider" />
+          <Resets resets={page.resets} />
+        </>
+      )}
       <div className="panel-divider" />
       <DayBlock
         today={page.today}
@@ -100,6 +110,28 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
         <ChevronRight className="panel-chevron" />
       </div>
     </>
+  );
+}
+
+/**
+ * `PanelProviderPage.resets`: the count, the soonest reset's name and lapse,
+ * and `Use…` while the vendor would apply one. The app's press only asks, in
+ * the page itself; here the button is drawn and inert like `Copy the fix`,
+ * because spending is not a route.
+ */
+function Resets({ resets }: { resets: ResetsRow }): ReactElement {
+  return (
+    <div className="panel-section panel-resets">
+      <div className="panel-label">
+        {RESETS_LABEL}
+        <span className="panel-label-end panel-resets-headline">{resets.headline}</span>
+      </div>
+      <div className="panel-line">
+        <span className="panel-caption panel-resets-caption">{resets.caption}</span>
+        {resets.usable && <span className="panel-small-button">{RESETS_USE}</span>}
+      </div>
+      {!resets.usable && <div className="panel-resets-hint">{RESETS_NOT_YET}</div>}
+    </div>
   );
 }
 

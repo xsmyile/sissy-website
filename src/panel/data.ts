@@ -108,7 +108,12 @@ const IDENTITIES: IdentityRow[] = [
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
  * over the costliest day's, and the total under the label is the bars above it
- * summed. A window's reset is what is left of it at its own pace mark.
+ * summed. A window's reset is what is left of it at its own pace mark, and it
+ * runs out when what is left of the window meets the rate spent so far.
+ *
+ * Codex's session is past the point OpenAI applies a reset, which is what makes
+ * its one reset usable: an account whose windows are further from their end
+ * holds the count and is offered no button.
  *
  * Every account's effort reading is of its strip's window: each model's
  * efforts sum to what the pills give that model across the covered days, and
@@ -145,9 +150,9 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       provider: "codex",
       account: null,
       name: "Codex",
-      window: "Weekly",
-      usedFraction: 0.46,
-      expectedFraction: 0.55,
+      window: "Session",
+      usedFraction: 0.94,
+      expectedFraction: 0.61,
     },
   ],
   agents: { running: 7, footprint: "2.22 GB" },
@@ -197,6 +202,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
+      resets: null,
       windows: [
         {
           id: "session",
@@ -330,6 +336,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
+      resets: null,
       windows: [
         {
           id: "session",
@@ -452,15 +459,20 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
         switchable: false,
       },
       limitsCaption: "Read 14:29",
-      binding: "weekly",
+      binding: "session",
+      resets: {
+        headline: "1 available",
+        caption: "Full reset (Weekly + 5 hr) · expires Oct 21",
+        usable: true,
+      },
       windows: [
         {
           id: "session",
           label: "Session",
-          reading: "38%",
-          usedFraction: 0.38,
+          reading: "94%",
+          usedFraction: 0.94,
           expectedFraction: 0.61,
-          caption: "23% in reserve · Lasts until reset · resets in 1h 57m",
+          caption: "33% in deficit · Runs out in 11m · resets in 1h 57m",
         },
         {
           id: "weekly",
