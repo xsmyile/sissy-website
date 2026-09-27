@@ -22,8 +22,8 @@ repository and is the reference for everything the site draws.
   Identities),
   `components/` the pieces they share, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `ProjectsCrop`, `ForgeCrop`, `IdentityCrop` and
-  `IdentitiesCrop`, each
+  enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
+  `IdentityCrop` and `IdentitiesCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
@@ -215,7 +215,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
   restating the hero. Under the title it is the demonstration the section's
-  claim needs, and the panel below it is where that claim is paid off. The
+  claim needs, and the two crops below it are where that claim is paid off:
+  the limits of the page the gauge opens, and Codex's, which carry the resets.
+  They are `LimitsCrop`, the page's header and its limits and nothing under
+  them, because a section draws the block it describes: the whole page was
+  drawn here once, and its day, projects and effort sat beside copy that
+  named none of them, a screen restating what the hero opens in one click. The
   figure still counts up on `[data-pace-band]`, and the blink still does not
   fire for it, because an unchanged figure re-entering the viewport is not new
   data.
