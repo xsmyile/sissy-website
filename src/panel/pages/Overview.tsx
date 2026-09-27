@@ -19,9 +19,9 @@ interface OverviewProps {
 const legendHelp = (row: GaugeRow): string => `Open ${row.name}`;
 
 const AGENTS_HELP = "How many sessions and agents have run, and what they are holding now";
-const AGENTS_TARGET = "agents";
+export const AGENTS_TARGET = "agents";
 const IDENTITY_HELP = "Show every repository's commit identity";
-const IDENTITY_TARGET = "identities";
+export const IDENTITY_TARGET = "identities";
 
 export function Overview({ snapshot, open }: OverviewProps): ReactElement {
   const { header, headline, gaugeRows, agents, projects, projectCount, identityLine, forge } =

@@ -235,7 +235,7 @@ export const INSTALL = {
   reassurance:
     "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
   menuBar:
-    "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar.",
+    "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar. The Sissy in this one takes you back to the panel at the top.",
   github: { label: "Source on GitHub", href: GITHUB_URL },
   uninstallSummary: "Uninstall",
   uninstallCommand: "brew uninstall --cask sissy",

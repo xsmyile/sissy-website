@@ -290,6 +290,43 @@ const timing = [
     text-wrap: pretty;
   }
 
+  /*
+   * The pulse on the next door to try. It is the page's voice rather than the
+   * app's, so it is drawn in the page's accent, outside the row, and never
+   * inside the replica's own colours.
+   */
+  .lit :global(.panel-live[data-hint]) {
+    position: relative;
+  }
+
+  .lit :global(.panel-live[data-hint]::after) {
+    content: "";
+    position: absolute;
+    inset: calc(-3 * var(--pt)) calc(-5 * var(--pt));
+    border-radius: calc(6 * var(--pt));
+    box-shadow: 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 35%, transparent);
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .lit :global(.panel-live[data-hint]::after) {
+      animation: hint-pulse 3.6s ease-in-out 1.2s infinite both;
+    }
+  }
+
+  @keyframes hint-pulse {
+    0%,
+    100% {
+      background: transparent;
+      box-shadow: 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 15%, transparent);
+    }
+
+    50% {
+      background: color-mix(in srgb, var(--accent) 6%, transparent);
+      box-shadow: 0 0 0 calc(3 * var(--pt)) color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+  }
+
   .lit :global(.hero-panel) {
     transform-style: preserve-3d;
     transform: rotateX(calc(var(--tilt-y, 0) * var(--tilt-max-x) * -1))

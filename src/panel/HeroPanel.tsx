@@ -1,4 +1,4 @@
-import { animate, inView } from "motion";
+import { animate } from "motion";
 import {
   type ReactElement,
   useCallback,
@@ -12,6 +12,7 @@ import { type BlinkDriver, driveBlink } from "./blink";
 import { DEMO_SNAPSHOT } from "./data";
 import { Panel } from "./Panel";
 import { BACK, type OpenPage, OVERVIEW, pageIdentity } from "./page";
+import { AGENTS_TARGET, IDENTITY_TARGET } from "./pages/Overview";
 import type { PanelPage } from "./types";
 
 /** Long enough after mount to read as a frame landing rather than as page load. */
@@ -31,11 +32,34 @@ const EYES = "[data-sissy-eye], .panel-cat-eye";
 /** Stiff enough to read as a popover resizing, damped enough not to wobble. */
 const PANEL_SPRING = { type: "spring", stiffness: 210, damping: 26 } as const;
 
-/** How much of the panel has to be on screen before a summons presents it. */
-const SUMMONED_IN_VIEW = 0.6;
+/**
+ * How long a summons waits for the scroll to end where the browser never says
+ * it has. Measured, the longest trip, from the foot of the page at 1440 x 900,
+ * took 1.42 s.
+ */
+const SCROLL_SETTLE_MS = 2000;
 
 /** The row the Overview leads with, which is where a summons leaves focus. */
 const FIRST_ROW = DEMO_SNAPSHOT.gaugeRows[0]?.id ?? null;
+
+const GAUGE_ROWS = new Set(DEMO_SNAPSHOT.gaugeRows.map((row) => row.id));
+
+/** The three kinds of door the Overview has, which is what the hint walks through. */
+type Door = "account" | "agents" | "identity";
+
+/** Each door and the row the hint sits on while it has not been opened yet. */
+const HINTS: readonly { door: Door; target: string }[] = [
+  ...(FIRST_ROW === null ? [] : [{ door: "account" as const, target: FIRST_ROW }]),
+  { door: "agents", target: AGENTS_TARGET },
+  { door: "identity", target: IDENTITY_TARGET },
+];
+
+function doorOf(target: string): Door | null {
+  if (GAUGE_ROWS.has(target)) return "account";
+  if (target === AGENTS_TARGET) return "agents";
+  if (target === IDENTITY_TARGET) return "identity";
+  return null;
+}
 
 /**
  * Opening a page moves focus inside the panel, and the page it sits on must
@@ -58,6 +82,13 @@ interface View {
  * HTML and the first client render agree and a page without JavaScript shows
  * the same Overview with nothing on it that looks pressable.
  *
+ * A replica reads as a screenshot until something says otherwise, so one row
+ * at a time carries `data-hint`, which the hero draws as a pulse: the first
+ * account, then the agents count, then the identity line, each giving way to
+ * the next once its kind of door has been opened, and nothing once all three
+ * have. The mark is set on the DOM rather than passed down, because the pages
+ * mirror the app and the app has no such thing.
+ *
  * Its light and its tilt are written onto the scene around it rather than kept
  * to itself, because the cat is the light's source and counter-drifts against
  * the panel's rotation.
@@ -65,6 +96,7 @@ interface View {
 export function HeroPanel({ label, anchor }: { label: string; anchor: string }): ReactElement {
   const [view, setView] = useState<View>({ page: OVERVIEW, focus: null });
   const [live, setLive] = useState(false);
+  const [opened, setOpened] = useState<ReadonlySet<Door>>(new Set());
   const rootRef = useRef<HTMLDivElement>(null);
   const driverRef = useRef<BlinkDriver | null>(null);
   const originsRef = useRef<string[]>([]);
@@ -73,20 +105,19 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
     const back = from === BACK;
     const focus = back ? (originsRef.current.pop() ?? null) : BACK;
     if (!back) originsRef.current.push(from);
+    const door = doorOf(from);
+    if (door !== null) setOpened((before) => new Set(before).add(door));
     setView({ page: next, focus });
   }, []);
 
-  const present = useCallback(() => {
+  const rewind = useCallback(() => {
     originsRef.current = [];
-    setView({ page: OVERVIEW, focus: FIRST_ROW });
-    const wrap = rootRef.current?.querySelector<HTMLElement>(".panel-wrap") ?? null;
-    if (wrap === null || window.matchMedia(REDUCED_MOTION).matches) return;
-    animate(
-      wrap,
-      { opacity: [0, 1], transform: ["translateY(-8px) scale(0.97)", "translateY(0px) scale(1)"] },
-      PANEL_SPRING,
-    ).then(() => clearInline([wrap]));
+    setView({ page: OVERVIEW, focus: null });
   }, []);
+
+  const land = useCallback(() => setView({ page: OVERVIEW, focus: FIRST_ROW }), []);
+
+  const hint = live ? (HINTS.find((entry) => !opened.has(entry.door))?.target ?? null) : null;
 
   useEffect(() => setLive(true), []);
 
@@ -113,8 +144,19 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
     driverRef.current?.blink();
   }, [view]);
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (root === null) return;
+    for (const marked of root.querySelectorAll<HTMLElement>("[data-hint]")) {
+      delete marked.dataset.hint;
+    }
+    if (hint === null || view.page.kind !== "overview") return;
+    const row = root.querySelector<HTMLElement>(`[data-target="${hint}"]`);
+    if (row !== null) row.dataset.hint = "";
+  }, [hint, view]);
+
   useTilt(rootRef);
-  useSummons(rootRef, anchor, present);
+  useSummons(rootRef, anchor, rewind, land);
   usePanelTransition(rootRef, pageIdentity(view.page));
 
   return (
@@ -135,46 +177,57 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
  * click on the status item opens the popover, and the popover on this page is
  * the one up here.
  *
- * The scroll centres the panel rather than landing on its top edge, so the
- * stacked scene shows the whole of it too. The presentation waits until the
- * panel is mostly on screen, because a blink played while it is still out of
- * view is a blink nobody sees. Without JavaScript the link is a plain anchor
- * and still lands on the panel.
+ * Whatever page the panel was left on goes back to the Overview the moment the
+ * link is pressed, while the panel is still off screen, so the resize is over
+ * before anyone can see it. Nothing else moves until the scroll has ended:
+ * then she blinks and focus lands on the first row. Started any sooner, on the
+ * panel coming into view, the arrival played during the scroll's long
+ * deceleration and read as a late glitch. The scroll centres the panel, so the
+ * stacked scene shows the whole of it too. Without JavaScript the link is a
+ * plain anchor and still lands on the panel.
  */
 function useSummons(
   ref: React.RefObject<HTMLDivElement | null>,
   anchor: string,
-  present: () => void,
+  rewind: () => void,
+  land: () => void,
 ): void {
   useEffect(() => {
     const root = ref.current;
     if (root === null) return;
     const selector = `a[href="#${anchor}"]`;
-    let arrival: (() => void) | null = null;
+    let settle: (() => void) | null = null;
 
     const onClick = (event: MouseEvent): void => {
       if (!(event.target instanceof Element) || event.target.closest(selector) === null) return;
       event.preventDefault();
+      settle?.();
+      rewind();
       const reduced = window.matchMedia(REDUCED_MOTION).matches;
       root.scrollIntoView({ block: "center", behavior: reduced ? "instant" : "smooth" });
-      arrival?.();
-      arrival = inView(
-        root,
-        () => {
-          arrival?.();
-          arrival = null;
-          present();
-        },
-        { amount: SUMMONED_IN_VIEW },
-      );
+      if (reduced) {
+        land();
+        return;
+      }
+      const arrive = (): void => {
+        settle?.();
+        settle = null;
+        land();
+      };
+      const fallback = window.setTimeout(arrive, SCROLL_SETTLE_MS);
+      window.addEventListener("scrollend", arrive, { once: true });
+      settle = () => {
+        window.clearTimeout(fallback);
+        window.removeEventListener("scrollend", arrive);
+      };
     };
 
     document.addEventListener("click", onClick);
     return () => {
       document.removeEventListener("click", onClick);
-      arrival?.();
+      settle?.();
     };
-  }, [ref, anchor, present]);
+  }, [ref, anchor, rewind, land]);
 }
 
 /**

@@ -56,11 +56,15 @@ import { MENU_BAR_CLOCK, MENU_BAR_OPEN, PANEL_ANCHOR, symbolHref } from "../cont
     height: 22px;
     margin-inline: -4px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.18);
+    transition: background 120ms ease;
   }
 
   .sissy:hover {
-    background: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .sissy:active {
+    background: rgba(255, 255, 255, 0.18);
   }
 
   .sissy:focus-visible {
@@ -88,15 +92,4 @@ import { MENU_BAR_CLOCK, MENU_BAR_OPEN, PANEL_ANCHOR, symbolHref } from "../cont
     font-weight: 500;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .sissy {
-      animation: item-press 160ms ease-out 420ms both;
-    }
-  }
-
-  @keyframes item-press {
-    from {
-      background: transparent;
-    }
-  }
 </style>
