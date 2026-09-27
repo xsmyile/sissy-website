@@ -101,8 +101,10 @@ const IDENTITIES: IdentityRow[] = [
  * hold the seven processes the Overview's agents door counts. The chart's bands
  * end on those rows' footprints, the fold's two and an agent that exited
  * mid-hour making the rest, and each row's lane ends on its load. Every
- * repository the identities page reads is one Sissy has seen an agent in, and
- * the Overview's line names the one that disagrees. Every
+ * repository the identities page reads is one Sissy has seen an agent in on
+ * some day, not only this one, because the app checks every repository
+ * `ProjectLedger` has banked: that is why `group935/tranzit` is checked without
+ * a row under By project. The Overview's line names the one that disagrees. Every
  * account's gauge reads the window `binding` would pick for its page.
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
