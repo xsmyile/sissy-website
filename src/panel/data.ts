@@ -59,11 +59,12 @@ const PERSONAL = "Smyile <smyile@example.com>";
 const WORK = "Billy Handsome <billy@group935.example>";
 
 /**
- * Seven repositories, ordered the way `makeIdentities` orders them: the one
+ * Five repositories, ordered the way `makeIdentities` orders them: the one
  * that disagrees first, then by name. Group 935's GitLab account has three, two
  * of them committing as the work identity, which is what makes that name the
  * expectation and `group935/buried`, set to the personal one in its own config,
- * the finding. Only a local override carries a fix.
+ * the finding. Only a local override carries a fix. Two personal repositories
+ * are enough to read the finding against; more only made the page taller.
  */
 const IDENTITIES: IdentityRow[] = [
   {
@@ -79,9 +80,7 @@ const IDENTITIES: IdentityRow[] = [
     ["group935-origins", "group935/origins", WORK],
     ["group935-tranzit", "group935/tranzit", WORK],
     ["billy", "xsmyile/billy", PERSONAL],
-    ["homebrew-sissy", "xsmyile/homebrew-sissy", PERSONAL],
     ["sissy", "xsmyile/sissy", PERSONAL],
-    ["sissy-website", "xsmyile/sissy-website", PERSONAL],
   ].map(
     ([id, name, author]): IdentityRow => ({
       id,
