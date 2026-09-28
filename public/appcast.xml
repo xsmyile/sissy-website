@@ -6,6 +6,27 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.2.9</title>
+            <pubDate>Mon, 28 Sep 2026 08:53:36 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>746</sparkle:version>
+            <sparkle:shortVersionString>0.2.9</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.2.9: See how the Mac is holding up
+
+- A Mac line on the Overview shows the kernel's memory pressure and the free
+  disk, orange at warn and red at critical.
+- The Mac has its own page: memory, swap and free disk, load against the
+  cores, uptime, and the three apps holding the most memory outside your
+  agents.
+- Under pressure, a small orange or red dot appears behind Sissy's neck in the
+  menu bar. The blue eye still means only that the Mac is held awake.
+- Switch it off under Settings > General > Mac health. It asks for no
+  permission.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.2.9/Sissy-0.2.9.dmg" length="6276691" type="application/octet-stream" sparkle:edSignature="v7OJ0XLTP1U/5u9n+vAuoO+eb6X9Jzw1QXhyG1V6n6LhedVXBHsT5gwtbBMyw3H/34neFYgi0TaohS58LWnSDQ=="/>
+        </item>
+        <item>
             <title>0.2.8</title>
             <pubDate>Sat, 26 Sep 2026 08:53:11 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -82,6 +103,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: 4t5pHzkM5KAjjj/yrDDoTrRyPJ11P9Qdw22VpvoqIA/Zc5/iPVXdjN0MLamxWUWMUd1lWhdDVAvHMqb6ujBwAA==
-length: 5189
+edSignature: aKzs4axyOLBb4bUapKdAuq95/sbzGEVidwN3V/yEF9wLNU+2KIJ7gF7E10N5NNFSig0yrewh9bOBR3DQBMjlBg==
+length: 6462
 -->
