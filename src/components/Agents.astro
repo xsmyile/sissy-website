@@ -15,7 +15,12 @@ import Section from "./Section.astro";
 >
   <p class="body" slot="aside">{AGENTS_SCENE.body}</p>
   <div class="stage">
-    <Panel snapshot={DEMO_SNAPSHOT} page={{ kind: "stats" }} label={AGENTS_SCENE.panelLabel} />
+    <Panel
+      snapshot={DEMO_SNAPSHOT}
+      tab="sessions"
+      showsAllProcesses
+      label={AGENTS_SCENE.panelLabel}
+    />
   </div>
 </Section>
 

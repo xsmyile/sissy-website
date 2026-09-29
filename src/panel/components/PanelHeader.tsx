@@ -1,10 +1,22 @@
 import type { ReactElement } from "react";
 import { headerSubtitle } from "../format";
 import type { HeaderReading } from "../types";
-import { CupAndSaucer, Gearshape } from "./Glyph";
+import { Calendar, CupAndSaucer, Gearshape } from "./Glyph";
 import { Cat } from "./Sprite";
 
-export function PanelHeader({ reading }: { reading: HeaderReading }): ReactElement {
+/**
+ * The Overview's header: Sissy, when the reading landed, and the app's own
+ * switches. The period is the calendar, one control for every tab that reads
+ * a window, and drawn disabled on a tab that reads the moment rather than
+ * hidden, so the header does not move under the pointer between tabs.
+ */
+export function PanelHeader({
+  reading,
+  readsPeriod,
+}: {
+  reading: HeaderReading;
+  readsPeriod: boolean;
+}): ReactElement {
   const held = reading.awake !== null;
   return (
     <div className="panel-header">
@@ -14,6 +26,9 @@ export function PanelHeader({ reading }: { reading: HeaderReading }): ReactEleme
         <div className="panel-subtitle">{headerSubtitle(reading)}</div>
       </div>
       <div className="panel-controls">
+        <span className="panel-glass panel-glass-quiet" data-disabled={!readsPeriod || undefined}>
+          <Calendar />
+        </span>
         <span className={held ? "panel-glass panel-glass-held" : "panel-glass"}>
           <CupAndSaucer />
         </span>

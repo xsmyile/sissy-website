@@ -3,7 +3,7 @@ import { GITHUB_URL } from "./site";
 /**
  * The band and the limits behind it, as one section.
  *
- * The band is the Overview's first gauge drawn at page scale, and every figure
+ * The band is the Usage tab's first gauge drawn at page scale, and every figure
  * on it comes from that row. It opens the section rather than standing as one
  * of its own: the figure is already in the hero's panel, and a screen that
  * restates it is a screen the page spends saying nothing new. Here it is the
@@ -16,7 +16,7 @@ export const LIMITS = {
   id: "limits",
   eyebrow: "Rate limits",
   title: "See how close you are before the CLI stops you.",
-  lede: "The Overview shows one gauge per account, on the window it is closest to running out of.",
+  lede: "The Usage tab shows one gauge per account, on the window it is closest to running out of.",
   rowId: "claude-xsmyile",
   resetsProvider: "codex",
   paceBody:
@@ -72,18 +72,25 @@ export const ACCOUNTS = {
     "Settings, Providers: two linked Claude accounts, and Add account under each vendor",
 } as const;
 
+/**
+ * The sessions, which are a tab of the panel since the app gave each module
+ * one. The panel beside the copy draws the tab with its running sessions
+ * unfolded, because the body names every one of them and the app opens that
+ * list closed.
+ */
 export const AGENTS_SCENE = {
   id: "agents",
   eyebrow: "Agents",
   title: "What is running right now, and what it holds.",
-  lede: "A rate limit and the Mac's memory are the two things that stop work now, so the Overview keeps a count of the agents on the label above the gauges. Click it for the page behind it.",
-  body: "First the day: how many sessions and agents it has had, how long it was worked and when, how much of the input the cache answered, and the longest turn. Under it every running session with its memory, its CPU and how long it has been up, named after the repository it is working in.",
-  panelLabel: "Sissy's Agents page",
+  lede: "A rate limit and the Mac's memory are the two things that stop work now, so the sessions have a tab of their own beside the gauges, and the Mac has the next one.",
+  body: "First the period: how many sessions and sub-agents it has had, how long it was worked and when, how much of the input the cache answered, and the longest turn. Under it every running session with its memory, its CPU and how long it has been up, named after the repository it is working in.",
+  panelLabel: "Sissy's Sessions tab",
 } as const;
 
 /**
  * The repositories, as one section: the commit-identity check leads, and the
- * two Overview blocks that are also about repositories follow it.
+ * two panel blocks that are also about repositories follow it, the Usage
+ * tab's projects and the Forge tab's contributions.
  *
  * The copy is the README's "Commit identity" paragraph, narrowed to what the
  * replica draws. The two blocks under it keep a sentence each, because a
@@ -103,12 +110,12 @@ export const GIT = {
     projects: {
       title: "By project",
       body: "Where the day went, one row per repository. A worktree counts against the one it was cut from, whichever CLI did the work.",
-      panelLabel: "The Overview's By project block",
+      panelLabel: "The Usage tab's By project block",
     },
     contributions: {
       title: "Contributions",
       body: "What you pushed on each forge you connected. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
-      panelLabel: "The Overview's Contributions block",
+      panelLabel: "The Forge tab's Contributions block",
       settingsLabel: "Settings, Forge: GitHub and GitLab connected, and Connect",
     },
   },

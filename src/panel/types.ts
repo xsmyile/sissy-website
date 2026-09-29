@@ -229,14 +229,15 @@ export interface ProviderPage {
 }
 
 /**
- * One running agent, as a row. Its band on the chart is its place in the list,
- * because only the standing rows are carried and the app numbers their bands
- * in the list's order.
+ * `AgentsBlock.Process`: one running session, as a row. `band` is its band on
+ * the chart and the tint its lane takes, null for a session pooled into the
+ * chart's grey rest.
  */
 export interface AgentProcess {
   id: string;
   provider: ProviderId;
   name: string;
+  band: number | null;
   /** Cores' worth of CPU since the sweep before, null on the sweep that first saw it. */
   cpuLoad: number | null;
   /** Its load at each sample of the chart, null where it was not running yet. */
@@ -252,8 +253,8 @@ export interface MemoryBand {
 }
 
 /**
- * `MemoryChart`: the retained hour, stacked by agent, the dearest band at the
- * axis. `starts` are the samples where a standing agent first appears after
+ * `MemoryChart`: the retained hour, stacked by session, the dearest band at the
+ * axis. `starts` are the samples where a standing session first appears after
  * the chart began; `span` and `peak` are the axis's two ends as printed.
  */
 export interface MemoryChart {
@@ -276,9 +277,9 @@ export interface ProviderCount {
   figures: string;
 }
 
-/** `AgentsBlock`, as `PanelStats` draws it: the counted half and the live one. */
-export interface StatsPage {
-  /** `agentsReading`: when the count on screen was taken, under the page's title. */
+/** `AgentsBlock`, as `PanelSessions` draws it: the counted half and the live one. */
+export interface SessionsBlock {
+  /** `agentsReading`: when the live half's sweep was taken, on its own label. */
   reading: string;
   live: {
     line: AgentsLine;
@@ -287,10 +288,8 @@ export interface StatsPage {
     caption: string;
     /** `UsageFormat.agentsLoad`, null for a reading with no counters. */
     load: string | null;
-    /** `standingProcesses`: the whole list up to six, five past it. */
+    /** Every running session, which the tab keeps behind one closed row. */
     processes: AgentProcess[];
-    /** `foldedProcesses`, as what the fold says of them; null where the list is whole. */
-    folded: AgentsLine | null;
   };
   counted: {
     period: Period;
@@ -304,6 +303,30 @@ export interface StatsPage {
     /** `ActivityTotals.longestTurnMilliseconds` as `turnDuration` prints it. */
     longestTurn: string | null;
   };
+}
+
+/** `MacHealthLevel`: the kernel's word for memory, and the disk's grade against RAM. */
+export type MacLevel = "normal" | "warn" | "critical";
+
+/** `UsagePanelSnapshot.MacApp`: one app and what it holds, the agents left out. */
+export interface MacApp {
+  id: string;
+  name: string;
+  footprint: string;
+}
+
+/**
+ * `UsagePanelSnapshot.MacBlock`, as `PanelMac` draws it. `caption` is the free
+ * share and the sample's age as the headline's second line prints them.
+ */
+export interface MacBlock {
+  memory: string;
+  pressure: MacLevel | null;
+  caption: string;
+  swap: string;
+  load: string;
+  uptime: string;
+  heaviest: MacApp[];
 }
 
 /**
@@ -353,8 +376,8 @@ export interface IdentityRow {
 export type IdentityLineState = "unread" | "clean" | "findings";
 
 /**
- * `IdentityLine`: the Overview's one line about commit identity, drawn on
- * every frame. `repository` is the row the page opens on, set only when
+ * `IdentityLine`: the one line about commit identity, drawn on every frame, on
+ * the Forge tab once a forge is connected. `repository` is the row the page opens on, set only when
  * exactly one repository is wrong.
  */
 export interface IdentityLine {
@@ -363,13 +386,31 @@ export interface IdentityLine {
   repository: string | null;
 }
 
+/** `PanelTab`: a module with a page of its own, in the order the tab bar draws them. */
+export type PanelTab = "usage" | "sessions" | "mac" | "disk" | "network" | "forge";
+
+/**
+ * `PanelTabBadge`: what a tab says about its page while another is open, as the
+ * colour its symbol takes and the line its hover adds.
+ */
+export interface TabBadge {
+  tint: "orange" | "red";
+  reason: string;
+}
+
+/** One tab of `PanelTab.visible`, with the badge `PanelTab.badge` gives it. */
+export interface TabEntry {
+  tab: PanelTab;
+  badge: TabBadge | null;
+}
+
 export interface PanelSnapshot {
   header: HeaderReading;
   headline: Headline;
+  tabs: TabEntry[];
   usedToday: number;
   meteringProviders: number;
   gaugeRows: GaugeRow[];
-  agents: AgentsLine;
   /**
    * `UsagePanelSnapshot.projects`: past three, the two busiest and one row
    * folding the rest, which names no owner and no forge.
@@ -384,16 +425,18 @@ export interface PanelSnapshot {
   identitiesReading: string;
   forge: ForgeRow[];
   providerPages: ProviderPage[];
-  stats: StatsPage;
+  sessions: SessionsBlock;
+  mac: MacBlock;
 }
 
 /**
  * Which surface the panel shows. Mirrors `UsagePanelView.Page`; the site adds
- * a case only when it draws that page.
+ * a case only when it draws that page. `overview` is the selected tab's own
+ * page, and which tab that is lives beside the page rather than in it, as the
+ * app keeps it, so the way back lands on the tab a page was opened from.
  */
 export type PanelPage =
   | { kind: "overview" }
   | { kind: "provider"; provider: ProviderId; account: string | null }
   | { kind: "effort"; provider: ProviderId; account: string | null }
-  | { kind: "stats" }
   | { kind: "identities"; focus: string | null };

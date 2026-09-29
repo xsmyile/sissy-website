@@ -1,11 +1,11 @@
 export const SITE_NAME = "Sissy";
-export const SITE_TITLE = "Sissy · The menu bar companion for developers who code with agents";
+export const SITE_TITLE = "Sissy · The menu bar companion for developers";
 export const SITE_DESCRIPTION =
-  "The menu bar companion for developers who code with agents: spend, rate limits, accounts, agents, projects and git, read from what is already on your Mac and the services you connect. No account of its own, no telemetry.";
+  "The menu bar companion for developers: spend, rate limits, accounts, agents, projects, git, and the Mac's memory, disk and network, read from what is already on your Mac and the services you connect. No account of its own, no telemetry.";
 
 export const TAGLINE = "The numbers you keep checking, one click away.";
 export const LEDE =
-  "The menu bar companion for developers who code with agents. Everything is read from what is already on your Mac and the services you connect.";
+  "The menu bar companion for developers: your agents, your Mac, your repositories. Everything is read from what is already on your Mac and the services you connect.";
 
 export const GITHUB_URL = "https://github.com/xsmyile/sissy";
 export const DOWNLOAD_URL = `${GITHUB_URL}/releases/latest/download/Sissy.dmg`;
@@ -47,13 +47,14 @@ export const HERO_PANEL_LABEL = "Sissy's panel";
 
 /**
  * What the panel invites. The README says every row with a chevron opens the
- * page behind it, which is true of the app; the replica draws chevrons on two
- * rows it leaves inert, so the invitation names the routes this panel has
- * rather than a rule the page would break twice. It leads with the verb,
- * because a replica that looks like a screenshot is read as one until
- * something says otherwise.
+ * page behind it, which is true of the app; the replica draws chevrons on rows
+ * it leaves inert and two tabs it draws no page for, so the invitation names
+ * the routes this panel has rather than a rule the page would break. The tabs
+ * are icons, so it names the ones that open. It leads with the verb, because a
+ * replica that looks like a screenshot is read as one until something says
+ * otherwise.
  */
-export const PANEL_INVITATION = "Try it: click an account, the agents count or the identity line.";
+export const PANEL_INVITATION = "Try it: click an account, or the Sessions, Mac and Forge tabs.";
 
 /** The hero panel's anchor, which the menu bar's Sissy at the foot of the page links back to. */
 export const PANEL_ANCHOR = "panel";

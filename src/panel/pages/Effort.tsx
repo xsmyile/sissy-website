@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactElement } from "react";
 import { PageHeader } from "../components/PageHeader";
+import { PanelGroup, Platters } from "../components/PanelGroup";
 import { BACK, type OpenPage } from "../page";
 import type { EffortReading, EffortRow, EffortSegment, ProviderPage } from "../types";
 
@@ -33,15 +34,23 @@ export function Effort({ page, reading, open }: EffortProps): ReactElement {
           (() => open({ kind: "provider", provider: page.provider, account: page.account }, BACK))
         }
       />
-      <div className="panel-effort-head">
-        <span className="panel-label">By effort</span>
-        <span className="panel-caption panel-label-end">{reading.window}</span>
-      </div>
-      <div className="panel-effort-models" data-tint={page.provider}>
-        {reading.rows.map((row) => (
-          <EffortModel row={row} key={row.id} />
-        ))}
-      </div>
+      <Platters>
+        <PanelGroup
+          className="panel-effort-models"
+          label={
+            <div className="panel-label">
+              By effort
+              <span className="panel-caption panel-label-end">{reading.window}</span>
+            </div>
+          }
+        >
+          <div className="panel-effort-rows" data-tint={page.provider}>
+            {reading.rows.map((row) => (
+              <EffortModel row={row} key={row.id} />
+            ))}
+          </div>
+        </PanelGroup>
+      </Platters>
     </>
   );
 }

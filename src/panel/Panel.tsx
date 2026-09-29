@@ -2,21 +2,40 @@ import "./panel.css";
 import type { ReactElement, ReactNode } from "react";
 import { ForgeSection } from "./components/ForgeSection";
 import { Identity } from "./components/Identity";
+import { PanelGroup, Platters } from "./components/PanelGroup";
+import { PanelHeader } from "./components/PanelHeader";
 import { ProjectsSection } from "./components/ProjectRow";
-import { type OpenPage, OVERVIEW, pageIdentity } from "./page";
+import { TAB_TITLES, TabBar } from "./components/TabBar";
+import { HOME_TAB, type OpenPage, OVERVIEW, pageIdentity, type SelectTab } from "./page";
 import { Effort } from "./pages/Effort";
+import { Forge } from "./pages/Forge";
 import { Identities, IdentitiesBlock } from "./pages/Identities";
+import { Mac } from "./pages/Mac";
 import { Overview } from "./pages/Overview";
 import { Provider, ProviderHeader, ProviderLimits } from "./pages/Provider";
-import { Stats } from "./pages/Stats";
-import type { AccountIdentity, PanelPage, PanelSnapshot, ProviderId, ProviderPage } from "./types";
+import { Sessions } from "./pages/Sessions";
+import type {
+  AccountIdentity,
+  PanelPage,
+  PanelSnapshot,
+  PanelTab,
+  ProviderId,
+  ProviderPage,
+} from "./types";
 
 interface PanelProps {
   snapshot: PanelSnapshot;
   page?: PanelPage;
+  tab?: PanelTab;
   label?: string;
   open?: OpenPage;
+  select?: SelectTab;
+  /** The Sessions tab's fold, which a surface that enlarges the tab may draw open. */
+  showsAllProcesses?: boolean;
 }
+
+/** `PanelTab.readsPeriod`: the Mac, the disk and the network read the moment. */
+const READS_PERIOD: ReadonlySet<PanelTab> = new Set(["usage", "sessions", "forge"]);
 
 function providerPage(
   page: { provider: ProviderId; account: string | null },
@@ -31,28 +50,60 @@ function providerPage(
   return found;
 }
 
-function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
+/** `UsagePanelView.homeHelp`: the way back names the tab it returns to. */
+function homeHelp(tab: PanelTab): string {
+  return tab === HOME_TAB ? "Back to today" : `Back to ${TAB_TITLES[tab]}`;
+}
+
+/** `UsagePanelView.home`: the selected tab's own page. */
+function home(
+  tab: PanelTab,
+  snapshot: PanelSnapshot,
+  showsAllProcesses: boolean,
+  open?: OpenPage,
+): ReactElement {
+  switch (tab) {
+    case "usage":
+      return <Overview snapshot={snapshot} open={open} />;
+    case "sessions":
+      return <Sessions block={snapshot.sessions} showsAllProcesses={showsAllProcesses} />;
+    case "mac":
+      return <Mac block={snapshot.mac} />;
+    case "forge":
+      return <Forge snapshot={snapshot} open={open} />;
+    case "disk":
+    case "network":
+      throw new Error(`The replica draws no page for the "${tab}" tab`);
+  }
+}
+
+function renderPage(
+  page: PanelPage,
+  tab: PanelTab,
+  snapshot: PanelSnapshot,
+  showsAllProcesses: boolean,
+  open?: OpenPage,
+) {
   switch (page.kind) {
     case "overview":
-      return <Overview snapshot={snapshot} open={open} />;
+      return home(tab, snapshot, showsAllProcesses, open);
     case "provider":
       return <Provider page={providerPage(page, snapshot)} header={snapshot.header} open={open} />;
     case "effort": {
       const found = providerPage(page, snapshot);
       const reading = found.effort;
       if (reading === null || reading.rows === null) {
-        throw new Error(`The fixture's "${pageIdentity(page)}" has no effort page to open`);
+        throw new Error(`The fixture's "${pageIdentity(page, tab)}" has no effort page to open`);
       }
       return <Effort page={found} reading={{ ...reading, rows: reading.rows }} open={open} />;
     }
-    case "stats":
-      return <Stats page={snapshot.stats} open={open} />;
     case "identities":
       return (
         <Identities
           rows={snapshot.identities}
           focus={page.focus}
           reading={snapshot.identitiesReading}
+          backLabel={homeHelp(tab)}
           open={open}
         />
       );
@@ -62,18 +113,34 @@ function renderPage(page: PanelPage, snapshot: PanelSnapshot, open?: OpenPage) {
 /**
  * The popover itself. Given `open` it is operable, with the routes the app has
  * and nothing else; without one it is a drawing of the same state, which is
- * what every surface below the hero wants.
+ * what every surface below the hero wants. `tab` is which module the Overview
+ * shows, kept beside the page as the app keeps it, so a page one level in
+ * returns to the tab it was opened from.
+ *
+ * The header and the tab bar stand outside the keyed page, because they stay
+ * put while a tab changes under them and the selection slides between tabs.
  */
 export function Panel({
   snapshot,
   page = OVERVIEW,
+  tab = HOME_TAB,
   label = "Sissy's panel",
   open,
+  select,
+  showsAllProcesses = false,
 }: PanelProps): ReactElement {
   const body = (
-    <div className="panel-page" key={pageIdentity(page)}>
-      {renderPage(page, snapshot, open)}
-    </div>
+    <>
+      {page.kind === "overview" && (
+        <div className="panel-header-block">
+          <PanelHeader reading={snapshot.header} readsPeriod={READS_PERIOD.has(tab)} />
+          <TabBar tabs={snapshot.tabs} selected={tab} select={select} />
+        </div>
+      )}
+      <div className="panel-page" key={pageIdentity(page, tab)}>
+        {renderPage(page, tab, snapshot, showsAllProcesses, open)}
+      </div>
+    </>
   );
   return (
     <div className="panel-wrap">
@@ -110,12 +177,14 @@ export function LimitsCrop({
   return (
     <Crop label={label}>
       <ProviderHeader page={page} header={snapshot.header} />
-      <ProviderLimits page={page} />
+      <Platters>
+        <ProviderLimits page={page} />
+      </Platters>
     </Crop>
   );
 }
 
-/** The Overview's projects block on its own, for a surface that enlarges it. */
+/** The Usage tab's projects block on its own, for a surface that enlarges it. */
 export function ProjectsCrop({
   snapshot,
   label,
@@ -125,17 +194,19 @@ export function ProjectsCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <ProjectsSection
-        label="By project · today"
-        rows={snapshot.projects}
-        count={snapshot.projectCount}
-      />
+      <Platters>
+        <ProjectsSection
+          label="By project · today"
+          rows={snapshot.projects}
+          count={snapshot.projectCount}
+        />
+      </Platters>
     </Crop>
   );
 }
 
 /**
- * The Overview's contributions block on its own.
+ * The Forge tab's contributions block on its own.
  *
  * Both connected accounts, because the block draws one row per connection and
  * the two are never summed: each vendor counts its own thing, so a total
@@ -150,7 +221,9 @@ export function ForgeCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+      <Platters>
+        <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+      </Platters>
     </Crop>
   );
 }
@@ -168,7 +241,9 @@ export function IdentitiesCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <IdentitiesBlock rows={snapshot.identities} focus={null} showsAll />
+      <Platters>
+        <IdentitiesBlock rows={snapshot.identities} focus={null} showsAll />
+      </Platters>
     </Crop>
   );
 }
@@ -190,7 +265,11 @@ export function IdentityCrop({
 }): ReactElement {
   return (
     <Crop label={label}>
-      <Identity identity={identity} />
+      <Platters>
+        <PanelGroup>
+          <Identity identity={identity} />
+        </PanelGroup>
+      </Platters>
     </Crop>
   );
 }

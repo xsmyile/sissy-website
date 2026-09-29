@@ -3,6 +3,7 @@ import { DayBlock } from "../components/DayBlock";
 import { ChevronRight } from "../components/Glyph";
 import { Identity } from "../components/Identity";
 import { PageHeader } from "../components/PageHeader";
+import { PanelGroup, Platters } from "../components/PanelGroup";
 import { ProjectsSection } from "../components/ProjectRow";
 import { ShareBar } from "../components/ShareBar";
 import { SEPARATOR } from "../format";
@@ -22,58 +23,60 @@ interface ProviderProps {
 }
 
 /**
- * `PanelProviderPage`: what one account is doing. Identity, the limits it is
- * closest to, its day against the week behind it with the split by model
- * under it, its own projects, the week's effort in one row, and the vendor's
- * own status line at the foot. Codex's resets sit under the limits they clear.
- * The credits bar is not drawn, because the fixture's accounts hold no
- * credits.
+ * `PanelProviderPage`: what one account is doing, a platter per question.
+ * Identity; the limits it is closest to, with Codex's resets under the windows
+ * they clear; its day against the week behind it with the split by model
+ * under it; its own projects; and the two doors, the week's effort and the
+ * vendor's own status line. The credits are not drawn, because the fixture's
+ * accounts hold none.
  */
 export function Provider({ page, header, open }: ProviderProps): ReactElement {
   return (
     <>
       <ProviderHeader page={page} header={header} back={open && (() => open(OVERVIEW, BACK))} />
-      <Identity identity={page.identity} />
-      <div className="panel-divider" />
-      <ProviderLimits page={page} />
-      <div className="panel-divider" />
-      <DayBlock
-        today={page.today}
-        models={page.models}
-        strip={page.strip}
-        tint={page.provider}
-        pointable={open !== undefined}
-      />
-      {page.projects.length > 0 && (
-        <>
-          <div className="panel-divider" />
-          <ProjectsSection label="By project" rows={page.projects} count={page.projectCount} />
-        </>
-      )}
-      {page.effort !== null && (
-        <>
-          <div className="panel-divider" />
-          <EffortLine
-            reading={page.effort}
-            press={
-              open &&
-              (() =>
-                open(
-                  { kind: "effort", provider: page.provider, account: page.account },
-                  EFFORT_TARGET,
-                ))
-            }
+      <Platters>
+        <PanelGroup>
+          <Identity identity={page.identity} />
+        </PanelGroup>
+        <ProviderLimits page={page} />
+        <PanelGroup>
+          <DayBlock
+            today={page.today}
+            models={page.models}
+            strip={page.strip}
+            tint={page.provider}
+            pointable={open !== undefined}
           />
-        </>
-      )}
-      <div className="panel-divider" />
-      <div className="panel-status">
-        <span className="panel-status-dot" />
-        <span className="panel-status-label">{page.status.label}</span>
-        <span className="panel-caption">·</span>
-        <span className="panel-caption">{page.status.checked}</span>
-        <ChevronRight className="panel-chevron" />
-      </div>
+        </PanelGroup>
+        {page.projects.length > 0 && (
+          <ProjectsSection label="By project" rows={page.projects} count={page.projectCount} />
+        )}
+        <PanelGroup className="panel-doors">
+          {page.effort !== null && (
+            <>
+              <EffortLine
+                reading={page.effort}
+                press={
+                  open &&
+                  (() =>
+                    open(
+                      { kind: "effort", provider: page.provider, account: page.account },
+                      EFFORT_TARGET,
+                    ))
+                }
+              />
+              <div className="panel-divider" />
+            </>
+          )}
+          <div className="panel-status">
+            <span className="panel-status-dot" />
+            <span className="panel-status-label">{page.status.label}</span>
+            <span className="panel-caption">·</span>
+            <span className="panel-caption">{page.status.checked}</span>
+            <ChevronRight className="panel-chevron" />
+          </div>
+        </PanelGroup>
+      </Platters>
     </>
   );
 }
@@ -100,13 +103,14 @@ export function ProviderHeader({
 }
 
 /**
- * `PanelProviderPage`'s limits: each window with its bar, its pace mark and
- * its caption, and Codex's resets under the windows they clear.
+ * `PanelProviderPage.capacityGroup`: each window with its bar, its pace mark
+ * and its caption, and Codex's resets under the windows they clear, on one
+ * platter.
  */
 export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
   return (
-    <>
-      <div className="panel-section panel-limits">
+    <PanelGroup className="panel-capacity">
+      <div className="panel-limits">
         <div className="panel-label">
           Limits
           <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
@@ -136,7 +140,7 @@ export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
           <Resets resets={page.resets} />
         </>
       )}
-    </>
+    </PanelGroup>
   );
 }
 
@@ -148,7 +152,7 @@ export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
  */
 function Resets({ resets }: { resets: ResetsRow }): ReactElement {
   return (
-    <div className="panel-section panel-resets">
+    <div className="panel-resets">
       <div className="panel-label">
         {RESETS_LABEL}
         <span className="panel-label-end panel-resets-headline">{resets.headline}</span>

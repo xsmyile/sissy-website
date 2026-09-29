@@ -6,10 +6,19 @@
  */
 .panel-wrap {
   --pt: var(--panel-pt, 1px);
-  --panel-width: calc(340 * var(--pt));
-  --panel-gutter: calc(14 * var(--pt));
+  --panel-width: calc(352 * var(--pt));
+  --panel-gutter: calc(20 * var(--pt));
+  --panel-platter-inset: calc(8 * var(--pt));
+  --panel-platter-padding: calc(var(--panel-gutter) - var(--panel-platter-inset));
+  --panel-platter-vertical: calc(10 * var(--pt));
+  --panel-platter-radius: calc(12 * var(--pt));
+  --panel-platter-gap: calc(10 * var(--pt));
+  --panel-platter-label-gap: calc(5 * var(--pt));
+  --panel-tabs: calc(30 * var(--pt));
+  --panel-tabs-inset: calc(2 * var(--pt));
   --panel-bar: calc(5 * var(--pt));
-  --panel-headline: calc(18 * var(--pt));
+  --panel-headline: calc(22 * var(--pt));
+  --panel-figure: calc(18 * var(--pt));
   --panel-headline-meta: calc(11 * var(--pt));
   --panel-row: calc(12 * var(--pt));
   --panel-mark: calc(14 * var(--pt));
@@ -28,6 +37,7 @@
   --panel-plot: calc(52 * var(--pt));
   --panel-day-label: calc(13 * var(--pt));
   --panel-agent-chart: calc(50 * var(--pt));
+  --panel-mac-step: calc(10 * var(--pt));
   --panel-agent-axis: calc(9.5 * var(--pt));
   --panel-lane-width: calc(70 * var(--pt));
   --panel-lane-height: calc(9 * var(--pt));
