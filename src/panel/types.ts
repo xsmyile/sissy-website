@@ -330,13 +330,27 @@ export interface MacBlock {
 }
 
 /**
- * One connected forge account, as `ForgeRowView` draws it: the contribution
- * total bare, the other three behind their own mark, and the age of the
- * reading under them.
+ * `ForgeEvent` as its line reads: `done` is `UsageFormat.forgeEventDone`, what
+ * was done and to what, and `tail` is `forgeEventTail`, the repository and the
+ * age with their leading separators. The replica draws only the events whose
+ * mark is a counter's, so `counter` names that mark; a push, an opened request
+ * or a review would need their glyphs through the pipeline first.
+ */
+export interface ForgeEvent {
+  counter: ForgeCounter;
+  done: string;
+  tail: string;
+}
+
+/**
+ * One connected forge account, as `PanelForge` draws its section: the
+ * vendor's heading with the age of the reading at its end, then the
+ * contribution total bare, the other three behind their own mark, and the last
+ * thing the account did under them.
  *
- * The two rows are never summed. Each vendor counts its own thing — GitHub its
- * contribution total, GitLab the events it recorded — so a total across them
- * would be a third number belonging to neither.
+ * The two sections are never summed. Each vendor counts its own thing — GitHub
+ * its contribution total, GitLab the events it recorded — so a total across
+ * them would be a third number belonging to neither.
  */
 export interface ForgeRow {
   id: string;
@@ -348,6 +362,7 @@ export interface ForgeRow {
   comments: string;
   /** `UsageFormat.forgeNotice`, which on a healthy row is how old the figures are. */
   notice: string;
+  latest: ForgeEvent | null;
 }
 
 /**
@@ -377,12 +392,14 @@ export type IdentityLineState = "unread" | "clean" | "findings";
 
 /**
  * `IdentityLine`: the one line about commit identity, drawn on every frame, on
- * the Forge tab once a forge is connected. `repository` is the row the page opens on, set only when
- * exactly one repository is wrong.
+ * the Forge tab once a forge is connected. `count` is `UsageFormat.identityCount`,
+ * the end of its heading, nil before the first sweep. `repository` is the row
+ * the page opens on, set only when exactly one repository is wrong.
  */
 export interface IdentityLine {
   state: IdentityLineState;
   summary: string;
+  count: string | null;
   repository: string | null;
 }
 
