@@ -83,4 +83,20 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   not from desktop Chrome, which will not open a window narrower than about
   500 px.
 
-Topic rules live in `.claude/rules/`, each scoped by `paths:` to the files it governs.
+## Topic rules
+
+The rest of the conventions live in `.claude/rules/`, one file per topic.
+Claude Code loads each by its `paths:` frontmatter; every other agent reads
+the file for the paths it is about to edit before editing them, because these
+are the maintenance contract, not background.
+
+| File | Governs |
+|---|---|
+| `.claude/rules/panel-replica.md` | `src/panel/**`, `src/settings/**`, `src/components/Hero.astro`: the mirror pairs, the fixture's invariants, the `--pt` measure and the replica's colours |
+| `.claude/rules/hero.md` | `src/components/Hero.astro`, `Install.astro`, `MenuBar.astro`, `src/panel/HeroPanel.tsx`, `blink.ts`, `motion.ts`: the scene, the blink, the operable panel and its hint |
+| `.claude/rules/arrival-motion.md` | `src/motion/**`, `src/components/Section.astro`, `src/panel/HeroPanel.tsx`: the tiers and how a section arrives |
+| `.claude/rules/page-sections.md` | `src/pages/**`, `src/components/**`: what each section draws and how its crops overlap |
+| `.claude/rules/page-style.md` | `src/styles/**`, `src/components/**`: the palette, the footer, links |
+| `.claude/rules/content.md` | `src/content/**`: where copy comes from, and the money note |
+| `.claude/rules/glyphs.md` | `src/panel/components/Glyph.tsx`, `src/panel/panel.css`: the SF Symbols and how to convert one |
+| `.claude/rules/appcast.md` | `public/appcast.xml`: the signed update feed nobody edits by hand |
