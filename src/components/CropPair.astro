@@ -1,0 +1,104 @@
+---
+/**
+ * Two crops of the panel, one lying over the edge of the other, each with a
+ * caption: a title in the page's text colour and a sentence after it. Below
+ * 920 px the two stack and nothing overlaps.
+ */
+interface Props {
+  under: { title: string; body: string };
+  over: { title: string; body: string };
+}
+
+const { under, over } = Astro.props;
+---
+
+<div class="pair">
+  <figure class="under">
+    <slot name="under" />
+    <figcaption><b>{under.title}</b> {under.body}</figcaption>
+  </figure>
+  <figure class="over">
+    <slot name="over" />
+    <figcaption><b>{over.title}</b> {over.body}</figcaption>
+  </figure>
+</div>
+
+<style>
+  /*
+   * The crop on top lies over the one under it, down and to the right, and
+   * covers only the platter inset along its right edge, which carries no
+   * text. Its caption sits beside it, so the pair is no taller than the crop
+   * under it and its caption. The crop on top carries a short shadow of its
+   * own, because two contact shadows alone do not say which edge is on top.
+   */
+  .pair {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  figure {
+    --panel-pt: 1.12px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
+    flex: none;
+    margin: 0;
+  }
+
+  .over {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    min-width: 0;
+    margin: 72px 0 0 calc(-6 * var(--panel-pt));
+  }
+
+  .over :global(.panel) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  figcaption {
+    max-width: calc(352 * var(--panel-pt));
+    font-size: 14.5px;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .over figcaption {
+    flex: 1 1 220px;
+  }
+
+  figcaption b {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  @media (max-width: 920px) {
+    .pair {
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    figure {
+      --panel-pt: 1px;
+    }
+
+    .over {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .over figcaption {
+      flex: none;
+    }
+  }
+</style>

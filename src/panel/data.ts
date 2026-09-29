@@ -109,7 +109,14 @@ const IDENTITIES: IdentityRow[] = [
  * its page.
  *
  * The Mac reads normal, so its tab carries no badge, and its heaviest apps
- * leave the sessions out, as `MacAppGrouping` does.
+ * leave the sessions out, as `MacAppGrouping` does. The Mac is a 12-core one
+ * with 36 GB, so the disk grades warn under 72 GB free and critical under 36,
+ * which is where the marks sit on a 995 GB home volume; its 184 GB free is
+ * normal, so the Disk tab carries no badge either. It booted six days and four
+ * hours before the fixture's Monday 21 Sep, on Sep 15, which is what the
+ * network's totals are since. Each rate series is the background log's
+ * five-second points over the two minutes the page opens on, and each figure
+ * over a chart is its last point.
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
  * over the costliest day's, and the total under the label is the bars above it
@@ -1004,6 +1011,65 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       { id: "/Applications/Safari.app", name: "Safari", footprint: "2.48 GB" },
       { id: "/Applications/Docker.app", name: "Docker", footprint: "1.96 GB" },
     ],
+  },
+  disk: {
+    free: "184 GB free",
+    level: "normal",
+    caption: "of 995 GB · Macintosh HD · read 6s ago",
+    used: 0.815,
+    warnMark: 0.928,
+    criticalMark: 0.964,
+    thresholds: "warn under 72 GB · critical under 36 GB",
+    purgeable: "12 GB",
+    activity: {
+      read: "Read 1.2 MB/s",
+      write: "Write 340 KB/s",
+      rates: {
+        interval: 5,
+        first: [
+          1023000, 927000, 601000, 731000, 2128000, 5277000, 7419000, 5257000, 2195000, 1197000,
+          681000, 328000, 1140000, 1311000, 1594000, 3321000, 1433000, 501000, 1058000, 1120000,
+          298000, 1019000, 1197000, 639000, 1200000,
+        ],
+        second: [
+          112000, 261000, 325000, 207000, 489000, 1074000, 2435000, 3276000, 2461000, 1135000,
+          280000, 433000, 406000, 243000, 191000, 271000, 254000, 443000, 488000, 1018000, 666000,
+          133000, 409000, 240000, 340000,
+        ],
+      },
+    },
+    volumes: [
+      { id: "t7-shield", name: "T7 Shield", free: "612 GB free of 1.0 TB", used: 0.388 },
+      { id: "backups", name: "Backups", free: "1.1 TB free of 2.0 TB", used: 0.45 },
+    ],
+    cleanup: [
+      { id: "derivedData", name: "Xcode DerivedData", size: "18 GB", offered: true },
+      { id: "npm", name: "npm cache", size: "3.1 GB", offered: true },
+      { id: "uv", name: "uv cache", size: "1.2 GB", offered: true },
+      { id: "deviceSupport", name: "iOS device support", size: "9.7 GB", offered: true },
+    ],
+  },
+  network: {
+    down: "↓ 1.8 MB/s",
+    up: "↑ 240 KB/s",
+    caption: "Wi-Fi · now",
+    rates: {
+      interval: 5,
+      first: [
+        1485000, 1547000, 1505000, 1283000, 275000, 652000, 1602000, 1522000, 2301000, 4234000,
+        5402000, 4634000, 3390000, 1803000, 1104000, 1265000, 1161000, 496000, 1249000, 1438000,
+        718000, 1456000, 1124000, 749000, 1800000,
+      ],
+      second: [
+        126000, 155000, 115000, 193000, 79000, 198000, 179000, 228000, 322000, 526000, 531000,
+        510000, 213000, 97000, 139000, 131000, 58000, 190000, 205000, 71000, 308000, 212000, 242000,
+        76000, 240000,
+      ],
+    },
+    interface: "Wi-Fi (en0)",
+    signal: "-52 dBm · 866 Mbps",
+    totalsLabel: "Since Sep 15",
+    totals: "↓ 38 GB · ↑ 4.6 GB",
   },
 };
 

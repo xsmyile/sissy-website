@@ -101,6 +101,33 @@ export const AGENTS_SCENE = {
 } as const;
 
 /**
+ * The Disk and Network tabs, as a pair of crops in the order the tab bar puts
+ * them. The captions are the README's own "At a glance" lines, narrowed to
+ * what the tabs draw; the lede says what `ServerConfig` says of both
+ * switches, that the counters, the route and the Wi-Fi signal answer with no
+ * permission and no request.
+ */
+export const DISK_NETWORK = {
+  id: "disk",
+  eyebrow: "Disk and network",
+  title: "Room on the disk, and what the link carries.",
+  lede: "The Disk and Network tabs sit beside the Mac's, and like it they read the machine itself: nothing to grant, and nothing asked of anyone.",
+  blocks: {
+    disk: {
+      title: "Disk",
+      body: "Free space graded against the Mac's RAM, marked where it turns warn and critical, read and write activity, and the developer caches you can clear, such as Xcode DerivedData, each after a confirmation.",
+      panelLabel: "The Disk tab: 184 GB free, activity, volumes and the caches taking room",
+    },
+    network: {
+      title: "Network",
+      body: "What the links carry now and over the last two minutes, what they carried since boot, and the Wi-Fi signal.",
+      panelLabel:
+        "The Network tab: the rates now and over two minutes, the interface and the totals",
+    },
+  },
+} as const;
+
+/**
  * The repositories, as one section: the commit-identity check leads, and the
  * two panel blocks that are also about repositories follow it, the Usage
  * tab's projects and the Forge tab's contributions.

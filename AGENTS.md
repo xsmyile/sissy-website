@@ -8,23 +8,26 @@ repository and is the reference for everything the site draws.
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
-  `Agents`, `Git`, `Privacy`, `Detail`, `Install` and `Footer` are the page in
-  order, which is the order the panel itself reads in: the Usage tab's gauges
-  and the accounts behind them, the Sessions tab, then the repositories. `Section` is the frame the middle ones share
+  `Agents`, `DiskNetwork`, `Git`, `Privacy`, `Detail`, `Install` and `Footer`
+  are the page in order, which is the order the panel's tabs read in: the
+  Usage tab's gauges and the accounts behind them, Sessions and Mac, Disk and
+  Network, then the repositories. `Section` is the frame the middle ones share
   (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
   both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
-  says how it arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
+  says how it arrives); `CropPair` lays one crop over the edge of another with a
+  caption each; `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
   `Inline` are the pieces. `Nav` is rendered inside `Hero`, not beside it, and
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
   on the page and, on the Overview, on the tab; `page.ts` carries which page
-  that is, which tabs have one, and how one is opened. `pages/` holds one
-  component per page or tab (Overview, which is the Usage tab, Sessions, Mac,
-  Forge, Provider, Effort, Identities), `components/` the pieces they share,
+  that is and how one is opened. `pages/` holds one component per page or tab
+  (Overview, which is the Usage tab, Sessions, Mac, Disk, Network, Forge,
+  Provider, Effort, Identities), `components/` the pieces they share,
   `PanelGroup` the platter every block sits on and `TabBar` the modules, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
   enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
-  `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop` and `MacCrop`, each
+  `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop`, `MacCrop`, `DiskCrop`
+  and `NetworkCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of

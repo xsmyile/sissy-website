@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactElement } from "react";
-import { DRAWN_TABS, type SelectTab, tabTarget } from "../page";
+import { type SelectTab, tabTarget } from "../page";
 import type { PanelTab, TabEntry } from "../types";
 import {
   ArrowTriangleBranch,
@@ -55,51 +55,25 @@ export function TabBar({
     <div className="panel-tabs" style={style}>
       <span className="panel-tab-selection" aria-hidden="true" />
       {tabs.map((entry) => (
-        <Tab
-          key={entry.tab}
-          entry={entry}
-          selected={entry.tab === selected}
-          live={select !== undefined}
-          select={select !== undefined && DRAWN_TABS.has(entry.tab) ? select : undefined}
-        />
+        <Tab key={entry.tab} entry={entry} selected={entry.tab === selected} select={select} />
       ))}
     </div>
   );
 }
 
-/**
- * One tab. On an operable bar a tab with no page behind it is still named, on
- * the hover and to a screen reader, as the app names every tab.
- */
 function Tab({
   entry,
   selected,
-  live,
   select,
 }: {
   entry: TabEntry;
   selected: boolean;
-  live: boolean;
   select?: SelectTab;
 }): ReactElement {
   const TabSymbol = TAB_SYMBOLS[entry.tab];
   const title = TAB_TITLES[entry.tab];
   const tint = entry.badge?.tint;
   const help = entry.badge === null ? title : `${title}\n${entry.badge.reason}`;
-  if (select === undefined && live) {
-    return (
-      <span
-        className="panel-tab"
-        data-selected={selected || undefined}
-        data-badge={tint}
-        role="img"
-        aria-label={title}
-        title={help}
-      >
-        <TabSymbol />
-      </span>
-    );
-  }
   if (select === undefined) {
     return (
       <span className="panel-tab" data-selected={selected || undefined} data-badge={tint}>
