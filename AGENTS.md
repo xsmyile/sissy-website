@@ -93,7 +93,7 @@ are the maintenance contract, not background.
 | File | Governs |
 |---|---|
 | `.claude/rules/panel-replica.md` | `src/panel/**`, `src/settings/**`, `src/components/Hero.astro`: the mirror pairs, the fixture's invariants, the `--pt` measure and the replica's colours |
-| `.claude/rules/hero.md` | `src/components/Hero.astro`, `Install.astro`, `MenuBar.astro`, `src/panel/HeroPanel.tsx`, `blink.ts`, `motion.ts`: the scene, the blink, the operable panel and its hint |
+| `.claude/rules/hero.md` | `src/components/Hero.astro`, `src/components/Install.astro`, `src/components/MenuBar.astro`, `src/panel/HeroPanel.tsx`, `src/panel/blink.ts`, `src/panel/motion.ts`: the scene, the blink, the operable panel and its hint |
 | `.claude/rules/arrival-motion.md` | `src/motion/**`, `src/components/Section.astro`, `src/panel/HeroPanel.tsx`: the tiers and how a section arrives |
 | `.claude/rules/page-sections.md` | `src/pages/**`, `src/components/**`: what each section draws and how its crops overlap |
 | `.claude/rules/page-style.md` | `src/styles/**`, `src/components/**`: the palette, the footer, links |
