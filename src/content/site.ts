@@ -48,13 +48,11 @@ export const HERO_PANEL_LABEL = "Sissy's panel";
 /**
  * What the panel invites. The README says every row with a chevron opens the
  * page behind it, which is true of the app; the replica draws chevrons on rows
- * it leaves inert and two tabs it draws no page for, so the invitation names
- * the routes this panel has rather than a rule the page would break. The tabs
- * are icons, so it names the ones that open. It leads with the verb, because a
- * replica that looks like a screenshot is read as one until something says
- * otherwise.
+ * it leaves inert, so the invitation names the routes this panel has rather
+ * than a rule the page would break. It leads with the verb, because a replica
+ * that looks like a screenshot is read as one until something says otherwise.
  */
-export const PANEL_INVITATION = "Try it: click an account, or the Sessions, Mac and Forge tabs.";
+export const PANEL_INVITATION = "Try it: click an account or any tab.";
 
 /** The hero panel's anchor, which the menu bar's Sissy at the foot of the page links back to. */
 export const PANEL_ANCHOR = "panel";

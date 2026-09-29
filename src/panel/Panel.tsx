@@ -7,10 +7,12 @@ import { PanelHeader } from "./components/PanelHeader";
 import { ProjectsSection } from "./components/ProjectRow";
 import { TAB_TITLES, TabBar } from "./components/TabBar";
 import { HOME_TAB, type OpenPage, OVERVIEW, pageIdentity, type SelectTab } from "./page";
+import { Disk } from "./pages/Disk";
 import { Effort } from "./pages/Effort";
 import { Forge } from "./pages/Forge";
 import { Identities, IdentitiesBlock } from "./pages/Identities";
 import { Mac } from "./pages/Mac";
+import { Network } from "./pages/Network";
 import { Overview } from "./pages/Overview";
 import { Provider, ProviderHeader, ProviderLimits } from "./pages/Provider";
 import { Sessions, SessionsNow } from "./pages/Sessions";
@@ -62,11 +64,12 @@ function home(tab: PanelTab, snapshot: PanelSnapshot, open?: OpenPage): ReactEle
       return <Sessions block={snapshot.sessions} />;
     case "mac":
       return <Mac block={snapshot.mac} />;
+    case "disk":
+      return <Disk block={snapshot.disk} />;
+    case "network":
+      return <Network block={snapshot.network} />;
     case "forge":
       return <Forge snapshot={snapshot} open={open} />;
-    case "disk":
-    case "network":
-      throw new Error(`The replica draws no page for the "${tab}" tab`);
   }
 }
 
@@ -174,6 +177,36 @@ export function MacCrop({
   return (
     <Crop label={label}>
       <Mac block={snapshot.mac} />
+    </Crop>
+  );
+}
+
+/** The Disk tab's page on its own. */
+export function DiskCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <Disk block={snapshot.disk} />
+    </Crop>
+  );
+}
+
+/** The Network tab's page on its own. */
+export function NetworkCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <Network block={snapshot.network} />
     </Crop>
   );
 }

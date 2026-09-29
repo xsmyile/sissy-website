@@ -6,13 +6,6 @@ export const OVERVIEW: PanelPage = { kind: "overview" };
 export const HOME_TAB: PanelTab = "usage";
 
 /**
- * The tabs the replica draws a page for. Disk and Network sit in the bar drawn
- * and inert: one spends a cleanup, which is a write, and the other samples the
- * links once a second, which a fixture cannot.
- */
-export const DRAWN_TABS: ReadonlySet<PanelTab> = new Set(["usage", "sessions", "mac", "forge"]);
-
-/**
  * Opens a page from a control on the one showing, naming the control it came
  * from so the surface that owns the state can put focus back on it.
  *

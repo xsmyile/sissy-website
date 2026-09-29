@@ -14,6 +14,9 @@ paths:
   `pages/Effort.tsx` mirrors `PanelEffortPage.swift`, `pages/Sessions.tsx`
   mirrors `PanelSessions.swift`, `pages/Mac.tsx` mirrors `PanelMac.swift`,
   `pages/Forge.tsx` mirrors `PanelForge.swift` and `PanelIdentityLine`,
+  `pages/Disk.tsx` mirrors `PanelDisk.swift`, `PanelDiskActivity.swift` and
+  `PanelDiskCleanup.swift`, `pages/Network.tsx` mirrors `PanelNetwork.swift`,
+  `components/RateSparkline.tsx` mirrors `PanelRateSparkline.swift`,
   `components/TabBar.tsx` mirrors `PanelTabs.swift`,
   `components/PanelGroup.tsx` mirrors `PanelGroup` and `PanelPlatter`,
   `pages/Identities.tsx` mirrors

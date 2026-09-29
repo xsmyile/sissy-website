@@ -1,0 +1,23 @@
+---
+import { DISK_NETWORK } from "../content/sections";
+import { DEMO_SNAPSHOT } from "../panel/data";
+import { DiskCrop, NetworkCrop } from "../panel/Panel";
+import CropPair from "./CropPair.astro";
+import Section from "./Section.astro";
+
+const { disk, network } = DISK_NETWORK.blocks;
+---
+
+<Section
+  id={DISK_NETWORK.id}
+  eyebrow={DISK_NETWORK.eyebrow}
+  title={DISK_NETWORK.title}
+  lede={DISK_NETWORK.lede}
+  layout="stack"
+  tier="support"
+>
+  <CropPair under={disk} over={network}>
+    <DiskCrop slot="under" snapshot={DEMO_SNAPSHOT} label={disk.panelLabel} />
+    <NetworkCrop slot="over" snapshot={DEMO_SNAPSHOT} label={network.panelLabel} />
+  </CropPair>
+</Section>

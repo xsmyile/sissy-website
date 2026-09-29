@@ -57,15 +57,16 @@ paths:
 - **One panel is operable, and only along routes the app has.** The hero's is
   the only one; every other panel on the page is the same markup rendered
   inert. A panel is given `open` or it is not, and that single switch decides
-  whether its rows are buttons. The routes are the Usage, Sessions, Mac and
-  Forge tabs, the three gauge rows, the commit identity line on the Forge tab,
+  whether its rows are buttons. The routes are the six tabs, the three gauge
+  rows, the commit identity line on the Forge tab,
   the `By effort` row where it is a door, and the back control, and nothing
   else — the period, the picker, refresh, settings, the projects label,
-  `Show all`, the sessions' `By repository` fold, `Copy the fix` and Codex's
-  `Use…` stay drawn and dead, because spending a reset is a write and not a
-  route. The Disk and Network tabs are drawn in the bar and left inert with
-  no page behind them: Disk's cleanup is a write, and Network samples the
-  links once a second, which a fixture cannot. The tab and the page are two
+  `Show all`, the sessions' `By repository` fold, `Copy the fix`, Codex's
+  `Use…` and the Disk tab's `Clean…` stay drawn and dead, because spending a
+  reset or clearing a cache is a write and not a route. The Disk and Network
+  pages are drawn as the app opens them, on the background log's last two
+  minutes, and do not sample: a fixture has no link to read, and the
+  sparklines' hover is not mirrored. The tab and the page are two
   states, as `UsagePanelView` keeps them, so Back from a page returns to the
   tab it was opened from and is named after it, `Back to Forge` from the
   identities page. A tab keeps focus when it is pressed, and its hover names

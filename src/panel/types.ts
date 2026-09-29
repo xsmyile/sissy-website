@@ -22,7 +22,7 @@ export type ForgeHost = "github" | "gitlab";
  */
 export type ForgeCounter = "merged" | "issues" | "comments";
 
-export type BarTint = ProviderId | "share";
+export type BarTint = ProviderId | "share" | "secondary";
 
 export type Period = "Today" | "7 days" | "30 days" | "All";
 
@@ -386,6 +386,73 @@ export interface IdentityLine {
   repository: string | null;
 }
 
+/**
+ * `RateSparkline.Point`s over `LiveCadence.window`, evenly `interval` seconds
+ * apart and oldest first, the last one now. Two series of bytes a second,
+ * the second drawn under the first. The figures above the chart are the last
+ * points as `UsageFormat` prints them, which is why they are carried apart.
+ */
+export interface RateSeries {
+  interval: number;
+  first: number[];
+  second: number[];
+}
+
+/** `UsagePanelSnapshot.DiskVolumeRow`: a volume other than the home one. */
+export interface DiskVolumeRow {
+  id: string;
+  name: string;
+  free: string;
+  used: number;
+}
+
+/**
+ * One `CleanupTarget` row, as `DiskCleanupPlatter` draws a sized cache: its
+ * name, its size, and whether `Clean…` is offered, which is whenever it holds
+ * anything and nothing else is under way.
+ */
+export interface CleanupRow {
+  id: string;
+  name: string;
+  size: string;
+  offered: boolean;
+}
+
+/**
+ * `UsagePanelSnapshot.DiskBlock` with the activity and cleanup the Disk tab
+ * reads beside it. `free` is the headline, graded by `level` against the Mac's
+ * RAM; `used`, `warnMark` and `criticalMark` are shares of the home volume.
+ */
+export interface DiskBlock {
+  free: string;
+  level: MacLevel | null;
+  caption: string;
+  used: number;
+  warnMark: number | null;
+  criticalMark: number | null;
+  thresholds: string;
+  purgeable: string;
+  activity: { read: string; write: string; rates: RateSeries };
+  volumes: DiskVolumeRow[];
+  cleanup: CleanupRow[];
+}
+
+/**
+ * `NetworkReading`, as `PanelNetwork` prints it: the rates now over the
+ * link's name, the last two minutes, and the interface, the Wi-Fi signal
+ * where there is one, and the totals under the label that says since when.
+ */
+export interface NetworkBlock {
+  down: string;
+  up: string;
+  caption: string;
+  rates: RateSeries;
+  interface: string;
+  signal: string | null;
+  totalsLabel: string;
+  totals: string;
+}
+
 /** `PanelTab`: a module with a page of its own, in the order the tab bar draws them. */
 export type PanelTab = "usage" | "sessions" | "mac" | "disk" | "network" | "forge";
 
@@ -427,6 +494,8 @@ export interface PanelSnapshot {
   providerPages: ProviderPage[];
   sessions: SessionsBlock;
   mac: MacBlock;
+  disk: DiskBlock;
+  network: NetworkBlock;
 }
 
 /**

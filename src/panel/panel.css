@@ -19,6 +19,7 @@
   --panel-held-glyph: #6fb2ff;
   --panel-quaternary: rgba(255, 255, 255, 0.1);
   --panel-system-orange: #ff9f0a;
+  --panel-system-cyan: #64d2ff;
   --panel-platter: rgba(255, 255, 255, 0.06);
   --panel-separator: rgba(255, 255, 255, 0.1);
   --panel-tab-selected: rgba(255, 255, 255, 0.16);
@@ -529,6 +530,10 @@ svg[data-glyph="arrow.triangle.branch"] {
 
 .panel-bar-fill[data-tint="codex"] {
   background: var(--panel-text);
+}
+
+.panel-bar-fill[data-tint="secondary"] {
+  background: var(--panel-secondary);
 }
 
 .panel-bar-fill[data-tint="share"] {
@@ -1360,4 +1365,137 @@ svg[data-glyph="arrow.triangle.branch"] {
 .panel-mac-value {
   margin-left: auto;
   white-space: nowrap;
+}
+
+/*
+ * Disk and Network tabs. RateSparkline draws the second series under the
+ * first, blue received or read over cyan sent or written, on the baseline the
+ * app strokes at a fifth of the secondary grey.
+ */
+.panel-rates {
+  display: flex;
+  gap: calc(14 * var(--pt));
+  white-space: nowrap;
+}
+
+.panel-rates-small {
+  font-size: var(--panel-row);
+}
+
+.panel-rate-figure {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(5 * var(--pt));
+}
+
+.panel-rate-swatch {
+  flex: none;
+  width: calc(10 * var(--pt));
+  height: calc(3 * var(--pt));
+  border-radius: 999px;
+  background: var(--panel-system-blue);
+}
+
+.panel-rate-swatch[data-series="second"] {
+  background: var(--panel-system-cyan);
+}
+
+.panel-sparkline {
+  display: grid;
+  gap: calc(3 * var(--pt));
+}
+
+.panel-sparkline-plot {
+  display: block;
+  width: 100%;
+  height: calc(44 * var(--pt));
+  overflow: visible;
+  fill: none;
+  stroke-width: calc(1.5 * var(--pt));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.panel-sparkline-baseline {
+  stroke: rgba(235, 235, 245, 0.12);
+  stroke-width: 1px;
+}
+
+.panel-sparkline-first {
+  stroke: var(--panel-system-blue);
+}
+
+.panel-sparkline-second {
+  stroke: var(--panel-system-cyan);
+}
+
+.panel-sparkline-axis {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(8 * var(--pt));
+  font-size: var(--panel-agent-axis);
+  color: var(--panel-tertiary);
+}
+
+.panel-disk-window,
+.panel-disk-thresholds {
+  font-size: var(--panel-caption);
+  color: var(--panel-tertiary);
+}
+
+.panel-disk-track {
+  display: grid;
+  gap: calc(4 * var(--pt));
+}
+
+.panel-disk-track .panel-bar {
+  background: var(--panel-quaternary);
+}
+
+.panel-disk-fill {
+  --disk-tint: var(--panel-secondary);
+
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--disk-tint) 80%, white),
+    var(--disk-tint)
+  );
+}
+
+.panel-disk-fill[data-level="warn"] {
+  --disk-tint: var(--panel-system-orange);
+}
+
+.panel-disk-fill[data-level="critical"] {
+  --disk-tint: var(--panel-system-red);
+}
+
+.panel-disk-mark {
+  border-radius: 999px;
+}
+
+.panel-disk-mark[data-level="warn"] {
+  background: var(--panel-system-orange);
+}
+
+.panel-disk-mark[data-level="critical"] {
+  background: var(--panel-system-red);
+}
+
+.panel-disk-volume {
+  display: grid;
+  gap: calc(4 * var(--pt));
+}
+
+.panel-clean {
+  flex: none;
+  margin-top: 0;
+  font-size: var(--panel-headline-meta);
+}
+
+.panel-network {
+  gap: calc(10 * var(--pt));
 }
