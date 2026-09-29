@@ -30,17 +30,9 @@ const LANE_CELL_INDICES = Array.from({ length: LANE_CELLS }, (_, cell) => cell);
  * length.
  *
  * The running sessions fold behind one row, closed as the app opens it.
- * `showsAllProcesses` is that row's state, which the app keeps local to the
- * tab; here the caller picks it, because no panel on the site toggles it.
  */
-export function Sessions({
-  block,
-  showsAllProcesses,
-}: {
-  block: SessionsBlock;
-  showsAllProcesses: boolean;
-}): ReactElement {
-  const { live, counted } = block;
+export function Sessions({ block }: { block: SessionsBlock }): ReactElement {
+  const { counted } = block;
   const underTheHood = counted.cache.share !== null || counted.longestTurn !== null;
   return (
     <Platters>
@@ -91,30 +83,49 @@ export function Sessions({
           )}
         </PanelGroup>
       )}
-      <PanelGroup
-        className="panel-sessions-live"
-        label={
-          <div className="panel-label">
-            Now
-            <span className="panel-caption panel-label-end">{block.reading}</span>
-            <ArrowClockwise className="panel-refresh" />
-          </div>
-        }
-      >
-        <div className="panel-reading">{agentsRunning(live.line)}</div>
-        {live.chart && <Chart chart={live.chart} />}
-        <div className="panel-caption">{live.caption}</div>
-        {live.load && <div className="panel-caption">{live.load}</div>}
-        <div className="panel-sessions-rows">
-          <div className="panel-disclosure">
-            {showsAllProcesses ? <ChevronDown /> : <ChevronRight />}
-            {SESSIONS_DISCLOSURE}
-          </div>
-          {showsAllProcesses &&
-            live.processes.map((process) => <ProcessRow key={process.id} process={process} />)}
-        </div>
-      </PanelGroup>
+      <SessionsNow block={block} showsAllProcesses={false} />
     </Platters>
+  );
+}
+
+/**
+ * `PanelSessions.liveSection`: what the sessions running now are holding, and
+ * the row they fold behind. `showsAllProcesses` is that row's state, which the
+ * app keeps local to the tab; here the caller picks it, because no panel on
+ * the site toggles it, and a surface that enlarges this block draws it open.
+ */
+export function SessionsNow({
+  block,
+  showsAllProcesses,
+}: {
+  block: SessionsBlock;
+  showsAllProcesses: boolean;
+}): ReactElement {
+  const { live } = block;
+  return (
+    <PanelGroup
+      className="panel-sessions-live"
+      label={
+        <div className="panel-label">
+          Now
+          <span className="panel-caption panel-label-end">{block.reading}</span>
+          <ArrowClockwise />
+        </div>
+      }
+    >
+      <div className="panel-reading">{agentsRunning(live.line)}</div>
+      {live.chart && <Chart chart={live.chart} />}
+      <div className="panel-caption">{live.caption}</div>
+      {live.load && <div className="panel-caption">{live.load}</div>}
+      <div className="panel-sessions-rows">
+        <div className="panel-disclosure">
+          {showsAllProcesses ? <ChevronDown /> : <ChevronRight />}
+          {SESSIONS_DISCLOSURE}
+        </div>
+        {showsAllProcesses &&
+          live.processes.map((process) => <ProcessRow key={process.id} process={process} />)}
+      </div>
+    </PanelGroup>
   );
 }
 

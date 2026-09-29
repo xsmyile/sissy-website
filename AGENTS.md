@@ -24,7 +24,7 @@ repository and is the reference for everything the site draws.
   `PanelGroup` the platter every block sits on and `TabBar` the modules, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
   enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
-  `IdentityCrop` and `IdentitiesCrop`, each
+  `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop` and `MacCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
@@ -318,12 +318,13 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   crop. So `.panel` carries only its contact shadow, and the hero, which is the
   one panel presented as floating, draws its own light over it. The one
   exception is a surface laid over another: in `Limits` Codex's limits over
-  Claude's, in `Git` the contributions block over the identities page and the
+  Claude's, in `Agents` the Mac tab over the sessions' Now block, in `Git` the contributions block over the identities page and the
   projects block, and Settings ▸ Forge over the contributions block. Each
   surface on top carries a short shadow of its own, because two contact
   shadows alone do not say which edge is on top. An overlap covers a frame or
   a caption and never a line of text a reader is meant to finish, at any
-  width: below 920 px Limits' pair and Git's first two blocks stack, and
+  width: below 920 px Limits' pair, Agents' pair and Git's first two blocks
+  stack, and
   Settings ▸ Forge lies over no more than the contributions block's bottom
   margin, because a column that narrow has no other frame left to lie over.
 - **The palette is the seal point Siamese the app is named after.** Graphite

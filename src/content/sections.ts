@@ -73,18 +73,31 @@ export const ACCOUNTS = {
 } as const;
 
 /**
- * The sessions, which are a tab of the panel since the app gave each module
- * one. The panel beside the copy draws the tab with its running sessions
- * unfolded, because the body names every one of them and the app opens that
- * list closed.
+ * The two things that stop work now besides a rate limit, as a pair of crops:
+ * the Sessions tab's live block, its running sessions unfolded because its
+ * caption names every one of them, and the Mac tab lying over its edge. The
+ * counted half of the Sessions tab is the hero's to show, one click away, so
+ * a caption says it is there rather than drawing it again.
+ *
+ * The Mac caption is the README's own list, narrowed to what the tab draws.
  */
 export const AGENTS_SCENE = {
   id: "agents",
   eyebrow: "Agents",
   title: "What is running right now, and what it holds.",
   lede: "A rate limit and the Mac's memory are the two things that stop work now, so the sessions have a tab of their own beside the gauges, and the Mac has the next one.",
-  body: "First the period: how many sessions and sub-agents it has had, how long it was worked and when, how much of the input the cache answered, and the longest turn. Under it every running session with its memory, its CPU and how long it has been up, named after the repository it is working in.",
-  panelLabel: "Sissy's Sessions tab",
+  blocks: {
+    now: {
+      title: "Sessions",
+      body: "Every running session with its memory, its CPU and how long it has been up, named after the repository it is working in. The same tab counts the period: sessions, sub-agents, how long it was worked and what the cache answered.",
+      panelLabel: "The Sessions tab's Now block, every running session shown",
+    },
+    mac: {
+      title: "Mac",
+      body: "Memory pressure as the kernel grades it, swap, load and uptime, and the apps holding the most besides the sessions.",
+      panelLabel: "The Mac tab: memory normal, swap, load, uptime and the heaviest apps",
+    },
+  },
 } as const;
 
 /**

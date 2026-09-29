@@ -13,7 +13,7 @@ import { Identities, IdentitiesBlock } from "./pages/Identities";
 import { Mac } from "./pages/Mac";
 import { Overview } from "./pages/Overview";
 import { Provider, ProviderHeader, ProviderLimits } from "./pages/Provider";
-import { Sessions } from "./pages/Sessions";
+import { Sessions, SessionsNow } from "./pages/Sessions";
 import type {
   AccountIdentity,
   PanelPage,
@@ -30,8 +30,6 @@ interface PanelProps {
   label?: string;
   open?: OpenPage;
   select?: SelectTab;
-  /** The Sessions tab's fold, which a surface that enlarges the tab may draw open. */
-  showsAllProcesses?: boolean;
 }
 
 /** `PanelTab.readsPeriod`: the Mac, the disk and the network read the moment. */
@@ -56,17 +54,12 @@ function homeHelp(tab: PanelTab): string {
 }
 
 /** `UsagePanelView.home`: the selected tab's own page. */
-function home(
-  tab: PanelTab,
-  snapshot: PanelSnapshot,
-  showsAllProcesses: boolean,
-  open?: OpenPage,
-): ReactElement {
+function home(tab: PanelTab, snapshot: PanelSnapshot, open?: OpenPage): ReactElement {
   switch (tab) {
     case "usage":
       return <Overview snapshot={snapshot} open={open} />;
     case "sessions":
-      return <Sessions block={snapshot.sessions} showsAllProcesses={showsAllProcesses} />;
+      return <Sessions block={snapshot.sessions} />;
     case "mac":
       return <Mac block={snapshot.mac} />;
     case "forge":
@@ -77,16 +70,10 @@ function home(
   }
 }
 
-function renderPage(
-  page: PanelPage,
-  tab: PanelTab,
-  snapshot: PanelSnapshot,
-  showsAllProcesses: boolean,
-  open?: OpenPage,
-) {
+function renderPage(page: PanelPage, tab: PanelTab, snapshot: PanelSnapshot, open?: OpenPage) {
   switch (page.kind) {
     case "overview":
-      return home(tab, snapshot, showsAllProcesses, open);
+      return home(tab, snapshot, open);
     case "provider":
       return <Provider page={providerPage(page, snapshot)} header={snapshot.header} open={open} />;
     case "effort": {
@@ -127,7 +114,6 @@ export function Panel({
   label = "Sissy's panel",
   open,
   select,
-  showsAllProcesses = false,
 }: PanelProps): ReactElement {
   const body = (
     <>
@@ -138,7 +124,7 @@ export function Panel({
         </div>
       )}
       <div className="panel-page" key={pageIdentity(page, tab)}>
-        {renderPage(page, tab, snapshot, showsAllProcesses, open)}
+        {renderPage(page, tab, snapshot, open)}
       </div>
     </>
   );
@@ -154,6 +140,41 @@ export function Panel({
         </section>
       )}
     </div>
+  );
+}
+
+/**
+ * The Sessions tab's Now block on its own, its running sessions unfolded,
+ * because the surface that enlarges it names every one of them.
+ */
+export function SessionsNowCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <Platters>
+        <SessionsNow block={snapshot.sessions} showsAllProcesses />
+      </Platters>
+    </Crop>
+  );
+}
+
+/** The Mac tab's page on its own: the memory reading and the heaviest apps. */
+export function MacCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <Mac block={snapshot.mac} />
+    </Crop>
   );
 }
 
