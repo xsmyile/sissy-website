@@ -194,8 +194,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   wash in the page's accent, outside the row: the first account, then the
   Sessions tab, then the identity line, each giving way to the next once its
   kind of door has been opened, and nothing once all three have. A door on
-  another tab is marked through that tab, so the identity line is hinted at by
-  the Forge tab until the Forge tab is open. On a tab the ring is the tab's
+  the tab on screen comes first, and a door on another tab is marked through
+  that tab only until that tab has been seen: the reader starts on Usage, so
+  from Forge or Mac the pulse never calls them back to the accounts, and once
+  every tab holding a door has been seen it goes quiet. It led them back once,
+  and a pulse that follows you around reads as nagging rather than as an
+  invitation. On a tab the ring is the tab's
   own capsule and the pulse breathes inside it, because a ring grown outward
   spills past the bar's rounded end and reads as larger than the tab. It is the
   site's own gesture, set on the DOM rather than passed through the pages,

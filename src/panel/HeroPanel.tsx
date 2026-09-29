@@ -58,20 +58,36 @@ type Door = "account" | "sessions" | "identity";
 const DOORS: readonly Door[] =
   FIRST_ROW === null ? ["sessions", "identity"] : ["account", "sessions", "identity"];
 
+/** The tab each door is on. The Sessions tab is its own door. */
+const DOOR_TABS: Record<Door, PanelTab> = {
+  account: HOME_TAB,
+  sessions: "sessions",
+  identity: "forge",
+};
+
+/** The row each door is, null for the one that is a tab. */
+const DOOR_ROWS: Record<Door, string | null> = {
+  account: FIRST_ROW,
+  sessions: null,
+  identity: IDENTITY_TARGET,
+};
+
 /**
- * The control the hint sits on for a door not yet opened, from the tab on
- * screen: the door itself where it is on this tab, and the tab it is on where
- * it is not.
+ * The control the hint sits on: a door not yet opened on the tab on screen,
+ * else the next tab holding one that has not been seen yet, else nothing. A
+ * tab already seen is never pointed back to, so the pulse leads forward and
+ * never calls the reader back to where they have been.
  */
-function hintTarget(door: Door, tab: PanelTab): string | null {
-  switch (door) {
-    case "account":
-      return tab === HOME_TAB ? FIRST_ROW : tabTarget(HOME_TAB);
-    case "sessions":
-      return tabTarget("sessions");
-    case "identity":
-      return tab === "forge" ? IDENTITY_TARGET : tabTarget("forge");
-  }
+function hintTarget(
+  opened: ReadonlySet<Door>,
+  seen: ReadonlySet<PanelTab>,
+  tab: PanelTab,
+): string | null {
+  const waiting = DOORS.filter((door) => !opened.has(door));
+  const here = waiting.find((door) => DOOR_TABS[door] === tab && DOOR_ROWS[door] !== null);
+  if (here !== undefined) return DOOR_ROWS[here];
+  const ahead = waiting.find((door) => !seen.has(DOOR_TABS[door]));
+  return ahead === undefined ? null : tabTarget(DOOR_TABS[ahead]);
 }
 
 function doorOf(target: string): Door | null {
@@ -110,10 +126,11 @@ const HOME: View = { page: OVERVIEW, tab: HOME_TAB, focus: null };
  * A replica reads as a screenshot until something says otherwise, so one
  * control at a time carries `data-hint`, which the hero draws as a pulse: the
  * first account, then the Sessions tab, then the identity line on the Forge
- * tab, each giving way to the next once its kind of door has been opened, and
- * nothing once all three have. A door on another tab is hinted at through
- * that tab. The mark is set on the DOM rather than passed down, because the
- * pages mirror the app and the app has no such thing.
+ * tab, each giving way to the next once its kind of door has been opened. A
+ * door on the tab on screen comes first; a door on another tab is hinted at
+ * through that tab, and only until that tab has been seen. The mark is set on
+ * the DOM rather than passed down, because the pages mirror the app and the
+ * app has no such thing.
  *
  * Its light and its tilt are written onto the scene around it rather than kept
  * to itself, because the cat is the light's source and counter-drifts against
@@ -123,6 +140,7 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
   const [view, setView] = useState<View>(HOME);
   const [live, setLive] = useState(false);
   const [opened, setOpened] = useState<ReadonlySet<Door>>(new Set());
+  const [seen, setSeen] = useState<ReadonlySet<PanelTab>>(new Set([HOME_TAB]));
   const rootRef = useRef<HTMLDivElement>(null);
   const driverRef = useRef<BlinkDriver | null>(null);
   const originsRef = useRef<string[]>([]);
@@ -138,6 +156,7 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
 
   const select = useCallback<SelectTab>((tab) => {
     if (tab === "sessions") setOpened((before) => new Set(before).add("sessions"));
+    setSeen((before) => new Set(before).add(tab));
     setView((before) =>
       before.tab === tab ? before : { page: OVERVIEW, tab, focus: tabTarget(tab) },
     );
@@ -150,8 +169,7 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
 
   const land = useCallback(() => setView({ ...HOME, focus: FIRST_ROW }), []);
 
-  const door = DOORS.find((entry) => !opened.has(entry));
-  const hint = live && door !== undefined ? hintTarget(door, view.tab) : null;
+  const hint = live ? hintTarget(opened, seen, view.tab) : null;
 
   useEffect(() => setLive(true), []);
 
