@@ -6,6 +6,36 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.0</title>
+            <pubDate>Tue, 29 Sep 2026 09:10:11 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>806</sparkle:version>
+            <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.0: A tab for each thing Sissy watches
+
+- The panel moves between modules with a row of tabs: Overview, Sessions,
+  Mac, Disk, Network and Forge. The period (Today, 7 days, 30 days, All) is
+  chosen once, in the header, and every tab reads over it.
+- Sessions has its own tab, with the running ones folded behind one row.
+- Disk has its own tab and badge: free space, read and write activity while
+  the tab is open, and the caches taking room.
+- Clean regenerable caches from the Disk tab: Xcode DerivedData, npm, uv and
+  iOS device support. Each asks before it removes anything, and one is
+  refused while its tool is at work.
+- A separate row takes only the Xcode builds of projects that no longer
+  exist, such as deleted worktrees, so the projects you still have keep
+  theirs.
+- A Network tab shows traffic while it is on screen. Network and disk rates
+  are logged every five seconds in the background, so the charts are full
+  when you open them.
+- Each forge has its own section on the Forge tab, with the latest thing you
+  did there. Switch that line off under Settings > Forge > Latest activity.
+- Disk and Network have their own switches under Settings > Mac.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.0/Sissy-0.3.0.dmg" length="6663468" type="application/octet-stream" sparkle:edSignature="6zpA2ouF41f/Ii55NaVNNOPwmArBoatYfnsJZUyH2iR+fCHsJpM6UCCweo1xVQjGuTeWQtcnQb1AHNPg95lBAA=="/>
+        </item>
+        <item>
             <title>0.2.9</title>
             <pubDate>Mon, 28 Sep 2026 08:53:36 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -103,6 +133,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: aKzs4axyOLBb4bUapKdAuq95/sbzGEVidwN3V/yEF9wLNU+2KIJ7gF7E10N5NNFSig0yrewh9bOBR3DQBMjlBg==
-length: 6462
+edSignature: Gd4OdRY4QUcdFKsiwrnaKFRk//tm5UjhZpDqTQnNnnOpjHg5f+MxPvq9xTAQ6USMA0H+I6LwKfuHjLp0+aApBw==
+length: 8364
 -->
