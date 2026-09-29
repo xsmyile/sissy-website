@@ -22,8 +22,9 @@ paths:
   `pages/Identities.tsx` mirrors
   `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
   mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
-  mirrors `ForgeRowView`, `metrics.css` mirrors
-  `PanelMetrics`, both in `PanelComponents.swift`, `format.ts` mirrors the
+  mirrors `ForgeRowView` and `metrics.css` mirrors `PanelMetrics`, both in
+  `PanelComponents.swift`, and `ForgeSection.tsx` also mirrors
+  `ForgeSectionLabel` in `PanelForge.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
   `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
   `ProvidersSettingsView.swift` and the first section of `ForgeSettings.swift`,
@@ -81,8 +82,8 @@ paths:
 
 - **Rows the replica does not navigate are drawn faithfully and left inert.**
   A chevron on a row is what the app draws; it is not a promise the site makes.
-  The forge block is drawn, with one connected account per vendor, and its two
-  rows are never summed — each vendor counts its own thing, so a total across
+  The forge sections are drawn, one per connected account and one account per
+  vendor, and they are never summed — each vendor counts its own thing, so a total across
   them would be a third number belonging to neither. The credits stay omitted
   rather than faked. A project list past three rows keeps two and folds the
   rest into one row that names no owner and no forge, and its label counts

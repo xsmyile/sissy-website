@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ForgeSection } from "../components/ForgeSection";
+import { ForgeSections } from "../components/ForgeSection";
 import { ChevronRight } from "../components/Glyph";
 import { IdentityLineMark } from "../components/IdentityMark";
 import { PanelGroup, Platters } from "../components/PanelGroup";
@@ -8,11 +8,14 @@ import type { OpenPage } from "../page";
 import type { IdentityLine as IdentityLineData, PanelSnapshot } from "../types";
 
 const IDENTITY_HELP = "Show every repository's commit identity";
+/** `UsageFormat.identitySectionLabel`. */
+const IDENTITY_LABEL = "Commit identity";
 export const IDENTITY_TARGET = "identities";
 
 /**
- * `PanelForge`, the Forge tab: what was pushed to each connected forge, and
- * whether every repository commits under the name its forge expects.
+ * `PanelForge`, the Forge tab: a section per connected forge, with what was
+ * pushed there and the last thing done, and whether every repository commits
+ * under the name its forge expects.
  */
 export function Forge({
   snapshot,
@@ -23,7 +26,7 @@ export function Forge({
 }): ReactElement {
   return (
     <Platters>
-      <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+      <ForgeSections rows={snapshot.forge} period={snapshot.headline.period} />
       <IdentityLine line={snapshot.identityLine} open={open} />
     </Platters>
   );
@@ -32,11 +35,20 @@ export function Forge({
 /**
  * `PanelIdentityLine`: the door to the identities page, always there and quiet
  * unless something is wrong. It opens the page on the repository it names,
- * which it does only when exactly one is wrong.
+ * which it does only when exactly one is wrong. Headed like every other block,
+ * with the count of repositories read at the heading's end, so the line is
+ * left saying the verdict.
  */
 function IdentityLine({ line, open }: { line: IdentityLineData; open?: OpenPage }): ReactElement {
   return (
-    <PanelGroup>
+    <PanelGroup
+      label={
+        <div className="panel-label">
+          {IDENTITY_LABEL}
+          {line.count && <span className="panel-caption panel-label-end">{line.count}</span>}
+        </div>
+      }
+    >
       <Row
         className="panel-door panel-identity-line"
         target={IDENTITY_TARGET}

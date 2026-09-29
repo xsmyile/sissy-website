@@ -1253,11 +1253,7 @@ svg[data-glyph="arrow.triangle.branch"] {
   background: var(--panel-system-blue);
 }
 
-/* Contributions, on the Forge tab */
-
-.panel-forge-section {
-  gap: calc(8 * var(--pt));
-}
+/* A section per forge, on the Forge tab */
 
 .panel-forge-row {
   display: grid;
@@ -1285,15 +1281,15 @@ svg[data-glyph="arrow.triangle.branch"] {
   place-items: center;
 }
 
-.panel-forge-counter[data-counter="merged"] .panel-forge-mark {
+[data-counter="merged"] > .panel-forge-mark {
   color: var(--panel-system-purple);
 }
 
-.panel-forge-counter[data-counter="issues"] .panel-forge-mark {
+[data-counter="issues"] > .panel-forge-mark {
   color: var(--panel-system-green);
 }
 
-.panel-forge-counter[data-counter="comments"] .panel-forge-mark {
+[data-counter="comments"] > .panel-forge-mark {
   color: var(--panel-system-blue);
 }
 
@@ -1301,12 +1297,28 @@ svg[data-glyph="arrow.triangle.branch"] {
   font-size: var(--panel-row);
 }
 
-.panel-forge-notice {
-  overflow: hidden;
-  font-size: var(--panel-forge-notice);
+.panel-forge-event {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--pt));
+  font-size: var(--panel-forge-event);
   white-space: nowrap;
-  text-overflow: ellipsis;
   color: var(--panel-secondary);
+}
+
+.panel-forge-event-text {
+  display: flex;
+  min-width: 0;
+}
+
+.panel-forge-event-done {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.panel-forge-event-tail {
+  flex: none;
+  white-space: pre;
 }
 
 /* Mac tab */

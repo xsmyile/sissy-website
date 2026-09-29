@@ -115,7 +115,7 @@ export const DISK_NETWORK = {
   blocks: {
     disk: {
       title: "Disk",
-      body: "Free space graded against the Mac's RAM, marked where it turns warn and critical, read and write activity, and the developer caches you can clear, such as Xcode DerivedData, each after a confirmation.",
+      body: "Free space graded against the Mac's RAM, marked where it turns warn and critical, read and write activity, and the developer caches you can clear, such as Xcode DerivedData or only the builds of projects no longer on the Mac, each after a confirmation.",
       panelLabel: "The Disk tab: 184 GB free, activity, volumes and the caches taking room",
     },
     network: {
@@ -154,8 +154,8 @@ export const GIT = {
     },
     contributions: {
       title: "Contributions",
-      body: "What you pushed on each forge you connected. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
-      panelLabel: "The Forge tab's Contributions block",
+      body: "What you pushed on each forge you connected, and under the figures the last thing you pushed, opened, merged or commented on. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
+      panelLabel: "The Forge tab's GitHub and GitLab sections",
       settingsLabel: "Settings, Forge: GitHub and GitLab connected, and Connect",
     },
   },

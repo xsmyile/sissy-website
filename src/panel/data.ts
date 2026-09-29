@@ -112,7 +112,9 @@ const IDENTITIES: IdentityRow[] = [
  * leave the sessions out, as `MacAppGrouping` does. The Mac is a 12-core one
  * with 36 GB, so the disk grades warn under 72 GB free and critical under 36,
  * which is where the marks sit on a 995 GB home volume; its 184 GB free is
- * normal, so the Disk tab carries no badge either. It booted six days and four
+ * normal, so the Disk tab carries no badge either. The builds of removed
+ * projects are DerivedData's own folders narrowed to the projects that are
+ * gone, so their 15 GB is inside DerivedData's 18. It booted six days and four
  * hours before the fixture's Monday 21 Sep, on Sep 15, which is what the
  * network's totals are since. Each rate series is the background log's
  * five-second points over the two minutes the page opens on, and each figure
@@ -183,7 +185,8 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
   identities: IDENTITIES,
   identityLine: {
     state: "findings",
-    summary: "group935/buried commits under an unexpected name",
+    summary: "group935/buried · unexpected name",
+    count: "4 repositories",
     repository: "group935-buried",
   },
   identitiesReading: "checked 3m ago",
@@ -197,6 +200,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       issues: "3",
       comments: "18",
       notice: "read 4m ago",
+      latest: { counter: "merged", done: "merged #214", tail: " · sissy · 2h ago" },
     },
     {
       id: "gitlab",
@@ -207,6 +211,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       issues: "9",
       comments: "31",
       notice: "read 12m ago",
+      latest: { counter: "comments", done: "commented on !42", tail: " · origins · 25m ago" },
     },
   ],
   providerPages: [
@@ -1044,6 +1049,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
     ],
     cleanup: [
       { id: "derivedData", name: "Xcode DerivedData", size: "18 GB", offered: true },
+      { id: "removedProjects", name: "Builds of removed projects", size: "15 GB", offered: true },
       { id: "npm", name: "npm cache", size: "3.1 GB", offered: true },
       { id: "uv", name: "uv cache", size: "1.2 GB", offered: true },
       { id: "deviceSupport", name: "iOS device support", size: "9.7 GB", offered: true },

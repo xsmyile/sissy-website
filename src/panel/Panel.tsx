@@ -1,6 +1,6 @@
 import "./panel.css";
 import type { ReactElement, ReactNode } from "react";
-import { ForgeSection } from "./components/ForgeSection";
+import { ForgeSections } from "./components/ForgeSection";
 import { Identity } from "./components/Identity";
 import { PanelGroup, Platters } from "./components/PanelGroup";
 import { PanelHeader } from "./components/PanelHeader";
@@ -260,9 +260,9 @@ export function ProjectsCrop({
 }
 
 /**
- * The Forge tab's contributions block on its own.
+ * The Forge tab's forge sections on their own, without the identity line.
  *
- * Both connected accounts, because the block draws one row per connection and
+ * Both connected accounts, because the tab draws a section per connection and
  * the two are never summed: each vendor counts its own thing, so a total
  * across them would be a third number belonging to neither.
  */
@@ -276,7 +276,7 @@ export function ForgeCrop({
   return (
     <Crop label={label}>
       <Platters>
-        <ForgeSection rows={snapshot.forge} period={snapshot.headline.period} />
+        <ForgeSections rows={snapshot.forge} period={snapshot.headline.period} />
       </Platters>
     </Crop>
   );

@@ -71,12 +71,14 @@ export function forgeName(host: ForgeHost): string {
 }
 
 /**
- * The heading over the forge rows, naming the window they are over for the
- * reason the project section names its own day: the block under a control is
- * the one that has to say which choice it is answering.
+ * The heading over one forge's section: whose figures, and the window they are
+ * over, for the reason the project section names its own day: the block under
+ * a control is the one that has to say which choice it is answering. The
+ * replica connects one account per vendor, so the vendor's name is always
+ * enough and the host never has to stand in for it.
  */
-export function forgeSectionLabel(period: Period): string {
-  return `Contributions${SEPARATOR}${periodHeading(period).toLowerCase()}`;
+export function forgeSectionLabel(host: ForgeHost, period: Period): string {
+  return `${forgeName(host)}${SEPARATOR}${periodHeading(period).toLowerCase()}`;
 }
 
 /** What the mark beside the merge count means, in the vendor's own noun. */
