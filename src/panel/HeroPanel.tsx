@@ -11,9 +11,17 @@ import { clearInline } from "../motion/settle";
 import { type BlinkDriver, driveBlink } from "./blink";
 import { DEMO_SNAPSHOT } from "./data";
 import { Panel } from "./Panel";
-import { BACK, type OpenPage, OVERVIEW, pageIdentity } from "./page";
-import { AGENTS_TARGET, IDENTITY_TARGET } from "./pages/Overview";
-import type { PanelPage } from "./types";
+import {
+  BACK,
+  HOME_TAB,
+  type OpenPage,
+  OVERVIEW,
+  pageIdentity,
+  type SelectTab,
+  tabTarget,
+} from "./page";
+import { IDENTITY_TARGET } from "./pages/Forge";
+import type { PanelPage, PanelTab } from "./types";
 
 /** Long enough after mount to read as a frame landing rather than as page load. */
 const FIRST_FRAME_MS = 900;
@@ -39,24 +47,51 @@ const PANEL_SPRING = { type: "spring", stiffness: 210, damping: 26 } as const;
  */
 const SCROLL_SETTLE_MS = 2000;
 
-/** The row the Overview leads with, which is where a summons leaves focus. */
+/** The row the Usage tab leads with, which is where a summons leaves focus. */
 const FIRST_ROW = DEMO_SNAPSHOT.gaugeRows[0]?.id ?? null;
 
 const GAUGE_ROWS = new Set(DEMO_SNAPSHOT.gaugeRows.map((row) => row.id));
 
-/** The three kinds of door the Overview has, which is what the hint walks through. */
-type Door = "account" | "agents" | "identity";
+/** The three kinds of door the panel has, which is what the hint walks through. */
+type Door = "account" | "sessions" | "identity";
 
-/** Each door and the row the hint sits on while it has not been opened yet. */
-const HINTS: readonly { door: Door; target: string }[] = [
-  ...(FIRST_ROW === null ? [] : [{ door: "account" as const, target: FIRST_ROW }]),
-  { door: "agents", target: AGENTS_TARGET },
-  { door: "identity", target: IDENTITY_TARGET },
-];
+const DOORS: readonly Door[] =
+  FIRST_ROW === null ? ["sessions", "identity"] : ["account", "sessions", "identity"];
+
+/** The tab each door is on. The Sessions tab is its own door. */
+const DOOR_TABS: Record<Door, PanelTab> = {
+  account: HOME_TAB,
+  sessions: "sessions",
+  identity: "forge",
+};
+
+/** The row each door is, null for the one that is a tab. */
+const DOOR_ROWS: Record<Door, string | null> = {
+  account: FIRST_ROW,
+  sessions: null,
+  identity: IDENTITY_TARGET,
+};
+
+/**
+ * The control the hint sits on: a door not yet opened on the tab on screen,
+ * else the next tab holding one that has not been seen yet, else nothing. A
+ * tab already seen is never pointed back to, so the pulse leads forward and
+ * never calls the reader back to where they have been.
+ */
+function hintTarget(
+  opened: ReadonlySet<Door>,
+  seen: ReadonlySet<PanelTab>,
+  tab: PanelTab,
+): string | null {
+  const waiting = DOORS.filter((door) => !opened.has(door));
+  const here = waiting.find((door) => DOOR_TABS[door] === tab && DOOR_ROWS[door] !== null);
+  if (here !== undefined) return DOOR_ROWS[here];
+  const ahead = waiting.find((door) => !seen.has(DOOR_TABS[door]));
+  return ahead === undefined ? null : tabTarget(DOOR_TABS[ahead]);
+}
 
 function doorOf(target: string): Door | null {
   if (GAUGE_ROWS.has(target)) return "account";
-  if (target === AGENTS_TARGET) return "agents";
   if (target === IDENTITY_TARGET) return "identity";
   return null;
 }
@@ -68,11 +103,17 @@ function doorOf(target: string): Door | null {
  */
 const FOCUS_IN_PLACE = { preventScroll: true } as const;
 
-/** The page showing, and the control the app would leave focus on once it has. */
+/**
+ * The page showing, the tab the Overview is on, and the control the app would
+ * leave focus on once it has.
+ */
 interface View {
   page: PanelPage;
+  tab: PanelTab;
   focus: string | null;
 }
+
+const HOME: View = { page: OVERVIEW, tab: HOME_TAB, focus: null };
 
 /**
  * The one operable panel on the page: it owns which page is showing, puts
@@ -82,21 +123,24 @@ interface View {
  * HTML and the first client render agree and a page without JavaScript shows
  * the same Overview with nothing on it that looks pressable.
  *
- * A replica reads as a screenshot until something says otherwise, so one row
- * at a time carries `data-hint`, which the hero draws as a pulse: the first
- * account, then the agents count, then the identity line, each giving way to
- * the next once its kind of door has been opened, and nothing once all three
- * have. The mark is set on the DOM rather than passed down, because the pages
- * mirror the app and the app has no such thing.
+ * A replica reads as a screenshot until something says otherwise, so one
+ * control at a time carries `data-hint`, which the hero draws as a pulse: the
+ * first account, then the Sessions tab, then the identity line on the Forge
+ * tab, each giving way to the next once its kind of door has been opened. A
+ * door on the tab on screen comes first; a door on another tab is hinted at
+ * through that tab, and only until that tab has been seen. The mark is set on
+ * the DOM rather than passed down, because the pages mirror the app and the
+ * app has no such thing.
  *
  * Its light and its tilt are written onto the scene around it rather than kept
  * to itself, because the cat is the light's source and counter-drifts against
  * the panel's rotation.
  */
 export function HeroPanel({ label, anchor }: { label: string; anchor: string }): ReactElement {
-  const [view, setView] = useState<View>({ page: OVERVIEW, focus: null });
+  const [view, setView] = useState<View>(HOME);
   const [live, setLive] = useState(false);
   const [opened, setOpened] = useState<ReadonlySet<Door>>(new Set());
+  const [seen, setSeen] = useState<ReadonlySet<PanelTab>>(new Set([HOME_TAB]));
   const rootRef = useRef<HTMLDivElement>(null);
   const driverRef = useRef<BlinkDriver | null>(null);
   const originsRef = useRef<string[]>([]);
@@ -107,17 +151,25 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
     if (!back) originsRef.current.push(from);
     const door = doorOf(from);
     if (door !== null) setOpened((before) => new Set(before).add(door));
-    setView({ page: next, focus });
+    setView((before) => ({ ...before, page: next, focus }));
+  }, []);
+
+  const select = useCallback<SelectTab>((tab) => {
+    if (tab === "sessions") setOpened((before) => new Set(before).add("sessions"));
+    setSeen((before) => new Set(before).add(tab));
+    setView((before) =>
+      before.tab === tab ? before : { page: OVERVIEW, tab, focus: tabTarget(tab) },
+    );
   }, []);
 
   const rewind = useCallback(() => {
     originsRef.current = [];
-    setView({ page: OVERVIEW, focus: null });
+    setView(HOME);
   }, []);
 
-  const land = useCallback(() => setView({ page: OVERVIEW, focus: FIRST_ROW }), []);
+  const land = useCallback(() => setView({ ...HOME, focus: FIRST_ROW }), []);
 
-  const hint = live ? (HINTS.find((entry) => !opened.has(entry.door))?.target ?? null) : null;
+  const hint = live ? hintTarget(opened, seen, view.tab) : null;
 
   useEffect(() => setLive(true), []);
 
@@ -157,15 +209,17 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
 
   useTilt(rootRef);
   useSummons(rootRef, anchor, rewind, land);
-  usePanelTransition(rootRef, pageIdentity(view.page));
+  usePanelTransition(rootRef, pageIdentity(view.page, view.tab));
 
   return (
     <div className="hero-panel" ref={rootRef}>
       <Panel
         snapshot={DEMO_SNAPSHOT}
         page={view.page}
+        tab={view.tab}
         label={label}
         open={live ? open : undefined}
+        select={live ? select : undefined}
       />
     </div>
   );
@@ -177,8 +231,8 @@ export function HeroPanel({ label, anchor }: { label: string; anchor: string }):
  * click on the status item opens the popover, and the popover on this page is
  * the one up here.
  *
- * Whatever page the panel was left on goes back to the Overview the moment the
- * link is pressed, while the panel is still off screen, so the resize is over
+ * Whatever page and tab the panel was left on go back to the Usage tab the
+ * moment the link is pressed, as the app reopens on it, while the panel is still off screen, so the resize is over
  * before anyone can see it. Nothing else moves until the scroll has ended:
  * then she blinks and focus lands on the first row. Started any sooner, on the
  * panel coming into view, the arrival played during the scroll's long

@@ -2,6 +2,7 @@ import type { CSSProperties, ReactElement } from "react";
 import { projectFigures, projectsCount } from "../format";
 import type { ProjectRow as ProjectRowData } from "../types";
 import { ChevronRight } from "./Glyph";
+import { PanelGroup } from "./PanelGroup";
 import { ForgeMark } from "./Sprite";
 
 /**
@@ -35,8 +36,9 @@ export function ProjectsLabel({ text, count }: { text: string; count: number }):
 }
 
 /**
- * The label counts every project of the day rather than the rows under it,
- * because the last row can fold several.
+ * The projects platter, its label off it. The label counts every project of
+ * the day rather than the rows under it, because the last row can fold
+ * several.
  */
 export function ProjectsSection({
   label,
@@ -48,13 +50,10 @@ export function ProjectsSection({
   count: number;
 }): ReactElement {
   return (
-    <div className="panel-section panel-projects">
-      <ProjectsLabel text={label} count={count} />
-      <div className="panel-project-list">
-        {rows.map((row) => (
-          <ProjectRow row={row} key={row.id} />
-        ))}
-      </div>
-    </div>
+    <PanelGroup className="panel-project-list" label={<ProjectsLabel text={label} count={count} />}>
+      {rows.map((row) => (
+        <ProjectRow row={row} key={row.id} />
+      ))}
+    </PanelGroup>
   );
 }

@@ -24,7 +24,7 @@ export function DayBlock({ today, models, strip, tint, pointable }: DayBlockProp
   const shown =
     pointed === null ? models : (strip.days.find((day) => day.id === pointed)?.models ?? models);
   return (
-    <div className="panel-section panel-day">
+    <div className="panel-day">
       <div className="panel-label">
         Today
         <span className="panel-label-end panel-figures">{today}</span>

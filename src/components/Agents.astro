@@ -1,8 +1,10 @@
 ---
 import { AGENTS_SCENE } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
-import { Panel } from "../panel/Panel";
+import { MacCrop, SessionsNowCrop } from "../panel/Panel";
 import Section from "./Section.astro";
+
+const { now, mac } = AGENTS_SCENE.blocks;
 ---
 
 <Section
@@ -10,38 +12,97 @@ import Section from "./Section.astro";
   eyebrow={AGENTS_SCENE.eyebrow}
   title={AGENTS_SCENE.title}
   lede={AGENTS_SCENE.lede}
-  layout="reverse"
+  layout="stack"
   tier="support"
 >
-  <p class="body" slot="aside">{AGENTS_SCENE.body}</p>
-  <div class="stage">
-    <Panel snapshot={DEMO_SNAPSHOT} page={{ kind: "stats" }} label={AGENTS_SCENE.panelLabel} />
+  <div class="pair">
+    <figure class="under">
+      <SessionsNowCrop snapshot={DEMO_SNAPSHOT} label={now.panelLabel} />
+      <figcaption><b>{now.title}</b> {now.body}</figcaption>
+    </figure>
+    <figure class="over">
+      <MacCrop snapshot={DEMO_SNAPSHOT} label={mac.panelLabel} />
+      <figcaption><b>{mac.title}</b> {mac.body}</figcaption>
+    </figure>
   </div>
 </Section>
 
 <style>
-  .body {
-    margin: 8px 0 0;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
+  /*
+   * The Mac tab lies over the sessions, down and to the right, and covers only
+   * the platter inset along the sessions' right edge, which carries no text.
+   * Its caption sits beside it, so the pair is no taller than the sessions and
+   * their caption. The crop on top carries a short shadow of its own, because
+   * two contact shadows alone do not say which edge is on top.
+   */
+  .pair {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  figure {
+    --panel-pt: 1.12px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    align-content: start;
+    justify-items: start;
+    flex: none;
+    margin: 0;
+  }
+
+  .over {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    min-width: 0;
+    margin: 72px 0 0 calc(-6 * var(--panel-pt));
+  }
+
+  .over :global(.panel) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  figcaption {
+    max-width: calc(352 * var(--panel-pt));
     font-size: 14.5px;
     color: var(--muted);
     text-wrap: pretty;
   }
 
-  .stage {
-    --panel-pt: 1.12px;
+  .over figcaption {
+    flex: 1 1 220px;
+  }
 
-    display: flex;
-    justify-content: center;
-    padding: 8px 0 24px;
+  figcaption b {
+    font-weight: 600;
+    color: var(--text);
   }
 
   @media (max-width: 920px) {
-    .stage {
-      --panel-pt: 1px;
+    .pair {
+      flex-direction: column;
+      gap: 32px;
+    }
 
-      padding: 0 0 8px;
+    figure {
+      --panel-pt: 1px;
+    }
+
+    .over {
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0;
+    }
+
+    .over figcaption {
+      flex: none;
     }
   }
 </style>

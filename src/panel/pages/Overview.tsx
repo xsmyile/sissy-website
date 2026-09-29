@@ -1,12 +1,11 @@
-import { type ReactElement, type ReactNode, useId } from "react";
-import { ForgeSection } from "../components/ForgeSection";
-import { ChevronRight, ChevronUpDown } from "../components/Glyph";
-import { IdentityLineMark } from "../components/IdentityMark";
-import { PanelHeader } from "../components/PanelHeader";
+import { type ReactElement, useId } from "react";
+import { ChevronRight } from "../components/Glyph";
+import { PanelGroup, Platters } from "../components/PanelGroup";
 import { ProjectsSection } from "../components/ProjectRow";
+import { Row } from "../components/Row";
 import { ShareBar } from "../components/ShareBar";
 import { ProviderMark } from "../components/Sprite";
-import { agentsRunning, gaugeReading, headlineMeta, providersLabel } from "../format";
+import { gaugeReading, headlineMeta, providersLabel } from "../format";
 import type { OpenPage } from "../page";
 import type { GaugeRow, PanelSnapshot } from "../types";
 
@@ -18,46 +17,34 @@ interface OverviewProps {
 /** `PanelOverview.legendHelp`, which is how a live row names itself. */
 const legendHelp = (row: GaugeRow): string => `Open ${row.name}`;
 
-const AGENTS_HELP = "How many sessions and agents have run, and what they are holding now";
-export const AGENTS_TARGET = "agents";
-const IDENTITY_HELP = "Show every repository's commit identity";
-export const IDENTITY_TARGET = "identities";
-
+/**
+ * `PanelOverview`, the Usage tab: what the period costs, whether there is room
+ * to keep working, and where the day went, each on a platter of its own. The
+ * app draws the identity line here only while no forge is connected, and the
+ * fixture has two, so the line is the Forge tab's.
+ */
 export function Overview({ snapshot, open }: OverviewProps): ReactElement {
-  const { header, headline, gaugeRows, agents, projects, projectCount, identityLine, forge } =
-    snapshot;
+  const { headline, gaugeRows, projects, projectCount } = snapshot;
   const ids = useId();
   const readingId = (id: string): string => `${ids}${id}`;
   return (
-    <>
-      <PanelHeader reading={header} />
-      <div className="panel-divider" />
-      <div className="panel-headline">
-        <div>
-          <div className="panel-money">{headline.cost}</div>
-          <div className="panel-meta">{headlineMeta(headline.tokens, headline.burn)}</div>
+    <Platters>
+      <PanelGroup>
+        <div className="panel-money">{headline.cost}</div>
+        <div className="panel-meta">
+          {headlineMeta(headline.period, headline.tokens, headline.burn)}
         </div>
-        <span className="panel-popup">
-          {headline.period}
-          <ChevronUpDown />
-        </span>
-      </div>
-      <div className="panel-divider" />
-      <div className="panel-section">
-        <div className="panel-label">
-          <span className="panel-label-text">
-            {providersLabel(snapshot.usedToday, snapshot.meteringProviders)}
-          </span>
-          <Row
-            className="panel-agents-door"
-            target={AGENTS_TARGET}
-            title={AGENTS_HELP}
-            press={open && (() => open({ kind: "stats" }, AGENTS_TARGET))}
-          >
-            <span data-running={agents.running > 0}>{agentsRunning(agents)}</span>
-            <ChevronRight className="panel-chevron" />
-          </Row>
-        </div>
+      </PanelGroup>
+      <PanelGroup
+        className="panel-gauges"
+        label={
+          <div className="panel-label">
+            <span className="panel-label-text">
+              {providersLabel(snapshot.usedToday, snapshot.meteringProviders)}
+            </span>
+          </div>
+        }
+      >
         {gaugeRows.map((row) => (
           <Row
             key={row.id}
@@ -87,84 +74,10 @@ export function Overview({ snapshot, open }: OverviewProps): ReactElement {
             />
           </Row>
         ))}
-      </div>
+      </PanelGroup>
       {projects.length > 0 && (
-        <>
-          <div className="panel-divider" />
-          <ProjectsSection label="By project · today" rows={projects} count={projectCount} />
-        </>
+        <ProjectsSection label="By project · today" rows={projects} count={projectCount} />
       )}
-      <div className="panel-divider" />
-      <Row
-        className="panel-agents panel-identity-line"
-        target={IDENTITY_TARGET}
-        title={IDENTITY_HELP}
-        press={
-          open &&
-          (() => open({ kind: "identities", focus: identityLine.repository }, IDENTITY_TARGET))
-        }
-      >
-        <IdentityLineMark state={identityLine.state} />
-        <span className="panel-identity-summary" data-state={identityLine.state}>
-          {identityLine.summary}
-        </span>
-        <ChevronRight className="panel-chevron" />
-      </Row>
-      {forge.length > 0 && (
-        <>
-          <div className="panel-divider" />
-          <ForgeSection rows={forge} period={headline.period} />
-        </>
-      )}
-    </>
-  );
-}
-
-/**
- * A row the panel can open, or the same row drawn and inert.
- *
- * An inert row gets none of what a live one carries — no title, no pointer,
- * nothing focusable — because a chevron the app draws is not a promise the
- * site makes.
- *
- * A gauge row is named the way the app names it, with `legendHelp` as an
- * accessibility label, and keeps its reading as a description so the name does
- * not swallow the figures beside it. The agents door and the identity row take
- * no label, because the app gives each a help string and nothing else: its
- * visible text is its name, which is also what keeps the name and the label
- * the same words.
- */
-function Row({
-  className,
-  target,
-  title,
-  label,
-  describedBy,
-  press,
-  children,
-}: {
-  className: string;
-  target: string;
-  title: string;
-  label?: string;
-  describedBy?: string;
-  press?: () => void;
-  children: ReactNode;
-}): ReactElement {
-  if (press === undefined) {
-    return <div className={className}>{children}</div>;
-  }
-  return (
-    <button
-      type="button"
-      className={`${className} panel-live`}
-      data-target={target}
-      title={title}
-      aria-label={label}
-      aria-describedby={describedBy}
-      onClick={press}
-    >
-      {children}
-    </button>
+    </Platters>
   );
 }

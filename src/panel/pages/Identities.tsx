@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import { ChevronDown, ChevronRight } from "../components/Glyph";
 import { IdentityMarkGlyph } from "../components/IdentityMark";
 import { PageHeader } from "../components/PageHeader";
+import { PanelGroup, Platters } from "../components/PanelGroup";
 import { identityCount, identityDisclosure, identityFooter, identityVerdict } from "../format";
 import { BACK, type OpenPage, OVERVIEW } from "../page";
 import type { IdentityMark, IdentityRow } from "../types";
@@ -15,24 +16,34 @@ interface IdentitiesProps {
   rows: IdentityRow[];
   focus: string | null;
   reading: string;
+  backLabel: string;
   open?: OpenPage;
 }
 
 /**
  * `PanelIdentities` under `identitiesHeader`: which repositories commit under
  * a name their forge does not expect. The header says when they were last
- * read, and the page opens folded, on a recap and the findings.
+ * read, and the page opens folded, on a recap and the findings. Back returns
+ * to the tab the page was opened from, and is named after it.
  */
-export function Identities({ rows, focus, reading, open }: IdentitiesProps): ReactElement {
+export function Identities({
+  rows,
+  focus,
+  reading,
+  backLabel,
+  open,
+}: IdentitiesProps): ReactElement {
   return (
     <>
       <PageHeader
         title="Identities"
         subtitle={reading}
-        backLabel="Back to today"
+        backLabel={backLabel}
         back={open && (() => open(OVERVIEW, BACK))}
       />
-      <IdentitiesBlock rows={rows} focus={focus} showsAll={false} />
+      <Platters>
+        <IdentitiesBlock rows={rows} focus={focus} showsAll={false} />
+      </Platters>
     </>
   );
 }
@@ -54,13 +65,17 @@ export function IdentitiesBlock({
   const standing = rows.filter((row) => row.mark === "unexpected");
   const rest = rows.filter((row) => row.mark !== "unexpected");
   return (
-    <div className="panel-section panel-identities">
-      <div className="panel-label">
-        Commit identity
-        <span className="panel-label-end panel-identities-footer">
-          {identityFooter(rows.length)}
-        </span>
-      </div>
+    <PanelGroup
+      className="panel-identities"
+      label={
+        <div className="panel-label">
+          Commit identity
+          <span className="panel-label-end panel-identities-footer">
+            {identityFooter(rows.length)}
+          </span>
+        </div>
+      }
+    >
       {rows.length > 0 && <Recap rows={rows} />}
       {standing.length > 0 && <IdentityRows rows={standing} focus={focus} />}
       {rest.length > 0 && (
@@ -73,7 +88,7 @@ export function IdentitiesBlock({
         </>
       )}
       <div className="panel-identity-caveat">{CAVEAT}</div>
-    </div>
+    </PanelGroup>
   );
 }
 

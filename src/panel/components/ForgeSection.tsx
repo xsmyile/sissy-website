@@ -2,6 +2,7 @@ import type { ReactElement } from "react";
 import { forgeCommentsHelp, forgeIssuesHelp, forgeMergedHelp, forgeSectionLabel } from "../format";
 import type { ForgeCounter, ForgeRow, Period } from "../types";
 import { ArrowTriangleheadMerge, BubbleLeft, SmallcircleFilledCircle } from "./Glyph";
+import { PanelGroup } from "./PanelGroup";
 import { ForgeMark } from "./Sprite";
 
 /**
@@ -73,20 +74,20 @@ function Counter({
 }
 
 /**
- * The forge block at the foot of the Overview, below the projects. The app's
- * own reason for the placement is the question rather than the height: the
- * projects are what the app is for and nothing may push them under the fold,
- * and a contribution count is the least urgent reading on the page.
+ * `PanelForge.forge`: how much was pushed, per forge account, over the panel's
+ * window, which the label names because the period is chosen in the header.
  *
  * The two rows are never summed, so nothing here adds them.
  */
 export function ForgeSection({ rows, period }: { rows: ForgeRow[]; period: Period }): ReactElement {
   return (
-    <div className="panel-section panel-forge-section">
-      <div className="panel-label">{forgeSectionLabel(period)}</div>
+    <PanelGroup
+      className="panel-forge-section"
+      label={<div className="panel-label">{forgeSectionLabel(period)}</div>}
+    >
       {rows.map((row) => (
         <Row row={row} key={row.id} />
       ))}
-    </div>
+    </PanelGroup>
   );
 }

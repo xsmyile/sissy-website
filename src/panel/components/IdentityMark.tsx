@@ -3,7 +3,7 @@ import type { IdentityLineState, IdentityMark } from "../types";
 import { Checkmark, ExclamationmarkTriangleFill } from "./Glyph";
 
 /**
- * The identities page's marks, which the Overview's line borrows so the line
+ * The identities page's marks, which the identity line borrows so the line
  * and the rows it leads to read alike: a tick, an orange warning, or a dash
  * for a reading that was not judged.
  */
@@ -18,7 +18,7 @@ export function IdentityMarkGlyph({ mark }: { mark: IdentityMark }): ReactElemen
   }
 }
 
-/** The Overview line's mark. Nothing read carries none: a tick there would be a verdict. */
+/** The identity line's mark. Nothing read carries none: a tick there would be a verdict. */
 export function IdentityLineMark({ state }: { state: IdentityLineState }): ReactElement | null {
   switch (state) {
     case "findings":

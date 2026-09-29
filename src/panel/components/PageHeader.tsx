@@ -15,7 +15,7 @@ interface PageHeaderProps {
 /**
  * The header a page one level in carries instead of Sissy's own: the way
  * back, whose page this is, and the refresh. Mirrors `providerHeader` and
- * `statsHeader` in `UsagePanelView.swift`.
+ * `identitiesHeader` in `UsagePanelView.swift`.
  */
 export function PageHeader({
   title,

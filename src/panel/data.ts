@@ -96,16 +96,20 @@ const IDENTITIES: IdentityRow[] = [
 /**
  * One day of demo readings, internally consistent: the three accounts sum to
  * the headline, each account's projects sum to its day, each project's rows
- * across the accounts sum to its line on the Overview, or to the fold that
- * stands for it there, and the stats page's five rows and the fold after them
- * hold the seven processes the Overview's agents door counts. The chart's bands
- * end on those rows' footprints, the fold's two and an agent that exited
- * mid-hour making the rest, and each row's lane ends on its load. Every
- * repository the identities page reads is one Sissy has seen an agent in on
- * some day, not only this one, because the app checks every repository
- * `ProjectLedger` has banked: that is why `group935/tranzit` is checked without
- * a row under By project. The Overview's line names the one that disagrees. Every
- * account's gauge reads the window `binding` would pick for its page.
+ * across the accounts sum to its line on the Usage tab, or to the fold that
+ * stands for it there, and the Sessions tab's seven rows hold the seven
+ * sessions its headline counts. The chart's bands end on the first five rows'
+ * footprints, the last two and a session that exited mid-hour making the rest,
+ * and each row's lane ends on its load. Every repository the identities page
+ * reads is one Sissy has seen an agent in on some day, not only this one,
+ * because the app checks every repository `ProjectLedger` has banked: that is
+ * why `group935/tranzit` is checked without a row under By project. The Forge
+ * tab's line names the one that disagrees, which is also what tints that
+ * tab's symbol. Every account's gauge reads the window `binding` would pick for
+ * its page.
+ *
+ * The Mac reads normal, so its tab carries no badge, and its heaviest apps
+ * leave the sessions out, as `MacAppGrouping` does.
  *
  * The day strip obeys `UsagePanelSnapshot.dayStrip`: a bar is its day's cost
  * over the costliest day's, and the total under the label is the bars above it
@@ -125,6 +129,17 @@ const IDENTITIES: IdentityRow[] = [
 export const DEMO_SNAPSHOT: PanelSnapshot = {
   header: { updated: "21s ago", awake: "<1m" },
   headline: { period: "Today", cost: "$932.03", tokens: "1404.8M tokens", burn: "60.8M/h" },
+  tabs: [
+    { tab: "usage", badge: null },
+    { tab: "sessions", badge: null },
+    { tab: "mac", badge: null },
+    { tab: "disk", badge: null },
+    { tab: "network", badge: null },
+    {
+      tab: "forge",
+      badge: { tint: "orange", reason: "A repository commits under an unexpected name" },
+    },
+  ],
   usedToday: 2,
   meteringProviders: 2,
   gaugeRows: [
@@ -156,7 +171,6 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       expectedFraction: 0.61,
     },
   ],
-  agents: { running: 7, footprint: "2.22 GB" },
   projects: [SISSY, BILLY, FOLDED],
   projectCount: 4,
   identities: IDENTITIES,
@@ -601,7 +615,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       status: { label: "All Systems Operational", checked: "checked 34s ago" },
     },
   ],
-  stats: {
+  sessions: {
     reading: "counted 12s ago",
     live: {
       line: { running: 7, footprint: "2.22 GB" },
@@ -667,6 +681,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "sissy-claude",
           provider: "claude-code",
           name: "sissy",
+          band: 0,
           cpuLoad: 0.94,
           lane: [
             0.04, 0.01, 0.03, 0.2, 0.01, 0.66, 0.06, 0.07, 0.06, 0.05, 0.03, 0.04, 0.06, 0.05, 0.07,
@@ -680,6 +695,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "origins-claude",
           provider: "claude-code",
           name: "origins",
+          band: 1,
           cpuLoad: 0.37,
           lane: [
             null,
@@ -738,6 +754,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "billy-codex",
           provider: "codex",
           name: "billy",
+          band: 2,
           cpuLoad: 0.12,
           lane: [
             0.05, 0.01, 0.04, 0.03, 0.06, 0.07, 0.02, 0.01, 0.67, 0, 0.33, 0.07, 0.02, 0.21, 0.04,
@@ -751,6 +768,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "sissy-codex",
           provider: "codex",
           name: "sissy",
+          band: 3,
           cpuLoad: 0.81,
           lane: [
             null,
@@ -809,6 +827,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "buried-claude",
           provider: "claude-code",
           name: "buried",
+          band: 4,
           cpuLoad: 0.03,
           lane: [
             null,
@@ -863,8 +882,80 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           ],
           figures: "214 MB · 18m",
         },
+        {
+          id: "billy-claude",
+          provider: "claude-code",
+          name: "billy",
+          band: null,
+          cpuLoad: 0.02,
+          lane: [
+            0.02, 0.01, 0.03, 0.01, 0.02, 0.04, 0.01, 0.02, 0.01, 0.03, 0.02, 0.01, 0.05, 0.02,
+            0.01, 0.02, 0.03, 0.01, 0.02, 0.01, 0.04, 0.02, 0.01, 0.02, 0.03, 0.01, 0.02, 0.01,
+            0.02, 0.06, 0.02, 0.01, 0.03, 0.02, 0.01, 0.02, 0.01, 0.03, 0.02, 0.01, 0.02, 0.04,
+            0.01, 0.02, 0.01, 0.03, 0.02, 0.01, 0.02,
+          ],
+          figures: "176 MB · 3h 40m",
+        },
+        {
+          id: "sissy-claude-second",
+          provider: "claude-code",
+          name: "sissy",
+          band: null,
+          cpuLoad: 0.44,
+          lane: [
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.71,
+            0.58,
+            0.49,
+            0.62,
+            0.4,
+            0.44,
+          ],
+          figures: "142 MB · 6m",
+        },
       ],
-      folded: { running: 2, footprint: "318 MB" },
     },
     counted: {
       period: "Today",
@@ -888,13 +979,31 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
           id: "claude-code",
           provider: "claude-code",
           name: "Claude",
-          figures: "9 sessions · 28 agents · 4h51",
+          figures: "9 sessions · 28 sub-agents · 4h51",
         },
-        { id: "codex", provider: "codex", name: "Codex", figures: "5 sessions · 9 agents · 2h04" },
+        {
+          id: "codex",
+          provider: "codex",
+          name: "Codex",
+          figures: "5 sessions · 9 sub-agents · 2h04",
+        },
       ],
       cache: { share: "98.1%", saved: "$5418.62" },
       longestTurn: "5m 29s",
     },
+  },
+  mac: {
+    memory: "Memory normal",
+    pressure: "normal",
+    caption: "58% free · sampled 4s ago",
+    swap: "1.4 GB",
+    load: "3.8 on 12 cores",
+    uptime: "6d 4h",
+    heaviest: [
+      { id: "/Applications/Xcode.app", name: "Xcode", footprint: "3.12 GB" },
+      { id: "/Applications/Safari.app", name: "Safari", footprint: "2.48 GB" },
+      { id: "/Applications/Docker.app", name: "Docker", footprint: "1.96 GB" },
+    ],
   },
 };
 

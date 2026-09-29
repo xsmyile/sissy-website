@@ -9,21 +9,22 @@ repository and is the reference for everything the site draws.
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
   `Agents`, `Git`, `Privacy`, `Detail`, `Install` and `Footer` are the page in
-  order, which is the order the Overview itself reads in: gauges, accounts,
-  agents, then the repositories. `Section` is the frame the middle ones share
+  order, which is the order the panel itself reads in: the Usage tab's gauges
+  and the accounts behind them, the Sessions tab, then the repositories. `Section` is the frame the middle ones share
   (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
   both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
   says how it arrives); `Nav`, `MenuBar`, `DownloadButton`, `Command`, `Disclosure` and
   `Inline` are the pieces. `Nav` is rendered inside `Hero`, not beside it, and
   `MenuBar` inside `Install`. Each carries its own scoped `<style>`.
 - `src/panel/`: the replica of the app's panel, in React. `Panel.tsx` switches
-  on the page, `page.ts` carries which page that is and how one is opened,
-  `pages/` holds one component per page (Overview, Provider, Effort, Stats,
-  Identities),
-  `components/` the pieces they share, `data.ts` the one fixture every number
+  on the page and, on the Overview, on the tab; `page.ts` carries which page
+  that is, which tabs have one, and how one is opened. `pages/` holds one
+  component per page or tab (Overview, which is the Usage tab, Sessions, Mac,
+  Forge, Provider, Effort, Identities), `components/` the pieces they share,
+  `PanelGroup` the platter every block sits on and `TabBar` the modules, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
   enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
-  `IdentityCrop` and `IdentitiesCrop`, each
+  `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop` and `MacCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
   never operable. `HeroPanel.tsx` is the only hydrated island: it
   owns the page state, the focus, the blink and the tilt. Every other use of
@@ -72,7 +73,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`,
   `Panel.tsx` mirrors `UsagePanelView.Page`, `pages/Overview.tsx` mirrors
   `PanelOverview.swift`, `pages/Provider.tsx` mirrors `PanelProviderPage.swift`,
-  `pages/Effort.tsx` mirrors `PanelEffortPage.swift`, `pages/Stats.tsx` mirrors `PanelStats.swift`, `pages/Identities.tsx` mirrors
+  `pages/Effort.tsx` mirrors `PanelEffortPage.swift`, `pages/Sessions.tsx`
+  mirrors `PanelSessions.swift`, `pages/Mac.tsx` mirrors `PanelMac.swift`,
+  `pages/Forge.tsx` mirrors `PanelForge.swift` and `PanelIdentityLine`,
+  `components/TabBar.tsx` mirrors `PanelTabs.swift`,
+  `components/PanelGroup.tsx` mirrors `PanelGroup` and `PanelPlatter`,
+  `pages/Identities.tsx` mirrors
   `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
   mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
   mirrors `ForgeRowView`, `metrics.css` mirrors
@@ -98,8 +104,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   a plain fraction, because the hero's furniture — nav, words, cue, gaps —
   costs the same on every screen: a plain fraction keeps the panel growing on a
   short window where that constant is most of the fold, and the cue is what
-  falls off the bottom. Measured on the wide scene, with the identity line in
-  the Overview, it clears the fold from 600 px of viewport height up; the
+  falls off the bottom. Measured on the wide scene, with the tab bar under the
+  header and the Usage tab open, it clears the fold from 600 px of viewport
+  height up; the
   stacked scene puts the panel under the words and makes no such claim. That size is what the words being one block in their own column
   buys: the title no longer spans the scene with the panel taking what is left
   under it, so the panel has a column for the whole height of the stack.
@@ -129,9 +136,9 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   plays it when a figure arrives, on the app's own timing and
   `dataBlinkCooldown`, never on a loop. The page blinks on the panel's first
   presentation, when the menu bar's Sissy at the foot of the page has brought
-  it back into view, and when the panel opens a page, which is a deliberate widening
-  of the app's rule — the app blinks on a data frame — because opening a page
-  is when new figures reach the screen here. It does not blink on the pace band
+  it back into view, and when the panel opens a page or a tab, which is a
+  deliberate widening of the app's rule — the app blinks on a data frame —
+  because opening one is when new figures reach the screen here. It does not blink on the pace band
   scrolling back into view: an unchanged figure re-entering the viewport is not
   new data. A hidden tab is what "readings stop"
   means here, so the eye closes and rests shut until the tab is back, which is
@@ -148,12 +155,19 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **One panel is operable, and only along routes the app has.** The hero's is
   the only one; every other panel on the page is the same markup rendered
   inert. A panel is given `open` or it is not, and that single switch decides
-  whether its rows are buttons. The routes are the three gauge rows, the agents
-  door at the end of the providers label, the commit identity line, the `By effort` row where it is a door, and
-  the back control, and nothing else — the picker, refresh, settings, the
-  projects label, `Show all`, the agents fold, `Copy the fix` and Codex's
+  whether its rows are buttons. The routes are the Usage, Sessions, Mac and
+  Forge tabs, the three gauge rows, the commit identity line on the Forge tab,
+  the `By effort` row where it is a door, and the back control, and nothing
+  else — the period, the picker, refresh, settings, the projects label,
+  `Show all`, the sessions' `By repository` fold, `Copy the fix` and Codex's
   `Use…` stay drawn and dead, because spending a reset is a write and not a
-  route. The
+  route. The Disk and Network tabs are drawn in the bar and left inert with
+  no page behind them: Disk's cleanup is a write, and Network samples the
+  links once a second, which a fixture cannot. The tab and the page are two
+  states, as `UsagePanelView` keeps them, so Back from a page returns to the
+  tab it was opened from and is named after it, `Back to Forge` from the
+  identities page. A tab keeps focus when it is pressed, and its hover names
+  it without the app's ⌘ digit, which on a web page belongs to the browser. The
   identity line opens its page on the repository it names, as the app does
   when exactly one is wrong. `By effort` is a door only where the app makes it
   one, when some model leads on another effort or leads by less than
@@ -163,11 +177,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   a route is the day strip's hover, which the same switch turns on: pointing at
   a bar swaps the strip's header and the model pills to that day, as
   `PanelDayBlock` does, and an inert strip keeps the window's header over
-  today's pills. The agents chart's hover is not mirrored: its caption stays
+  today's pills. The Sessions chart's hover is not mirrored: its caption stays
   the hour's, and the lanes draw no cursor. A gauge row is named
   the way the app names it, with `legendHelp` as an accessibility label and the
   reading beside it as a description, so the name does not swallow the figures.
-  The agents door and the identity row take no label at all, because the app gives each
+  The identity row takes no label at all, because the app gives it
   a help string and nothing else: its visible text is its name, which is also what
   keeps the accessible name and the visible label the same words. Focus lands
   on the new page's back control when one opens and returns to the row it came
@@ -178,14 +192,22 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   says otherwise, and the invitation under it is words, so the island marks
   one door at a time with `data-hint`, which the hero draws as a ring and a
   wash in the page's accent, outside the row: the first account, then the
-  agents count, then the identity line, each giving way to the next once its
-  kind of door has been opened, and nothing once all three have. It is the
+  Sessions tab, then the identity line, each giving way to the next once its
+  kind of door has been opened, and nothing once all three have. A door on
+  the tab on screen comes first, and a door on another tab is marked through
+  that tab only until that tab has been seen: the reader starts on Usage, so
+  from Forge or Mac the pulse never calls them back to the accounts, and once
+  every tab holding a door has been seen it goes quiet. It led them back once,
+  and a pulse that follows you around reads as nagging rather than as an
+  invitation. On a tab the ring is the tab's
+  own capsule and the pulse breathes inside it, because a ring grown outward
+  spills past the bar's rounded end and reads as larger than the tab. It is the
   site's own gesture, set on the DOM rather than passed through the pages,
   because the app has no such thing. Under Reduce Motion the ring stays and
   does not pulse. **The menu bar's Sissy is the way back to the panel.** In
   macOS a click on the status item opens the popover, and the popover on this
   page is the hero's, so the icon in `Install`'s menu bar links to `#panel`.
-  The press puts the panel back on the Overview at once, while it is off
+  The press puts the panel back on the Usage tab at once, as the app reopens, while it is off
   screen, and scrolls it to the middle of the viewport; nothing else moves
   until `scrollend` (or a two-second fallback), when she blinks and focus lands
   on the first gauge row. An arrival started on the panel coming into view
@@ -197,7 +219,8 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   decoration.
 - **`Git` is the repositories, one section rather than one per block.** The
   commit-identity check leads it, because it is the one thing on the page few
-  other tools do, and the Overview's projects and contributions blocks follow
+  other tools do, and the Usage tab's projects and the Forge tab's
+  contributions follow
   it at native size, a sentence each, in the `after` slot, the three touching:
   the projects block ends on the edge of its column, the contributions block
   starts there and rides up over the identities page's frame and over the
@@ -214,7 +237,7 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   since `ForgeSettings` draws that control as a macOS switch in a grouped
   `Form` and says why, *"a window that answered that question two ways would
   be asking the reader which one meant what"*.
-- **The band opens Limits; it is not a section.** The 69% is the Overview's
+- **The band opens Limits; it is not a section.** The 69% is the Usage tab's
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
   restating the hero. Under the title it is the demonstration the section's
@@ -230,10 +253,11 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
 - **The fixture stays internally consistent, and it carries every figure
   rather than working one out.** The three accounts sum to the headline, each
   account's projects sum to its day, each project's rows across the accounts
-  sum to its line on the Overview or to the fold standing for it there, each
+  sum to its line on the Usage tab or to the fold standing for it there, each
   account's efforts sum to its strip's models over the covered days, and the
-  processes on the Stats page each
-  belong to a project on their own account's page. A day strip obeys
+  sessions on the Sessions tab each belong to a project on their own
+  vendor's pages. The tabs' badges are fields, and the Forge tab's orange
+  is the identity line's finding. A day strip obeys
   `UsagePanelSnapshot.dayStrip`: a bar is its day's cost over the costliest
   day's, and the total under the label is the bars above it summed. A window's
   reset is what is left of it at its own pace mark, and its reserve or deficit
@@ -294,12 +318,13 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   crop. So `.panel` carries only its contact shadow, and the hero, which is the
   one panel presented as floating, draws its own light over it. The one
   exception is a surface laid over another: in `Limits` Codex's limits over
-  Claude's, in `Git` the contributions block over the identities page and the
+  Claude's, in `Agents` the Mac tab over the sessions' Now block, in `Git` the contributions block over the identities page and the
   projects block, and Settings ▸ Forge over the contributions block. Each
   surface on top carries a short shadow of its own, because two contact
   shadows alone do not say which edge is on top. An overlap covers a frame or
   a caption and never a line of text a reader is meant to finish, at any
-  width: below 920 px Limits' pair and Git's first two blocks stack, and
+  width: below 920 px Limits' pair, Agents' pair and Git's first two blocks
+  stack, and
   Settings ▸ Forge lies over no more than the contributions block's bottom
   margin, because a column that narrow has no other frame left to lie over.
 - **The palette is the seal point Siamese the app is named after.** Graphite

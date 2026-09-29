@@ -28,16 +28,19 @@ export function gaugeReading(row: GaugeRow): string {
 }
 
 export function agentsRunning(line: AgentsLine): string {
-  const noun = line.running === 1 ? "agent" : "agents";
+  const noun = line.running === 1 ? "session" : "sessions";
   return `${line.running} ${noun}${SEPARATOR}${line.footprint}`;
 }
 
-/** The fold under the agent rows, carrying what the folded rows hold. */
-export function agentsFolded(folded: AgentsLine): string {
-  return `${folded.running} more${SEPARATOR}${folded.footprint}`;
+/** The one row the running sessions fold behind. */
+export const SESSIONS_DISCLOSURE = "By repository";
+
+/** The counted half's label, naming the window its figures are over. */
+export function sessionsSectionLabel(period: Period): string {
+  return `Sessions and sub-agents${SEPARATOR}${periodHeading(period).toLowerCase()}`;
 }
 
-/** One agent's CPU as a percentage of one core, which is why it can pass 100%. */
+/** One session's CPU as a percentage of one core, which is why it can pass 100%. */
 export function cpuLoad(cores: number): string {
   return `${Math.round(cores * 100)}%`;
 }
@@ -50,8 +53,16 @@ export function projectFigures(tokens: string, cost: string): string {
   return `${tokens}${SEPARATOR}${cost}`;
 }
 
-export function headlineMeta(tokens: string, burn: string | null): string {
-  return burn === null ? tokens : `${tokens}${SEPARATOR}${burn}`;
+/** How a window is named where it heads a reading rather than sits in a picker. */
+export function periodHeading(period: Period): string {
+  return period === "All" ? "All time" : period;
+}
+
+/** `PanelOverview.subline`: the window always, then the tokens, then the pace on today. */
+export function headlineMeta(period: Period, tokens: string, burn: string | null): string {
+  const parts = [periodHeading(period), tokens];
+  if (burn !== null) parts.push(burn);
+  return parts.join(SEPARATOR);
 }
 
 /** The name a forge answers to on a row and in a control. */
@@ -65,8 +76,7 @@ export function forgeName(host: ForgeHost): string {
  * the one that has to say which choice it is answering.
  */
 export function forgeSectionLabel(period: Period): string {
-  const window = period === "All" ? "all time" : period.toLowerCase();
-  return `Contributions${SEPARATOR}${window}`;
+  return `Contributions${SEPARATOR}${periodHeading(period).toLowerCase()}`;
 }
 
 /** What the mark beside the merge count means, in the vendor's own noun. */

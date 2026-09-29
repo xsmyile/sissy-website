@@ -282,7 +282,7 @@ const timing = [
   }
 
   .invitation {
-    max-width: calc(340 * var(--panel-pt));
+    max-width: calc(352 * var(--panel-pt));
     margin: 0;
     font-size: 14px;
     line-height: 1.45;
@@ -308,9 +308,24 @@ const timing = [
     pointer-events: none;
   }
 
+  /*
+   * A tab is a capsule at the bar's own edge, so its ring is the capsule and
+   * its pulse breathes inside it: a ring grown outward spills past the bar's
+   * rounded end and reads as larger than the tab it marks.
+   */
+  .lit :global(.panel-tab[data-hint]::after) {
+    inset: 0;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .lit :global(.panel-live[data-hint]::after) {
       animation: hint-pulse 2.4s ease-out 1.2s infinite both;
+    }
+
+    .lit :global(.panel-tab[data-hint]::after) {
+      animation-name: hint-pulse-inside;
     }
   }
 
@@ -324,6 +339,19 @@ const timing = [
     100% {
       background: transparent;
       box-shadow: 0 0 0 calc(7 * var(--pt)) color-mix(in srgb, var(--accent) 0%, transparent);
+    }
+  }
+
+  @keyframes hint-pulse-inside {
+    0% {
+      background: color-mix(in srgb, var(--accent) 14%, transparent);
+      box-shadow: inset 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 60%, transparent);
+    }
+
+    70%,
+    100% {
+      background: transparent;
+      box-shadow: inset 0 0 0 calc(1 * var(--pt)) color-mix(in srgb, var(--accent) 30%, transparent);
     }
   }
 
