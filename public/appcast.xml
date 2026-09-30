@@ -6,6 +6,31 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.1</title>
+            <pubDate>Wed, 30 Sep 2026 08:32:38 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>983</sparkle:version>
+            <sparkle:shortVersionString>0.3.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.1: Steadier readings, lighter on the Mac
+
+- The panel header keeps one wording instead of flipping between a long and
+  a short form, and stays on one line beside its controls.
+- A keep-awake request that gets no answer now expires on its own.
+- The refresh buttons' tooltips say what the button does.
+- A Codex limit whose reset the CLI leaves empty is kept rather than dropped.
+- When a vendor answers "too many requests", Sissy waits as long as it was
+  told before asking again.
+- Sissy saves its usage state before the Mac sleeps and rewrites it less
+  often while it runs.
+- Reading the CLIs' logs and drawing the panel costs less CPU, and an export
+  no longer holds up the panel.
+- Rates for gpt-6.1-sol.
+- Fixes to limits polling, account linking and frame ordering.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.1/Sissy-0.3.1.dmg" length="6685810" type="application/octet-stream" sparkle:edSignature="w8PcaHqTA1zBklF+jRya6DO1g81gGyMUBMn7axPeMpaFNd26PLW9pDG5R4cUU3Mx5Ws7Ix2HU2G0rMAoSBsCCg=="/>
+        </item>
+        <item>
             <title>0.3.0</title>
             <pubDate>Tue, 29 Sep 2026 09:10:11 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -133,6 +158,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: Gd4OdRY4QUcdFKsiwrnaKFRk//tm5UjhZpDqTQnNnnOpjHg5f+MxPvq9xTAQ6USMA0H+I6LwKfuHjLp0+aApBw==
-length: 8364
+edSignature: npekDF3QehOa3QzAit/euBO3ivR8KK8HuyEQIsSHSFBlAiSuxF1s9t+cTe+Bmk9rDs8xz6MEomo3/8xiviOHBA==
+length: 9869
 -->
