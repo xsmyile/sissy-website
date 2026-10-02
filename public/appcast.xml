@@ -6,6 +6,27 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.2</title>
+            <pubDate>Fri, 02 Oct 2026 23:37:07 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>992</sparkle:version>
+            <sparkle:shortVersionString>0.3.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.2: GitHub Actions minutes on the Forge tab
+
+- The Forge tab shows how much of each GitHub owner's monthly Actions
+  allowance is gone, the account and every organisation whose bill the
+  token can read, with a gauge that resets on the 1st and a line naming the
+  repository and runner that spent the most. It has its own switch, and
+  reading the account's own bill needs the `user` scope on the token.
+- Only private repositories count against the allowance, the way GitHub
+  bills it; larger runners stay out of it.
+- The Codex reset button is offered whenever a reset is held, including
+  while the session limit sits at 100%.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.2/Sissy-0.3.2.dmg" length="6804425" type="application/octet-stream" sparkle:edSignature="JN12Z833pph8Uv4RjCReRINV8mIjEtFmw8sOtb0VuUUuk4b6+4d1LCBXJkN2+cprv2Ur+MQDmqeUSEBSDOuZCg=="/>
+        </item>
+        <item>
             <title>0.3.1</title>
             <pubDate>Wed, 30 Sep 2026 08:32:38 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -158,6 +179,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: npekDF3QehOa3QzAit/euBO3ivR8KK8HuyEQIsSHSFBlAiSuxF1s9t+cTe+Bmk9rDs8xz6MEomo3/8xiviOHBA==
-length: 9869
+edSignature: Zr1EhXEVZ9pPa4S2Pgg8Djw8HKBBN0/d8sxEk4jHWsSTyl/5qipAnvwKq0uUlG2IPZ3dHyfFGJHS087M+Zs5AA==
+length: 11228
 -->
