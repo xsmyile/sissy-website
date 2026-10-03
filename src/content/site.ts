@@ -1,11 +1,17 @@
 export const SITE_NAME = "Sissy";
-export const SITE_TITLE = "Sissy · The menu bar companion for developers";
+export const SHARE_IMAGE = {
+  src: "/og.png",
+  width: 1200,
+  height: 630,
+  alt: "Sissy, the cat with the lit eye, beside her name",
+} as const;
+export const SITE_TITLE = "Sissy · Claude Code and Codex limits in the macOS menu bar";
 export const SITE_DESCRIPTION =
-  "The menu bar companion for developers: spend, rate limits, accounts, agents, projects, git, and the Mac's memory, disk and network, read from what is already on your Mac and the services you connect. No account of its own, no telemetry.";
+  "A macOS menu bar app for developers: Claude Code and Codex limits and spend, the agents running now, your Mac's memory, disk and network, and git.";
 
-export const TAGLINE = "The numbers you keep checking, one click away.";
+export const TAGLINE = "Your agents, your Mac, your repos. One click away.";
 export const LEDE =
-  "The menu bar companion for developers: your agents, your Mac, your repositories. Everything is read from what is already on your Mac and the services you connect.";
+  "Sissy is the menu bar companion for developers. Everything is read from what is already on your Mac and the services you connect.";
 
 export const GITHUB_URL = "https://github.com/xsmyile/sissy";
 export const DOWNLOAD_URL = `${GITHUB_URL}/releases/latest/download/Sissy.dmg`;

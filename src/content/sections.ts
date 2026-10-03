@@ -290,7 +290,7 @@ export const DETAIL = {
 export const INSTALL = {
   id: "install",
   eyebrow: "Install",
-  title: "Put the numbers in the menu bar.",
+  title: "Put Sissy in the menu bar.",
   requirements: "macOS 26 or later, Apple Silicon or Intel. Free and open source.",
   reassurance:
     "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
