@@ -73,13 +73,13 @@ import Section from "./Section.astro";
 
   h3 {
     margin: 0 0 8px;
-    font-size: 16px;
+    font-size: var(--text-lg);
     font-weight: 600;
   }
 
   p {
     margin: 0;
-    font-size: 15px;
+    font-size: var(--text-base);
     color: var(--text-2);
     text-wrap: pretty;
   }
@@ -87,14 +87,14 @@ import Section from "./Section.astro";
   table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 14.5px;
+    font-size: var(--text-base);
   }
 
   th {
     padding: 0 20px 12px 0;
-    font-size: 11.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-tracking);
     text-align: left;
     text-transform: uppercase;
     color: var(--muted);
@@ -125,7 +125,7 @@ import Section from "./Section.astro";
   .security {
     display: inline-block;
     margin-top: 24px;
-    font-size: 15px;
+    font-size: var(--text-base);
     color: var(--accent);
     text-decoration: none;
   }
@@ -175,9 +175,9 @@ import Section from "./Section.astro";
       content: attr(data-label);
       display: block;
       margin-bottom: 2px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+      font-size: var(--label-size);
+      font-weight: var(--label-weight);
+      letter-spacing: var(--label-tracking);
       text-transform: uppercase;
       color: var(--muted);
     }
