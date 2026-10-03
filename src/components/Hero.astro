@@ -537,6 +537,11 @@ const timing = [
     }
 
     @supports (anchor-name: --download) {
+      .hero {
+        --eye-x: calc(273px + 0.06 * var(--cat));
+        --eye-y: 360px;
+      }
+
       .cta :global(.download) {
         anchor-name: --download;
       }

@@ -28,15 +28,19 @@ paths:
   rather than an edge one, because the panel blinks when it opens a page and
   opening a page means clicking a row, so the pointer is on the panel and
   tilting it every time. The tilt keeps the rotation and both shadows,
-  which is enough for it to be felt. Her eye lands under the download button, so
-  the one light on the page falls on the one thing the page asks for. **On a
+  which is enough for it to be felt. On a wide scene her eye lands under the
+  download button, so the one light on the page falls on the one thing the
+  page asks for. **On a
   narrow scene she is anchored beside that button** (`anchor-name: --download`)
   rather than placed by a percentage: a percentage of a hero whose height is its
-  copy put the eye behind the headline at every width from 360 to 900 px,
-  measured 2026-10-03, and beside the button it is still the light on the one
-  thing the page asks for. A browser without anchor positioning keeps the
-  percentage. Her interior is untouched, because the replica stays in macOS
-  neutrals.
+  copy put the eye behind the headline at every width measured from 360 to
+  900 px, 2026-10-03, and beside the button it is still the light on the one
+  thing the page asks for. The ambient cannot read an anchor, so on that scene
+  `--eye-x` and `--eye-y` follow the button in pixels instead (it ends 225 px
+  in at every narrow width, and its centre sits 305 to 414 px down), which is
+  close enough for a gradient that soft. A browser without anchor positioning
+  keeps the percentage. Her interior is untouched, because the replica stays
+  in macOS neutrals.
 
 - **She blinks when numbers land, and never otherwise.** `blink` is
   `SissyMenuBarMotion.blink` — *"Sissy noticing new numbers"* — so the page
