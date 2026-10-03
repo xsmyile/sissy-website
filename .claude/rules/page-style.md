@@ -23,3 +23,9 @@ paths:
   two marks used to grow was the only chip on the page, and a chip under one
   link and no other says the icon is a button when it is a link. The hit area
   stays the size the box was; only the paint is gone.
+
+- **Type sizes come from `tokens.css`, not from the component.** Six steps
+  (`--text-xs` to `--text-xl`, 12 to 17 px) and one uppercase label
+  (`--label-size`, `--label-weight`, `--label-tracking`), which the section
+  eyebrow, the legend, the scroll cue and the Privacy table heads share. A
+  new size snaps to a step; the replica's own measures stay in `src/panel`.

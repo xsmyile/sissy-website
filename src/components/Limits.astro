@@ -85,7 +85,7 @@ const expected = row.expectedFraction * 100;
   .said {
     margin: 0;
     max-width: 30em;
-    font-size: 17px;
+    font-size: var(--text-xl);
     line-height: 1.5;
     color: var(--text-2);
     text-wrap: pretty;
@@ -123,8 +123,9 @@ const expected = row.expectedFraction * 100;
     flex-wrap: wrap;
     gap: 6px 22px;
     margin: 15px 0 0;
-    font-size: 12px;
-    letter-spacing: 0.05em;
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-tracking);
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -183,7 +184,7 @@ const expected = row.expectedFraction * 100;
 
   figcaption {
     max-width: calc(352 * var(--panel-pt));
-    font-size: 14.5px;
+    font-size: var(--text-base);
     color: var(--muted);
     text-wrap: pretty;
   }

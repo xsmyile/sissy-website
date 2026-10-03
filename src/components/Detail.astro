@@ -53,20 +53,20 @@ import Section from "./Section.astro";
 
   dt {
     margin-bottom: 6px;
-    font-size: 15px;
+    font-size: var(--text-base);
     font-weight: 600;
   }
 
   dd {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     color: var(--text-2);
     text-wrap: pretty;
   }
 
   .note {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     color: var(--muted);
     text-wrap: pretty;
   }
@@ -82,7 +82,7 @@ import Section from "./Section.astro";
     gap: 24px;
     padding-block: 12px;
     border-top: 1px solid var(--border);
-    font-size: 14.5px;
+    font-size: var(--text-base);
   }
 
   .source:first-child {
