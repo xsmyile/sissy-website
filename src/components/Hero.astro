@@ -54,9 +54,12 @@ const timing = [
             {
               REQUIREMENTS.map((item, index) => (
                 <>
-                  {index > 0 && <span class="dot">·</span>}
-                  {item.strong && <b>{item.strong}</b>}
-                  {item.rest}
+                  {index > 0 && <wbr />}
+                  <span class="item">
+                    {item.strong && <b>{item.strong}</b>}
+                    {item.rest}
+                    {index < REQUIREMENTS.length - 1 && <span class="dot">·</span>}
+                  </span>
                 </>
               ))
             }
@@ -236,6 +239,10 @@ const timing = [
     margin: 0;
     font-size: 13.5px;
     color: var(--muted);
+  }
+
+  .item {
+    white-space: nowrap;
   }
 
   .requirements b {
@@ -527,6 +534,17 @@ const timing = [
       --cat: clamp(460px, 108vw, 820px);
       --eye-x: 74%;
       --eye-y: 12%;
+    }
+
+    @supports (anchor-name: --download) {
+      .cta :global(.download) {
+        anchor-name: --download;
+      }
+
+      .cat {
+        left: calc(anchor(--download right) + 48px - 0.545 * var(--cat));
+        top: calc(anchor(--download center) - 0.557 * var(--cat));
+      }
     }
 
     .stack {
