@@ -15,8 +15,8 @@ paths:
   publishes as a versionless asset. The footer's cat line is the one place the
   site corrects the README instead of narrowing it: *"The icon is her"* claims
   a likeness the drawing is not, and the licence line under it already calls
-  the artwork her face, so the site says *"The silhouette is drawn from her."*
-  The app's README wants the same edit at its own copy of that line. Where the
+  the artwork her face, so the site says *"The silhouette is drawn from her."*,
+  and so does the README since it took the same edit. Where the
   README says nothing, the app's own copy is the source rather than a sentence
   invented here: `Accounts` takes the `Use in CLI` warning from
   `ClaudeAccountSwitchCopy`, because a session already running putting its own
