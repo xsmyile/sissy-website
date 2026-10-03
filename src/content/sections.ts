@@ -154,7 +154,7 @@ export const GIT = {
     },
     contributions: {
       title: "Contributions",
-      body: "What you pushed on each forge you connected, and under the figures the last thing you pushed, opened, merged or commented on. Settings ▸ Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
+      body: "What you pushed on each forge you connected, and under the figures the last thing you pushed, opened, merged or commented on. Settings › Forge connects GitHub, GitHub Enterprise or GitLab with a token `gh` or `glab` already holds, or one you paste. Every counter has a switch there, and one switched off is not asked for.",
       panelLabel: "The Forge tab's GitHub and GitLab sections",
       settingsLabel: "Settings, Forge: GitHub and GitLab connected, and Connect",
     },
@@ -211,7 +211,7 @@ export const PRIVACY = {
     {
       host: "`api.github.com`, or the Enterprise or GitLab host you connected",
       purpose: "Your own activity counts",
-      off: "Disconnect it in Settings ▸ Forge",
+      off: "Disconnect it in Settings › Forge",
     },
     {
       host: "`status.claude.com`, `status.openai.com`",
@@ -221,7 +221,7 @@ export const PRIVACY = {
     {
       host: "`sissy.smyile.com`",
       purpose: "The update feed, daily",
-      off: "Settings ▸ About ▸ *Check for updates automatically*",
+      off: "Settings › About › *Check for updates automatically*",
     },
     {
       host: "`github.com`",
@@ -276,7 +276,7 @@ export const DETAIL = {
     { name: "Codex", where: "`~/.codex/sessions/**/rollout-*.jsonl`, honoring `CODEX_HOME`" },
     {
       name: "GitHub, GitLab",
-      where: "Each vendor's API, with a token you connect in Settings ▸ Forge",
+      where: "Each vendor's API, with a token you connect in Settings › Forge",
     },
     {
       name: "Your repositories",
@@ -293,7 +293,7 @@ export const INSTALL = {
   title: "Put Sissy in the menu bar.",
   requirements: "macOS 26 or later, Apple Silicon or Intel. Free and open source.",
   reassurance:
-    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click → Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
+    "The app is Developer ID signed and notarized, so there is no `xattr` workaround and no right-click › Open. The first launch asks for nothing, and from then on Sissy updates itself: it checks once a day and asks before installing.",
   menuBar:
     "Sissy lives in the menu bar, not the Dock. Left-click the icon for the panel, right-click for a short menu. There is no number in the menu bar. The Sissy in this one takes you back to the panel at the top.",
   github: { label: "Source on GitHub", href: GITHUB_URL },

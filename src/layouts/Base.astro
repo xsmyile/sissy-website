@@ -40,7 +40,13 @@ const shareImage = new URL(SHARE_IMAGE.src, Astro.site).href;
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <Font cssVariable="--font-sans" preload />
+    <Font
+      cssVariable="--font-sans"
+      preload={[
+        { weight: 400, style: "normal" },
+        { weight: 700, style: "normal" },
+      ]}
+    />
     <Font cssVariable="--font-mono" />
   </head>
   <body>
