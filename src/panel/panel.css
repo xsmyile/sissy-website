@@ -549,6 +549,14 @@ svg[data-glyph="arrow.triangle.branch"] {
   background: rgba(235, 235, 245, 0.55);
 }
 
+.panel-bar-fill[data-tint="accent"] {
+  background: var(--panel-system-blue);
+}
+
+.panel-bar-fill[data-tint="red"] {
+  background: var(--panel-system-red);
+}
+
 .panel-bar-mark {
   position: absolute;
   top: 0;
@@ -852,6 +860,31 @@ svg[data-glyph="arrow.triangle.branch"] {
 
 .panel-window .panel-caption {
   font-size: var(--panel-caption);
+}
+
+/* `PanelActions` and `ActionsRowView` */
+
+.panel-actions {
+  display: grid;
+  gap: calc(8 * var(--pt));
+}
+
+.panel-actions-row {
+  display: grid;
+  gap: calc(3 * var(--pt));
+}
+
+.panel-actions-line {
+  overflow: hidden;
+  font-size: var(--panel-caption);
+  color: var(--panel-secondary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-actions-line[data-stopped] {
+  font-weight: 500;
+  color: var(--panel-system-red);
 }
 
 .panel-resets {

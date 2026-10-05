@@ -125,6 +125,14 @@ const IDENTITIES: IdentityRow[] = [
  * summed. A window's reset is what is left of it at its own pace mark, and it
  * runs out when what is left of the window meets the rate spent so far.
  *
+ * The GitHub connection's Actions month is September, which ends at midnight
+ * UTC on 1 Oct, 9d 11h after the fixture's 14:32 in Rome, so every owner's
+ * pace mark sits at 68% of the month. Victis is a GitHub organisation xSmyile
+ * owns, on the free plan with a zero budget: its allowance is spent, so its CI
+ * has stopped and its row binds. Group 935 has no row because it is on GitLab.
+ * xSmyile's own private repositories are 22 points under the pace mark, in reserve. Each spender is
+ * a repository of its own owner's on that forge.
+ *
  * Codex's session is past the point OpenAI applies a reset, which is what makes
  * its one reset usable: an account whose windows are further from their end
  * holds the count and is offered no button.
@@ -201,6 +209,41 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       comments: "18",
       notice: "read 4m ago",
       latest: { counter: "merged", done: "merged #214", tail: " · sissy · 2h ago" },
+      actions: {
+        title: "Actions minutes · September",
+        rows: [
+          {
+            id: "victis",
+            window: {
+              id: "victis",
+              label: "victis",
+              reading: "100%",
+              usedFraction: 1,
+              expectedFraction: 0.68,
+              caption: "32% in deficit · Out of headroom · resets in 9d 11h",
+            },
+            state: "CI stopped until 1 Oct",
+            stopped: true,
+            spender: "nuketown · macOS 81%",
+            binding: true,
+          },
+          {
+            id: "xsmyile",
+            window: {
+              id: "xsmyile",
+              label: "xsmyile",
+              reading: "46%",
+              usedFraction: 0.46,
+              expectedFraction: 0.68,
+              caption: "22% in reserve · Lasts until reset · resets in 9d 11h",
+            },
+            state: null,
+            stopped: false,
+            spender: "billy · Linux 64%",
+            binding: false,
+          },
+        ],
+      },
     },
     {
       id: "gitlab",
@@ -212,6 +255,7 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       comments: "31",
       notice: "read 12m ago",
       latest: { counter: "comments", done: "commented on !42", tail: " · origins · 25m ago" },
+      actions: null,
     },
   ],
   providerPages: [

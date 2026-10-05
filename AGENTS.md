@@ -25,7 +25,7 @@ repository and is the reference for everything the site draws.
   Provider, Effort, Identities), `components/` the pieces they share,
   `PanelGroup` the platter every block sits on and `TabBar` the modules, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `LimitsCrop`, `ProjectsCrop`, `ForgeCrop`,
+  enlarges one block with: `LimitsCrop`, `ActionsCrop`, `ProjectsCrop`, `ForgeCrop`,
   `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop`, `MacCrop`, `DiskCrop`
   and `NetworkCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and

@@ -23,8 +23,11 @@ paths:
   `PanelIdentities.swift` under `identitiesHeader`, `components/DayBlock.tsx`
   mirrors `PanelDayBlock.swift` and `ModelPill`, `components/ForgeSection.tsx`
   mirrors `ForgeRowView` and `metrics.css` mirrors `PanelMetrics`, both in
-  `PanelComponents.swift`, and `ForgeSection.tsx` also mirrors
-  `ForgeSectionLabel` in `PanelForge.swift`, `format.ts` mirrors the
+  `PanelComponents.swift`, `components/WindowRow.tsx` mirrors
+  `WindowRowView` there too, which the provider page's limits and the Actions
+  block both draw, `components/Actions.tsx` mirrors `PanelActions`
+  and `ActionsRowView` in `PanelForge.swift`, and `ForgeSection.tsx` also
+  mirrors `ForgeSectionLabel` in `PanelForge.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
   `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
   `ProvidersSettingsView.swift` and the first section of `ForgeSettings.swift`,
@@ -71,7 +74,10 @@ paths:
   three account pages, two vendors. Codex's session sits at 94%, past the point
   OpenAI applies a reset, because that is the only state in which the app draws
   `Use…`: a Codex further from its limits would show the count and a hint and
-  no button. Settings is derived rather than written: every linked account is
+  no button. The GitHub row's Actions month is September, so every owner's
+  pace mark sits where the fixture's clock is in it, and only owners on
+  GitHub have a row: Group 935 is on GitLab, so the organisation whose CI has
+  stopped is Victis. Settings is derived rather than written: every linked account is
   one the panel has a page for, and every forge connection is a row of the
   contributions block, titled by its host.
 

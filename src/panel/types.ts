@@ -22,7 +22,7 @@ export type ForgeHost = "github" | "gitlab";
  */
 export type ForgeCounter = "merged" | "issues" | "comments";
 
-export type BarTint = ProviderId | "share" | "secondary";
+export type BarTint = ProviderId | "share" | "secondary" | "accent" | "red";
 
 export type Period = "Today" | "7 days" | "30 days" | "All";
 
@@ -363,6 +363,33 @@ export interface ForgeRow {
   /** `UsageFormat.forgeNotice`, which on a healthy row is how old the figures are. */
   notice: string;
   latest: ForgeEvent | null;
+  /** `ForgeRow.actions`: a GitHub connection's Actions allowances, nil on every other forge. */
+  actions: ActionsBlock | null;
+}
+
+/**
+ * `UsagePanelSnapshot.ActionsBlock`: one GitHub connection's monthly Actions
+ * allowances, headed by the month GitHub bills by rather than by the panel's
+ * period, because the allowance follows its own reset.
+ */
+export interface ActionsBlock {
+  title: string;
+  rows: ActionsRow[];
+}
+
+/**
+ * `UsagePanelSnapshot.ActionsRow`: one owner's allowance, drawn on the limit
+ * windows' own row, then what stopped and who spent it.
+ */
+export interface ActionsRow {
+  id: string;
+  window: WindowRow;
+  /** What happened at 100%, null below it. */
+  state: string | null;
+  /** Whether that state is CI that has stopped, which is drawn red. */
+  stopped: boolean;
+  spender: string | null;
+  binding: boolean;
 }
 
 /**

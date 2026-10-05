@@ -10,13 +10,17 @@ import { GITHUB_URL } from "./site";
  * demonstration the section's own claim needs, and the two crops under it are
  * where that claim is paid off: the limits of the page the gauge opens, and
  * Codex's, which carry the resets. The rest of that page is the hero's to
- * show, one click away.
+ * show, one click away. GitHub's Actions minutes close it, because the Forge
+ * tab draws them on the limit windows' own row: the app's docs say a quota at
+ * 80% with ten days left reads the way a weekly limit at 80% does. Their
+ * copy is `ForgeCounterCopy`'s caption and `ForgeConnectCopy.scopeWarning`,
+ * since the README does not describe them yet.
  */
 export const LIMITS = {
   id: "limits",
-  eyebrow: "Rate limits",
-  title: "See how close you are before the CLI stops you.",
-  lede: "The Usage tab shows one gauge per account, on the window it is closest to running out of.",
+  eyebrow: "Limits",
+  title: "See how close you are before the CLI, or CI, stops you.",
+  lede: "The Usage tab shows one gauge per account, on the window it is closest to running out of. The Forge tab reads GitHub Actions minutes on the same gauge.",
   rowId: "claude-xsmyile",
   resetsProvider: "codex",
   paceBody:
@@ -32,6 +36,12 @@ export const LIMITS = {
       title: "Resets",
       body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
       panelLabel: "Codex's limits, with one reset available",
+    },
+    actions: {
+      title: "Actions minutes",
+      body: "How much of each monthly GitHub Actions allowance your private repositories spent, and which repository and runner spent the most. Where the plan stops CI at the allowance, the row says until when. Your own minutes need the `user` scope on a classic token; an organisation's need only `repo`, where you own it or manage its billing.",
+      panelLabel:
+        "The Forge tab's Actions minutes: one organisation's allowance spent and its CI stopped, and an account in reserve",
     },
   },
 } as const;
@@ -210,7 +220,7 @@ export const PRIVACY = {
     },
     {
       host: "`api.github.com`, or the Enterprise or GitLab host you connected",
-      purpose: "Your own activity counts",
+      purpose: "Your own activity counts, and on github.com your Actions minutes",
       off: "Disconnect it in Settings › Forge",
     },
     {
