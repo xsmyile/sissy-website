@@ -14,13 +14,17 @@ paths:
   the cup was a mug seen from the side where the symbol is a cup seen from
   above its rim, and every glyph was squared off at one size where the symbols
   are neither one size nor square. **A viewBox unit is a hundredth of a
-  point**, which is what makes the box the symbol's own extent —
-  `cup.and.saucer.fill` at 11 pt covers 14.40 x 10.80 pt and its viewBox is
-  `0 0 1440 1080` — so `panel.css` sets a width against `data-glyph`, leaves
+  point**, which is what makes the box the symbol's own extent:
+  `cup.and.heat.waves.fill` at 13 pt covers 13.72 x 13.83 pt and its viewBox
+  is `0 0 1372 1383`, so `panel.css` sets a width against `data-glyph`, leaves
   the height to the box, and the proportion cannot drift from the drawing. The
-  extents are not interchangeable: the app gives the cup 11 pt and the gear 12
-  and says why, *"an outline gear reads lighter than a filled cup at every
-  size, and a filled one only catches up at 12."* `chevron.up.chevron.down` is
+  extents are not interchangeable: the app gives the cup 13 pt and the gear 12
+  and says why, *"the steam is thin strokes and the cup itself fills only the
+  lower half of the glyph"*, so at 13 it carries the ink the gear does at 12.
+  A symbol the app draws in more than one rendering keeps its layers apart:
+  the cup's steam is its own path, faded while no hold is in force the way
+  `.hierarchical` fades it, so trace each layer from a palette render rather
+  than one outline of the whole. `chevron.up.chevron.down` is
   the one the site sizes itself, because the app draws it inside a `Picker` and
   names no point size for it. To redo a glyph, render
   `NSImage(systemSymbolName:)` at that symbol's size and weight large enough to
