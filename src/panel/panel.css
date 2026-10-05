@@ -149,7 +149,7 @@
 /*
  * A glyph is as wide as its symbol is at the point size the app gives it, and
  * as tall as its own viewBox then makes it. Two of these are a point apart on
- * purpose: `UsagePanelView` draws the cup at 11 and the gear at 12 so the pair
+ * purpose: `UsagePanelView` draws the cup at 13 and the gear at 12 so the pair
  * weighs the same.
  */
 svg[data-glyph] {
@@ -176,8 +176,8 @@ svg[data-glyph="person.2"] {
   width: calc(15.05 * var(--pt));
 }
 
-svg[data-glyph="cup.and.saucer.fill"] {
-  width: calc(14.4 * var(--pt));
+svg[data-glyph="cup.and.heat.waves.fill"] {
+  width: calc(13.72 * var(--pt));
 }
 
 svg[data-glyph="gearshape.fill"] {
@@ -296,6 +296,15 @@ svg[data-glyph="arrow.triangle.branch"] {
 .panel-glass-held {
   background: var(--panel-held);
   color: var(--panel-held-glyph);
+}
+
+/*
+ * The cup's steam is what says the hold: `.hierarchical` draws its layer at
+ * the secondary opacity, measured at 0.30 off the system's own render, until a
+ * hold is in force and `.monochrome` draws it whole.
+ */
+.panel-glass:not(.panel-glass-held) [data-layer="steam"] {
+  opacity: 0.3;
 }
 
 .panel-glass-quiet {
