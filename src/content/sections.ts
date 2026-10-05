@@ -34,7 +34,7 @@ export const LIMITS = {
     },
     resets: {
       title: "Resets",
-      body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm once a window is nearly used up.",
+      body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm, saying first when the window would reset on its own and whether OpenAI counts one as needed yet.",
       panelLabel: "Codex's limits, with one reset available",
     },
     actions: {

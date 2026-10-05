@@ -72,10 +72,10 @@ paths:
   is the gap between the two fractions. The binding window is a field, not a
   derivation — the app picks it by projected exhaustion, which is not a figure
   this fixture holds. `meteringProviders` is 2 whatever the account count is:
-  three account pages, two vendors. Codex's session sits at 94%, past the point
-  OpenAI applies a reset, because that is the only state in which the app draws
-  `Use…`: a Codex further from its limits would show the count and a hint and
-  no button. The GitHub row's Actions month is September, so every owner's
+  three account pages, two vendors. Codex holds one reset, so its page draws
+  `Use…`, which the app offers for any reset held; whether OpenAI counts it
+  as needed yet is said only in the confirmation, which the replica does not
+  draw. The GitHub row's Actions month is September, so every owner's
   pace mark sits where the fixture's clock is in it, and only owners on
   GitHub have a row: Group 935 is on GitLab, so the organisation whose CI has
   stopped is Victis. Settings is derived rather than written: every linked account is

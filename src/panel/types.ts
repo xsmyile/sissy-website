@@ -183,15 +183,14 @@ export interface EffortReading {
 }
 
 /**
- * `UsagePanelSnapshot.ResetsRow`: how many resets the account holds, the
- * vendor's name for the soonest and when it lapses, and whether a press would
- * spend one now. `usable` is false while OpenAI would apply none, which keeps
- * the count on the page and the button off it.
+ * `UsagePanelSnapshot.ResetsRow`: how many resets the account holds, and the
+ * vendor's name for the soonest and when it lapses. `Use…` is offered whenever
+ * one is held; whether OpenAI counts it as needed yet is said only in the
+ * confirmation, which the replica does not draw.
  */
 export interface ResetsRow {
   headline: string;
   caption: string;
-  usable: boolean;
 }
 
 /** `ProviderRow`, as `PanelProviderPage` draws it for one account. */
