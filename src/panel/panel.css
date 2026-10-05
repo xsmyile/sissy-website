@@ -910,11 +910,6 @@ svg[data-glyph="arrow.triangle.branch"] {
   font-size: var(--panel-headline-meta);
 }
 
-.panel-resets-hint {
-  font-size: var(--panel-headline-meta);
-  color: var(--panel-secondary);
-}
-
 .panel-day {
   display: grid;
   gap: calc(3 * var(--pt));

@@ -13,7 +13,6 @@ import type { EffortReading, HeaderReading, ProviderPage, ResetsRow } from "../t
 const EFFORT_HELP = "Show each model's split by effort";
 const RESETS_LABEL = "Resets";
 const RESETS_USE = "Use…";
-const RESETS_NOT_YET = "Ready once a window is nearly used up";
 const EFFORT_TARGET = "effort";
 
 interface ProviderProps {
@@ -136,7 +135,7 @@ export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
 
 /**
  * `PanelProviderPage.resets`: the count, the soonest reset's name and lapse,
- * and `Use…` while the vendor would apply one. The app's press only asks, in
+ * and `Use…` while the account holds one. The app's press only asks, in
  * the page itself; here the button is drawn and inert like `Copy the fix`,
  * because spending is not a route.
  */
@@ -149,9 +148,8 @@ function Resets({ resets }: { resets: ResetsRow }): ReactElement {
       </div>
       <div className="panel-line">
         <span className="panel-caption panel-resets-caption">{resets.caption}</span>
-        {resets.usable && <span className="panel-small-button">{RESETS_USE}</span>}
+        <span className="panel-small-button">{RESETS_USE}</span>
       </div>
-      {!resets.usable && <div className="panel-resets-hint">{RESETS_NOT_YET}</div>}
     </div>
   );
 }

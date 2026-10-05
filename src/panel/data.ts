@@ -133,9 +133,8 @@ const IDENTITIES: IdentityRow[] = [
  * xSmyile's own private repositories are 22 points under the pace mark, in reserve. Each spender is
  * a repository of its own owner's on that forge.
  *
- * Codex's session is past the point OpenAI applies a reset, which is what makes
- * its one reset usable: an account whose windows are further from their end
- * holds the count and is offered no button.
+ * Codex holds one reset, so its page offers `Use…`, which the app does for
+ * any reset held whether or not OpenAI would count it as needed yet.
  *
  * Every account's effort reading is of its strip's window: each model's
  * efforts sum to what the pills give that model across the covered days, and
@@ -534,7 +533,6 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       resets: {
         headline: "1 available",
         caption: "Full reset (Weekly + 5 hr) · expires Oct 21",
-        usable: true,
       },
       windows: [
         {
