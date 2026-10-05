@@ -6,6 +6,33 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.3</title>
+            <pubDate>Mon, 05 Oct 2026 09:40:58 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1007</sparkle:version>
+            <sparkle:shortVersionString>0.3.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.3: Claude Code resets, a calendar for the period, and a Mac that keeps working with its lid closed
+
+- Claude Code's provider page shows the usage-limit resets Anthropic gave
+  the account, with a button that spends one after asking. It names the
+  windows the reset clears and when it lapses, and a press only ever spends
+  for the account the page showed it under.
+- The period control opens a calendar: pick a day or drag across a run of
+  days, and the headline, the projects and the forge counters all follow
+  it. A picked period goes back to Today after 24 hours.
+- Keep-awake can hold the Mac working with its lid closed. It is off by
+  default, asks before it changes anything, and is cleared at the next
+  launch if Sissy did not get to clear it itself.
+- Keep-awake has its own Settings tab, where Always can hold for a set time
+  or with no limit, and the cup's menu switches the screen half of the hold
+  and the lid.
+- The cup in the menu bar is drawn as one glyph sized to the gear beside it,
+  and only its steam says a hold is on.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.3/Sissy-0.3.3.dmg" length="7344820" type="application/octet-stream" sparkle:edSignature="tQU19yMAuH1uIez8dO8g9z83K3khdFLSny+XWMT0cC27IhLBG/Q5VVCZEDSBgm65WMTvZhwHpWMC4wwJayktCw=="/>
+        </item>
+        <item>
             <title>0.3.2</title>
             <pubDate>Fri, 02 Oct 2026 23:37:07 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -179,6 +206,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: Zr1EhXEVZ9pPa4S2Pgg8Djw8HKBBN0/d8sxEk4jHWsSTyl/5qipAnvwKq0uUlG2IPZ3dHyfFGJHS087M+Zs5AA==
-length: 11228
+edSignature: v9zPzt3kLh7Wzt2/9QuH5U21GIib5w4mOhlrjzALanenh0Mzdtgsv5dXAsV73iSxwsPxvA7KRCCakWt99XX7Dw==
+length: 13005
 -->
