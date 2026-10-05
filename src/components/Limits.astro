@@ -1,7 +1,7 @@
 ---
 import { LIMITS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
-import { LimitsCrop } from "../panel/Panel";
+import { ActionsCrop, LimitsCrop } from "../panel/Panel";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
@@ -10,7 +10,7 @@ if (row === undefined) {
   throw new Error(`The fixture has no gauge row "${LIMITS.rowId}" for the pace band to read`);
 }
 
-const { windows, resets } = LIMITS.blocks;
+const { windows, resets, actions } = LIMITS.blocks;
 const used = Math.round(row.usedFraction * 100);
 const expected = row.expectedFraction * 100;
 ---
@@ -56,6 +56,11 @@ const expected = row.expectedFraction * 100;
       <figcaption><b>{resets.title}</b> {resets.body}</figcaption>
     </figure>
   </div>
+
+  <figure class="ci">
+    <ActionsCrop snapshot={DEMO_SNAPSHOT} label={actions.panelLabel} />
+    <figcaption><b>{actions.title}</b> <Inline text={actions.body} /></figcaption>
+  </figure>
 </Section>
 
 <style>
@@ -182,6 +187,23 @@ const expected = row.expectedFraction * 100;
       0 14px 36px rgba(0, 0, 0, 0.5);
   }
 
+  /*
+   * The Actions allowances stand on their own row under the pair rather than
+   * lying over it: they are another tab's block, read on the same gauge, and
+   * a third crop in the stack would cover Claude's captions.
+   */
+  .ci {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 40px;
+    margin-top: 56px;
+  }
+
+  .ci figcaption {
+    flex: 1 1 220px;
+  }
+
   figcaption {
     max-width: calc(352 * var(--panel-pt));
     font-size: var(--text-base);
@@ -228,8 +250,15 @@ const expected = row.expectedFraction * 100;
       max-width: calc(352 * var(--panel-pt));
     }
 
-    .over figcaption {
+    .over figcaption,
+    .ci figcaption {
       flex: none;
+    }
+
+    .ci {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 32px;
     }
   }
 </style>

@@ -31,15 +31,18 @@ paths:
   first gauge at page scale and every figure on it comes from that row, which
   is also the row the hero's panel draws: a screen of its own spent the fold
   restating the hero. Under the title it is the demonstration the section's
-  claim needs, and the two crops below it are where that claim is paid off:
-  the limits of the page the gauge opens, and Codex's, which carry the resets.
-  They are `LimitsCrop`, the page's header and its limits and nothing under
+  claim needs, and the crops below it are where that claim is paid off: the
+  limits of the page the gauge opens, Codex's, which carry the resets, and
+  GitHub's Actions minutes. The first two are `LimitsCrop`, the page's header and its limits and nothing under
   them, because a section draws the block it describes: the whole page was
   drawn here once, and its day, projects and effort sat beside copy that
   named none of them, a screen restating what the hero opens in one click. The
   figure still counts up on `[data-pace-band]`, and the blink still does not
   fire for it, because an unchanged figure re-entering the viewport is not new
-  data.
+  data. The Actions minutes stand on a row of their own under the pair, as
+  `ActionsCrop`, because the Forge tab draws them on the limit windows' own
+  row and the section's claim is any quota that stops work, CI included; the
+  contributions crop in `Git` leaves them out so no block is drawn twice.
 
 - **A side-by-side section sets its panel on the copy's axis and against it.**
   `split` and `reverse` centre the panel on the height of the words, and a crop

@@ -5,7 +5,7 @@ import { Identity } from "../components/Identity";
 import { PageHeader } from "../components/PageHeader";
 import { PanelGroup, Platters } from "../components/PanelGroup";
 import { ProjectsSection } from "../components/ProjectRow";
-import { ShareBar } from "../components/ShareBar";
+import { WindowRowView } from "../components/WindowRow";
 import { SEPARATOR } from "../format";
 import { BACK, type OpenPage, OVERVIEW } from "../page";
 import type { EffortReading, HeaderReading, ProviderPage, ResetsRow } from "../types";
@@ -116,22 +116,12 @@ export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
           <span className="panel-caption panel-label-end">{page.limitsCaption}</span>
         </div>
         {page.windows.map((window) => (
-          <div
-            className="panel-window"
+          <WindowRowView
             key={window.id}
-            data-binding={window.id === page.binding || undefined}
-          >
-            <div className="panel-line">
-              <span className="panel-window-label">{window.label}</span>
-              <span className="panel-window-reading">{window.reading}</span>
-            </div>
-            <ShareBar
-              share={window.usedFraction}
-              tint={page.provider}
-              expected={window.expectedFraction}
-            />
-            <div className="panel-caption">{window.caption}</div>
-          </div>
+            window={window}
+            tint={page.provider}
+            binding={window.id === page.binding}
+          />
         ))}
       </div>
       {page.resets !== null && (

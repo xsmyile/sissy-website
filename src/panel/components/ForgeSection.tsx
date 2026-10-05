@@ -1,6 +1,7 @@
-import type { ReactElement } from "react";
+import { Fragment, type ReactElement } from "react";
 import { forgeCommentsHelp, forgeIssuesHelp, forgeMergedHelp, forgeSectionLabel } from "../format";
 import type { ForgeCounter, ForgeEvent, ForgeRow, Period } from "../types";
+import { PanelActions } from "./Actions";
 import { ArrowTriangleheadMerge, BubbleLeft, SmallcircleFilledCircle } from "./Glyph";
 import { PanelGroup } from "./PanelGroup";
 import { ForgeMark } from "./Sprite";
@@ -95,7 +96,10 @@ function Latest({ event }: { event: ForgeEvent }): ReactElement {
 /**
  * `PanelForge.section`: one forge account's section, headed by its vendor and
  * the panel's window, which the heading names because the period is chosen in
- * the header, with the age of the reading at its end.
+ * the header, with the age of the reading at its end, and a GitHub
+ * connection's Actions allowances under it. `withActions` is off only for a
+ * crop that enlarges the contributions while another surface draws the
+ * allowances.
  *
  * A section each, never summed, because each vendor counts its own thing and
  * one block of rows invited the sum.
@@ -103,24 +107,28 @@ function Latest({ event }: { event: ForgeEvent }): ReactElement {
 export function ForgeSections({
   rows,
   period,
+  withActions = true,
 }: {
   rows: ForgeRow[];
   period: Period;
+  withActions?: boolean;
 }): ReactElement {
   return (
     <>
       {rows.map((row) => (
-        <PanelGroup
-          key={row.id}
-          label={
-            <div className="panel-label">
-              {forgeSectionLabel(row.host, period)}
-              <span className="panel-caption panel-label-end">{row.notice}</span>
-            </div>
-          }
-        >
-          <Row row={row} />
-        </PanelGroup>
+        <Fragment key={row.id}>
+          <PanelGroup
+            label={
+              <div className="panel-label">
+                {forgeSectionLabel(row.host, period)}
+                <span className="panel-caption panel-label-end">{row.notice}</span>
+              </div>
+            }
+          >
+            <Row row={row} />
+          </PanelGroup>
+          {withActions && row.actions !== null && <PanelActions block={row.actions} />}
+        </Fragment>
       ))}
     </>
   );

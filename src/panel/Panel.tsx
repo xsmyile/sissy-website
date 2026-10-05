@@ -1,5 +1,6 @@
 import "./panel.css";
 import type { ReactElement, ReactNode } from "react";
+import { PanelActions } from "./components/Actions";
 import { ForgeSections } from "./components/ForgeSection";
 import { Identity } from "./components/Identity";
 import { PanelGroup, Platters } from "./components/PanelGroup";
@@ -260,7 +261,8 @@ export function ProjectsCrop({
 }
 
 /**
- * The Forge tab's forge sections on their own, without the identity line.
+ * The Forge tab's forge sections on their own, without the identity line or
+ * the Actions allowances, which `ActionsCrop` draws where the limits are.
  *
  * Both connected accounts, because the tab draws a section per connection and
  * the two are never summed: each vendor counts its own thing, so a total
@@ -276,7 +278,36 @@ export function ForgeCrop({
   return (
     <Crop label={label}>
       <Platters>
-        <ForgeSections rows={snapshot.forge} period={snapshot.headline.period} />
+        <ForgeSections
+          rows={snapshot.forge}
+          period={snapshot.headline.period}
+          withActions={false}
+        />
+      </Platters>
+    </Crop>
+  );
+}
+
+/**
+ * The Forge tab's Actions allowances on their own: the GitHub connection's
+ * block, which the page draws beside the limits because its gauges are the
+ * limit windows' own.
+ */
+export function ActionsCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  const block = snapshot.forge.find((row) => row.actions !== null)?.actions;
+  if (block === undefined || block === null) {
+    throw new Error("ActionsCrop: no forge row in the fixture carries an Actions block");
+  }
+  return (
+    <Crop label={label}>
+      <Platters>
+        <PanelActions block={block} />
       </Platters>
     </Crop>
   );
