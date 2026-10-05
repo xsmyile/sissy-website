@@ -8,7 +8,7 @@ paths:
 # Arrival motion
 
 - **The rhythm is three tiers, and the motion is the tier.** Limits, Accounts,
-  Git, Privacy and Install carry the decision and rise on arrival; Agents
+  Keep awake, Git, Privacy and Install carry the decision and rise on arrival; Agents
   supports them and barely settles; How it works does not move. A section does not
   arrive as one object: `reveal.ts` springs its parts in, and the tier is
   whether they land as a sequence or as one settle. That difference is

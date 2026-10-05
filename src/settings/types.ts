@@ -38,7 +38,34 @@ export interface ForgeSettings {
   connections: CredentialRowData[];
 }
 
+/** A `LabeledContent` row with a pop-up `Picker`: its heading, its caption and the value it shows. */
+export interface PickerRowData {
+  title: string;
+  caption: string;
+  value: string;
+}
+
+/** A `SettingsSwitchRow`: its heading, its caption, and whether the switch is on. */
+export interface SwitchRowData {
+  title: string;
+  caption: string;
+  on: boolean;
+}
+
+/**
+ * Settings ▸ Awake, `AwakeSettingsView`: the mode and how long `Always`
+ * holds, then what a hold covers. The captions are the ones the app words
+ * for the state each control is in.
+ */
+export interface AwakeSettings {
+  mode: PickerRowData;
+  ceiling: PickerRowData;
+  coversTitle: string;
+  covers: SwitchRowData[];
+}
+
 export interface SettingsSnapshot {
   providers: ProviderSettings[];
   forge: ForgeSettings;
+  awake: AwakeSettings;
 }

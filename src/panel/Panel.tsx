@@ -167,6 +167,24 @@ export function SessionsNowCrop({
   );
 }
 
+/**
+ * The panel's header on its own: Sissy, when the reading landed and how long
+ * the Mac has been held, and the three controls, the cup lit by the hold.
+ */
+export function HeaderCrop({
+  snapshot,
+  label,
+}: {
+  snapshot: PanelSnapshot;
+  label: string;
+}): ReactElement {
+  return (
+    <Crop label={label}>
+      <PanelHeader reading={snapshot.header} readsPeriod />
+    </Crop>
+  );
+}
+
 /** The Mac tab's page on its own: the memory reading and the heaviest apps. */
 export function MacCrop({
   snapshot,

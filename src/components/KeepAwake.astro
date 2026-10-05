@@ -1,0 +1,104 @@
+---
+import { KEEP_AWAKE } from "../content/sections";
+import { DEMO_SETTINGS, DEMO_SNAPSHOT } from "../panel/data";
+import { HeaderCrop } from "../panel/Panel";
+import { AwakeSettingsCrop } from "../settings/Settings";
+import Inline from "./Inline.astro";
+import Section from "./Section.astro";
+---
+
+<Section
+  id={KEEP_AWAKE.id}
+  eyebrow={KEEP_AWAKE.eyebrow}
+  title={KEEP_AWAKE.title}
+  lede={KEEP_AWAKE.lede}
+  tier="lead"
+>
+  <dl class="points" slot="aside">
+    {
+      KEEP_AWAKE.points.map((point) => (
+        <div class="point">
+          <dt>{point.title}</dt>
+          <dd>
+            <Inline text={point.body} />
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  <div class="stage">
+    <HeaderCrop snapshot={DEMO_SNAPSHOT} label={KEEP_AWAKE.panelLabel} />
+    <div class="over">
+      <AwakeSettingsCrop awake={DEMO_SETTINGS.awake} label={KEEP_AWAKE.settingsLabel} />
+    </div>
+  </div>
+</Section>
+
+<style>
+  /*
+   * The header is the control and Settings ▸ Awake is where each switch says
+   * what it costs, so the window lies over the header's lower edge, down and
+   * to the right, covering only frame. The surface on top carries a short
+   * shadow of its own, because two contact shadows alone do not say which
+   * edge is on top.
+   */
+  .stage {
+    --panel-pt: 1.2px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+
+  .over {
+    position: relative;
+    max-width: 100%;
+    margin: calc(-8 * var(--panel-pt)) 0 0 calc(56 * var(--panel-pt));
+  }
+
+  .over :global(.settings) {
+    box-shadow:
+      0 calc(2 * var(--pt)) calc(6 * var(--pt)) rgba(0, 0, 0, 0.4),
+      0 14px 36px rgba(0, 0, 0, 0.5);
+  }
+
+  .points {
+    display: grid;
+    gap: 20px;
+    margin: 8px 0 0;
+  }
+
+  .point {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  dt {
+    margin-bottom: 6px;
+    font-size: var(--text-base);
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--text-base);
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 1100px) {
+    .stage {
+      --panel-pt: 1px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .stage {
+      gap: 24px;
+    }
+
+    .over {
+      margin: 0;
+    }
+  }
+</style>

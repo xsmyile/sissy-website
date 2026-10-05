@@ -1161,7 +1161,8 @@ function linkedAccount(provider: ProviderId, account: string): CredentialRowData
  * one the panel has a page for, and every forge connection is a row of the
  * Overview's contributions block, titled by its host with the login and the
  * age the panel prints under it. Rows are ordered by what they are titled
- * with, as `sortedAccounts` orders them.
+ * with, as `sortedAccounts` orders them. The Awake tab holds what the header's
+ * cup says: a hold in force, so the mode is `Always`, set to no limit.
  */
 export const DEMO_SETTINGS: SettingsSnapshot = {
   providers: [
@@ -1188,5 +1189,31 @@ export const DEMO_SETTINGS: SettingsSnapshot = {
       subtitle: `${row.login} · ${row.notice}`,
       lead: { kind: "forge", host: row.host },
     })),
+  },
+  awake: {
+    mode: {
+      title: "Keep awake",
+      caption: "While agents are working lets go 10m after the last turn.",
+      value: "Always",
+    },
+    ceiling: {
+      title: "Always stops after",
+      caption: "It holds until you switch it off or quit Sissy.",
+      value: "Never",
+    },
+    coversTitle: "What a hold covers",
+    covers: [
+      {
+        title: "Keep the screen on too",
+        caption: "Off lets the display sleep while the Mac stays awake underneath for the agents.",
+        on: true,
+      },
+      {
+        title: "Keep working with the lid closed",
+        caption:
+          "While a hold is in force, closing the lid does not sleep the Mac, on battery too.",
+        on: true,
+      },
+    ],
   },
 };

@@ -30,12 +30,13 @@ paths:
   mirrors `ForgeSectionLabel` in `PanelForge.swift`, `format.ts` mirrors the
   `UsageFormat` functions it names, `motion.ts` mirrors
   `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
-  `ProvidersSettingsView.swift` and the first section of `ForgeSettings.swift`,
-  and `CredentialRow.tsx` mirrors `SettingsCredentialRow.swift`. When the app
+  `ProvidersSettingsView.swift`, the first section of `ForgeSettings.swift`
+  and `AwakeSettingsView.swift`, and `CredentialRow.tsx` mirrors `SettingsCredentialRow.swift`. When the app
   changes a page, diff those pairs first, then update `data.ts`. Do not restyle
   the replica from a screenshot; read the Swift. The one exception is what the
-  Swift leaves to the system: the grouped `Form`'s card, separators, switch and
-  type sizes are not declared anywhere in the app, so `settings.css` takes them
+  Swift leaves to the system: the grouped `Form`'s card, separators, switch,
+  closed pop-up picker, section header and type sizes are not declared
+  anywhere in the app, so `settings.css` takes them
   from a `Form` with the same rows rendered offscreen at 2x in the dark
   appearance, which is the system's drawing rather than a screenshot of it.
 
@@ -79,7 +80,9 @@ paths:
   GitHub have a row: Group 935 is on GitLab, so the organisation whose CI has
   stopped is Victis. Settings is derived rather than written: every linked account is
   one the panel has a page for, and every forge connection is a row of the
-  contributions block, titled by its host.
+  contributions block, titled by its host. Settings ▸ Awake holds what the
+  header's cup says: a hold in force, so `Always`, with no limit, the screen
+  and the lid both kept.
 
 - **The replica stays in macOS neutrals; the page is the brand.** The panel's
   colours are the popover material's, its font stack starts with the system
