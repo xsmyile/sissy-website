@@ -111,6 +111,36 @@ export const AGENTS_SCENE = {
 } as const;
 
 /**
+ * Keep awake, the one thing on the page Sissy does to the Mac rather than
+ * reads off it. The copy is the README's own paragraph, split into what the
+ * cup offers, the lid, and what quitting leaves behind; the switches' captions
+ * are `AwakeSettingsView`'s, which the crop draws.
+ */
+export const KEEP_AWAKE = {
+  id: "awake",
+  eyebrow: "Keep awake",
+  title: "Close the lid. The agents keep working.",
+  lede: "The cup in the panel header holds the Mac awake while agents are working, letting go ten minutes after they stop, or always, for eight hours by default, anything from one hour to twelve, or no limit at all. The cup's menu and Settings' Awake tab carry the same switches.",
+  points: [
+    {
+      title: "The lid",
+      body: "On a MacBook, *Keep working with the lid closed* keeps a held Mac working with its lid shut, on battery too. It is off until you switch it on, and the first time it says what that costs before it does.",
+    },
+    {
+      title: "The screen",
+      body: "*Keep the screen on too* is the other half. Off lets the display sleep and lock while the Mac stays awake underneath for the agents.",
+    },
+    {
+      title: "Nothing to undo",
+      body: "The hold dies with Sissy: quit and the Mac sleeps normally, lid included. After a crash the lid stays ignored until Sissy is opened again or the Mac restarts.",
+    },
+  ],
+  panelLabel: "The panel header, the cup lit while a hold is in force",
+  settingsLabel:
+    "Settings, Awake: Always with no limit, the screen and the lid both kept by the hold",
+} as const;
+
+/**
  * The Disk and Network tabs, as a pair of crops in the order the tab bar puts
  * them. The captions are the README's own "At a glance" lines, narrowed to
  * what the tabs draw; the lede says what `ServerConfig` says of both
@@ -187,7 +217,7 @@ export const PRIVACY = {
     },
     {
       title: "Off until you say so",
-      body: "Anything that costs a permission, or writes into another program's files, is off until you switch it on and says what it will do first.",
+      body: "Anything that costs a permission, writes into another program's files, or keeps the Mac working with its lid closed is off until you switch it on, and says what it will do first.",
     },
   ],
   detailsSummary: "Every host Sissy talks to, and how to switch each one off",

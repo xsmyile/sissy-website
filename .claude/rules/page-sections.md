@@ -59,7 +59,8 @@ paths:
   one panel presented as floating, draws its own light over it. The one
   exception is a surface laid over another: in `Limits` Codex's limits over
   Claude's, in `Agents` the Mac tab over the sessions' Now block, in
-  `DiskNetwork` the Network tab over the Disk tab, in `Git` the contributions block over the identities page and the
+  `DiskNetwork` the Network tab over the Disk tab, in `KeepAwake` Settings ▸
+  Awake over the panel header, in `Git` the contributions block over the identities page and the
   projects block, and Settings ▸ Forge over the contributions block. Each
   surface on top carries a short shadow of its own, because two contact
   shadows alone do not say which edge is on top. An overlap covers a frame or
@@ -69,3 +70,11 @@ paths:
   stack, and
   Settings ▸ Forge lies over no more than the contributions block's bottom
   margin, because a column that narrow has no other frame left to lie over.
+
+- **Keep awake is the one thing the page shows Sissy doing to the Mac.** It
+  sits after Agents, because the hold is what keeps those sessions running
+  with the lid shut, and it draws the control and the place it is explained:
+  the panel header with the cup lit, and Settings ▸ Awake lying over its
+  lower edge, whose captions say what each switch costs. The cup's own menu
+  is not drawn: it is a system menu the app declares nothing of, and its
+  switches are the same ones the tab shows.

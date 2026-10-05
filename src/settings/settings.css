@@ -106,6 +106,15 @@
   background: var(--settings-accent);
 }
 
+.settings-switch[data-off] {
+  background: var(--settings-quaternary);
+}
+
+.settings-switch[data-off]::after {
+  right: auto;
+  left: calc(2 * var(--pt));
+}
+
 .settings-switch::after {
   content: "";
   position: absolute;
@@ -232,4 +241,40 @@ svg[data-glyph="ellipsis"] {
   flex: none;
   width: calc(11.84 * var(--pt));
   height: auto;
+}
+
+/*
+ * A closed pop-up `Picker` in a grouped row, and the header over a titled
+ * section, measured off `AwakeSettingsView`'s rows rendered offscreen: the
+ * value at 13 pt, a 20 pt disc 13 pt after it, and the title 13 pt bold, 30.5
+ * pt under the card above it and 10 over its own.
+ */
+.settings-picker {
+  display: flex;
+  flex: none;
+  gap: calc(13 * var(--pt));
+  align-items: center;
+  align-self: center;
+  margin-right: calc(4 * var(--pt));
+  white-space: nowrap;
+}
+
+.settings-picker-disc {
+  display: grid;
+  place-items: center;
+  width: calc(20 * var(--pt));
+  height: calc(20 * var(--pt));
+  border-radius: 50%;
+  background: #363636;
+}
+
+.settings-picker-disc svg[data-glyph="chevron.up.chevron.down"] {
+  width: calc(7 * var(--pt));
+  height: auto;
+}
+
+.settings-section-header {
+  margin: calc(18.5 * var(--pt)) 0 calc(-2 * var(--pt));
+  padding-inline: calc(10 * var(--pt));
+  font-weight: 700;
 }

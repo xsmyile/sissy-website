@@ -1,9 +1,16 @@
 import "./settings.css";
 import type { ReactElement, ReactNode } from "react";
-import { InfoCircle } from "../panel/components/Glyph";
+import { ChevronUpDown, InfoCircle } from "../panel/components/Glyph";
 import { ProviderMark } from "../panel/components/Sprite";
 import { CredentialAddRow, CredentialRow } from "./CredentialRow";
-import type { ForgeSettings, ProviderSettings, SettingsSnapshot } from "./types";
+import type {
+  AwakeSettings,
+  ForgeSettings,
+  PickerRowData,
+  ProviderSettings,
+  SettingsSnapshot,
+  SwitchRowData,
+} from "./types";
 
 /** `ClaudeAccountLinkCopy.addTitle`, which `CodexAccountLinkCopy` shares. */
 const ADD_ACCOUNT = "Add account…";
@@ -88,6 +95,69 @@ export function ForgeSettingsCrop({
           <CredentialRow key={row.id} row={row} />
         ))}
         <CredentialAddRow title={FORGE_CONNECT} />
+      </div>
+    </SettingsCrop>
+  );
+}
+
+/**
+ * `LabeledContent` around a pop-up `Picker` with its label hidden: the heading
+ * and the caption under it, and on the right the value the picker shows with
+ * the system's up-down disc beside it. Drawn closed and inert.
+ */
+function PickerRow({ row }: { row: PickerRowData }): ReactElement {
+  return (
+    <div className="settings-row">
+      <div className="settings-credential-lines">
+        <span>{row.title}</span>
+        <span className="settings-detail">{row.caption}</span>
+      </div>
+      <span className="settings-picker">
+        {row.value}
+        <span className="settings-picker-disc">
+          <ChevronUpDown />
+        </span>
+      </span>
+    </div>
+  );
+}
+
+/** `SettingsSwitchRow`: the heading and its caption beside a switch, drawn as it is set. */
+function SwitchRow({ row }: { row: SwitchRowData }): ReactElement {
+  return (
+    <div className="settings-row">
+      <div className="settings-credential-lines">
+        <span>{row.title}</span>
+        <span className="settings-detail">{row.caption}</span>
+      </div>
+      <span className="settings-switch" data-off={!row.on || undefined} />
+    </div>
+  );
+}
+
+/**
+ * Settings ▸ Awake, `AwakeSettingsView`: the mode and how long `Always`
+ * holds, then the section that says what a hold covers, the lid included on
+ * a Mac that has one.
+ */
+export function AwakeSettingsCrop({
+  awake,
+  label,
+}: {
+  awake: AwakeSettings;
+  label: string;
+}): ReactElement {
+  return (
+    <SettingsCrop label={label}>
+      <div className="settings-section">
+        <PickerRow row={awake.mode} />
+        <PickerRow row={awake.ceiling} />
+      </div>
+      <div className="settings-section-header">{awake.coversTitle}</div>
+      <div className="settings-section">
+        {awake.covers.map((row) => (
+          <SwitchRow key={row.title} row={row} />
+        ))}
       </div>
     </SettingsCrop>
   );

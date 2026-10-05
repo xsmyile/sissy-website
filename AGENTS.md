@@ -8,10 +8,11 @@ repository and is the reference for everything the site draws.
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
-  `Agents`, `DiskNetwork`, `Git`, `Privacy`, `Detail`, `Install` and `Footer`
-  are the page in order, which is the order the panel's tabs read in: the
-  Usage tab's gauges and the accounts behind them, Sessions and Mac, Disk and
-  Network, then the repositories. `Section` is the frame the middle ones share
+  `Agents`, `KeepAwake`, `DiskNetwork`, `Git`, `Privacy`, `Detail`, `Install`
+  and `Footer` are the page in order, which is the order the panel's tabs read
+  in: the Usage tab's gauges and the accounts behind them, Sessions and Mac
+  and the hold that keeps them running, Disk and Network, then the
+  repositories. `Section` is the frame the middle ones share
   (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
   both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
   says how it arrives); `CropPair` lays one crop over the edge of another with a
@@ -25,7 +26,7 @@ repository and is the reference for everything the site draws.
   Provider, Effort, Identities), `components/` the pieces they share,
   `PanelGroup` the platter every block sits on and `TabBar` the modules, `data.ts` the one fixture every number
   on the replica comes from. Beside `Panel` it exports the crops a page section
-  enlarges one block with: `LimitsCrop`, `ActionsCrop`, `ProjectsCrop`, `ForgeCrop`,
+  enlarges one block with: `HeaderCrop`, `LimitsCrop`, `ActionsCrop`, `ProjectsCrop`, `ForgeCrop`,
   `IdentityCrop`, `IdentitiesCrop`, `SessionsNowCrop`, `MacCrop`, `DiskCrop`
   and `NetworkCrop`, each
   the same markup the page it belongs to draws, in the panel's own frame and
@@ -35,8 +36,9 @@ repository and is the reference for everything the site draws.
   and `blink.ts` plays it on whatever eyes a surface hands it.
 - `src/settings/`: the replica of the parts of the Settings window the page
   shows, in React and never operable. `Settings.tsx` exports `ProvidersCrop`
-  (Settings ▸ Providers, drawn in `Accounts`) and `ForgeSettingsCrop` (the
-  first section of Settings ▸ Forge, drawn in `Git`), `CredentialRow.tsx` the
+  (Settings ▸ Providers, drawn in `Accounts`), `ForgeSettingsCrop` (the
+  first section of Settings ▸ Forge, drawn in `Git`) and `AwakeSettingsCrop`
+  (Settings ▸ Awake, drawn in `KeepAwake`), `CredentialRow.tsx` the
   row every linked account and forge connection takes, and `settings.css` the
   grouped `Form`. Its fixture is `DEMO_SETTINGS` in `src/panel/data.ts`,
   derived from the panel's own readings.
