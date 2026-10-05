@@ -8,11 +8,12 @@ repository and is the reference for everything the site draws.
 
 - `src/pages/index.astro`: the one page, composed of the sections below.
 - `src/components/`: Astro sections and controls. `Hero`, `Limits`, `Accounts`,
-  `Agents`, `KeepAwake`, `DiskNetwork`, `Git`, `Privacy`, `Detail`, `Install`
-  and `Footer` are the page in order, which is the order the panel's tabs read
-  in: the Usage tab's gauges and the accounts behind them, Sessions and Mac
-  and the hold that keeps them running, Disk and Network, then the
-  repositories. `Section` is the frame the middle ones share
+  `Agents`, `KeepAwake`, `Git`, `DiskNetwork`, `Privacy`, `Detail`, `Install`
+  and `Footer` are the page in order, which is the order of what a reader
+  decides on rather than of the tabs: the limits, CI's included, and the
+  accounts behind them, Sessions and Mac, the hold that keeps them running,
+  the repositories, and only then the disk and the network, which every
+  system monitor already shows. `Section` is the frame the middle ones share
   (eyebrow, title, lede, an `aside` slot under them, an `after` slot across
   both columns, a `split`, `reverse` or `stack` layout, and the `tier` that
   says how it arrives); `CropPair` lays one crop over the edge of another with a

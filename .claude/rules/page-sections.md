@@ -78,3 +78,8 @@ paths:
   lower edge, whose captions say what each switch costs. The cup's own menu
   is not drawn: it is a system menu the app declares nothing of, and its
   switches are the same ones the tab shows.
+
+- **Disk and Network come after `Git`.** They are what every system monitor
+  already shows, so a page in order of what a reader decides on puts them
+  last of the panel's sections, under the limits, the accounts, the agents,
+  the hold and the repositories.
