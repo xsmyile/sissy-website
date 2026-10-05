@@ -34,7 +34,7 @@ export const LIMITS = {
     },
     resets: {
       title: "Resets",
-      body: "A Codex page also counts the resets OpenAI gave the account, and spends one on a press you confirm, saying first when the window would reset on its own and whether OpenAI counts one as needed yet.",
+      body: "A Codex or Claude Code page also counts the resets the vendor gave the account, and spends one on a press you confirm, saying first when the window would reset on its own and whether the vendor counts one as needed yet. Claude Code's are spent with the CLI's own sign-in, so only on the account it is signed in to.",
       panelLabel: "Codex's limits, with one reset available",
     },
     actions: {
@@ -213,7 +213,7 @@ export const PRIVACY = {
     },
     {
       title: "Every request has a switch",
-      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page, its own update feed. Each has an off switch of its own, the way the counters above do. The one request that is not a reading, spending a Codex reset, waits for you to press and confirm it.",
+      body: "Sissy does connect out, for readings you asked for: each vendor's usage endpoint, the public price list, a forge you connected, a status page, its own update feed. Each has an off switch of its own, the way the counters above do. The two requests that are not readings, spending a Codex reset and spending a Claude one, each wait for you to press and confirm.",
     },
     {
       title: "Off until you say so",
@@ -230,7 +230,7 @@ export const PRIVACY = {
     },
     {
       host: "`api.anthropic.com`",
-      purpose: "Usage and profile, with Claude Code's own token",
+      purpose: "Usage and profile, with Claude Code's own token, and a reset you confirm spending",
       off: "Switch the Claude Code provider off",
     },
     {

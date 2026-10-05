@@ -232,7 +232,7 @@ export function NetworkCrop({
 
 /**
  * The top of one account's page: whose page it is, and the limits under it,
- * with Codex's resets where the account has them. The header stays because
+ * with its resets where the account has them. The header stays because
  * it is what says which vendor the windows belong to.
  */
 export function LimitsCrop({

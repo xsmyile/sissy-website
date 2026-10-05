@@ -23,8 +23,8 @@ interface ProviderProps {
 
 /**
  * `PanelProviderPage`: what one account is doing, a platter per question.
- * Identity; the limits it is closest to, with Codex's resets under the windows
- * they clear; its day against the week behind it with the split by model
+ * Identity; the limits it is closest to, with the account's resets under the
+ * windows they clear; its day against the week behind it with the split by model
  * under it; its own projects; and the two doors, the week's effort and the
  * vendor's own status line. The credits are not drawn, because the fixture's
  * accounts hold none.
@@ -103,7 +103,7 @@ export function ProviderHeader({
 
 /**
  * `PanelProviderPage.capacityGroup`: each window with its bar, its pace mark
- * and its caption, and Codex's resets under the windows they clear, on one
+ * and its caption, and the account's resets under the windows they clear, on one
  * platter.
  */
 export function ProviderLimits({ page }: { page: ProviderPage }): ReactElement {
