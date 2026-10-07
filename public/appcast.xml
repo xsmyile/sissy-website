@@ -6,6 +6,33 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.4</title>
+            <pubDate>Wed, 07 Oct 2026 12:29:23 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1013</sparkle:version>
+            <sparkle:shortVersionString>0.3.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.4: an account switch Claude Code follows, an honest disk reading, and forge counts that add up
+
+- Switching Claude accounts from Sissy now also points Claude Code's own
+  config file at the new account, so the CLI's requests go to that
+  account's organisation. Sessions already open follow it without a
+  restart.
+- The Disk tab reads free space the way the system does when a write
+  needs it. What macOS could reclaim on its own is shown apart as
+  "macOS can free", explained on hover, and never counted as free.
+- The Disk tab no longer offers to clear caches: the tools that fill them
+  refill them on their next run.
+- GitHub merges and issues for a picked span count only what falls inside
+  it, where they could count every merge the account ever made.
+- Forge counters count the day from your local midnight, where a day's
+  contributions could stay hidden until midnight UTC.
+- Every log line is dated, and the log records Claude account changes and
+  resets that were expected and did not appear.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.4/Sissy-0.3.4.dmg" length="7216667" type="application/octet-stream" sparkle:edSignature="phz2cvXCgo++mV3Xge4/hJPIFo5k02RPRdFInN62Tcf5TR1dbI2eQSycNqx83Am+h77qG15GVpJNS5dU+zt8BQ=="/>
+        </item>
+        <item>
             <title>0.3.3</title>
             <pubDate>Mon, 05 Oct 2026 09:40:58 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -206,6 +233,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: v9zPzt3kLh7Wzt2/9QuH5U21GIib5w4mOhlrjzALanenh0Mzdtgsv5dXAsV73iSxwsPxvA7KRCCakWt99XX7Dw==
-length: 13005
+edSignature: 58hTv9KSiDIZBoCCX2M9HxWtJjbx2oSUeD+oFoJPuYSh/SeZIiunNBNn03Z85OfrfR8KGoqQ/6el0IjzmlWGCw==
+length: 14744
 -->
