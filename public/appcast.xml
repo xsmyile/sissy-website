@@ -6,6 +6,35 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.5</title>
+            <pubDate>Mon, 12 Oct 2026 16:06:53 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1020</sparkle:version>
+            <sparkle:shortVersionString>0.3.5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.5: one label per vendor, resets in view, and a keep-awake that counts from when you ask
+
+- The Overview names a vendor once over all of its accounts. Each account
+  keeps its own bar, and every row says when its window resets, so how
+  long until a full account works again is on the first page.
+- A degraded vendor status colours the vendor's name only, never the
+  account beside it.
+- The Sessions tab draws the day's work blocks for a single past day
+  picked on the calendar, not only for today.
+- Keep awake: a duration picked while the Mac is already held now counts
+  from that moment, where it used to end the hold at once. Switching the
+  lid on, or switching to Always, starts the count again.
+- With the lid closed on battery, Sissy lets the lid go below a charge you
+  choose in Settings › Awake, 15% by default.
+- Switching Claude accounts no longer refuses when one of Claude Code's
+  saved sign-ins is an older copy of an account Sissy already holds. The
+  warning from a failed switch clears as soon as the signed-in account
+  changes, and the log names the sign-in that could not be identified.
+- Pricing knows claude-haiku-5-5 out of the box.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.5/Sissy-0.3.5.dmg" length="7264494" type="application/octet-stream" sparkle:edSignature="TZgu7ULZIKrNzpile34juwBLzOhA69Mg78KVS7XZjszXmS29aCSrVKPGg3d2zhS9yjx2Q0K1hiSATM+Vt7NDAw=="/>
+        </item>
+        <item>
             <title>0.3.4</title>
             <pubDate>Wed, 07 Oct 2026 12:29:23 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -233,6 +262,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: 58hTv9KSiDIZBoCCX2M9HxWtJjbx2oSUeD+oFoJPuYSh/SeZIiunNBNn03Z85OfrfR8KGoqQ/6el0IjzmlWGCw==
-length: 14744
+edSignature: dBiEhtxgc3uRQKpngSjsPjbHoEqzYK36FMk3OJarFecloGhwEoEZawZysRMbpeO4NLVe+f5acVnhHPdEJcjtAQ==
+length: 16638
 -->
