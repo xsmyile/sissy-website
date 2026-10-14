@@ -6,6 +6,26 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.7</title>
+            <pubDate>Wed, 14 Oct 2026 10:46:46 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1025</sparkle:version>
+            <sparkle:shortVersionString>0.3.7</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.7: Codex back on the Overview after a relaunch
+
+- Codex no longer disappears from the Overview after Sissy restarts, as
+  it did after the 0.3.6 update for anyone who had archived a Codex
+  session in the last two days. Archiving a session moves its log out of
+  the folder Sissy reads, and Sissy then threw away everything it had
+  counted from it.
+- A signed-in Codex or Claude account with nothing spent in the last two
+  days still gets its row, with its plan and its limits, instead of
+  waiting for the next turn to show up.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.7/Sissy-0.3.7.dmg" length="7304696" type="application/octet-stream" sparkle:edSignature="dCY9Bcnb1oPjAOLxshpy2K384bqkEMx3LX2mO8jgQxJizx/sb2El9aVcxYFlNI/2KJXyePmN1qiv7awcYXaKDQ=="/>
+        </item>
+        <item>
             <title>0.3.6</title>
             <pubDate>Wed, 14 Oct 2026 09:22:54 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -289,6 +309,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: juactAUEcxEIJ/ImNsnW1lXQ11hF/FcI4gvulkFT4YTNxE4ZYNYyixmu4IXaVfCm6FkScfCvZonS4A1s/v41BA==
-length: 18368
+edSignature: u0qV3HRO/apSPkp8PpOzL8xgOYvQOw4q51XThiWmEwiHA36fHR9CkILDwSPpX5eL9QQxPS0KDRX6KXmVPFTDCg==
+length: 19629
 -->
