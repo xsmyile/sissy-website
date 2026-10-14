@@ -6,6 +6,33 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.6</title>
+            <pubDate>Wed, 14 Oct 2026 09:22:54 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1023</sparkle:version>
+            <sparkle:shortVersionString>0.3.6</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.6: accounts named by who owns them, and each one's plan in view
+
+- Accounts are named after their owner or their team: a personal plan
+  takes your name, or your address when claude.ai has no name for it, and
+  a team seat takes the organisation's. Settings › Providers picks the
+  format (Automatic, Email, or Name and organisation), and each account's
+  ⋯ menu there has Rename… for a name of your own. An empty name goes back to the
+  automatic one.
+- With more than one account for a vendor, each row on the Overview
+  carries its plan as a badge beside the name, so a Max seat and a Team
+  one are told apart at a glance. The rows are grouped under their vendor
+  and spaced to match.
+- A window that has not started yet says "starts on first use" under its
+  bar instead of leaving the line empty.
+- Use in CLI moved into the account menu on the provider page, which also
+  marks the account the CLI is signed into.
+- A Max 20x account reads "Max 20x" again, where it showed plain "Max".
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.6/Sissy-0.3.6.dmg" length="7302602" type="application/octet-stream" sparkle:edSignature="2vGx4tEQZHmcbkIubTWogHTHfQ0xgNPzfOd7S6PYlcWYR7aCrMEVHeTTyhp2p2LY46+wUrqnnx8IGs7D+n3dDQ=="/>
+        </item>
+        <item>
             <title>0.3.5</title>
             <pubDate>Mon, 12 Oct 2026 16:06:53 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -262,6 +289,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: dBiEhtxgc3uRQKpngSjsPjbHoEqzYK36FMk3OJarFecloGhwEoEZawZysRMbpeO4NLVe+f5acVnhHPdEJcjtAQ==
-length: 16638
+edSignature: juactAUEcxEIJ/ImNsnW1lXQ11hF/FcI4gvulkFT4YTNxE4ZYNYyixmu4IXaVfCm6FkScfCvZonS4A1s/v41BA==
+length: 18368
 -->
