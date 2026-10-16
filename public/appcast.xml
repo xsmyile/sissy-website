@@ -6,6 +6,23 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.9</title>
+            <pubDate>Fri, 16 Oct 2026 10:50:18 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1027</sparkle:version>
+            <sparkle:shortVersionString>0.3.9</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.9: A clearer battery floor for a closed lid
+
+- The Awake setting that ends the closed-lid hold on battery now reads
+  "On battery, stop the closed-lid hold below 15%". It used to read
+  "let the lid go below", which sounded as if the percentage belonged to
+  the lid rather than to the battery. The confirmation shown when you
+  switch on Keep working with the lid closed is reworded the same way.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.9/Sissy-0.3.9.dmg" length="7340179" type="application/octet-stream" sparkle:edSignature="6Ro0/CnlyfZChLg74VQ6+VrC+JdGhbHH6fvCz5/y0FbzLnX12AGU7wRNqsvAOCJ/iPo+bFeQag0TQ9eao09ECg=="/>
+        </item>
+        <item>
             <title>0.3.8</title>
             <pubDate>Wed, 14 Oct 2026 11:07:53 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -325,6 +342,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: wAh35setCpQIUEa8NSwhSUhIGKnPBNHdnr1MnqWrgHvJWeypYtn81hXAgECiUzaKYm++ehHPJgmr9OrBiC7GAw==
-length: 20679
+edSignature: SY9BWx2agbMxq4vq23LYfNIEZM/bxHwdwPlQ8+q+E5/POoeCW8/2xL6++JdYW0ijPX0NW5PCtVkG6vn7P0Q+AQ==
+length: 21807
 -->
