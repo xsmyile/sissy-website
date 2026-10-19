@@ -6,6 +6,35 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.10</title>
+            <pubDate>Mon, 19 Oct 2026 12:38:53 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1039</sparkle:version>
+            <sparkle:shortVersionString>0.3.10</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.10: VoiceOver across the panel, and a safer sign-in window
+
+- VoiceOver now names the panel's header controls, says whether Keep
+  awake is holding, names the menu bar icon with its state, and reads a
+  tab's badge reason. Provider marks and Sissy's own artwork are no
+  longer announced by their file names.
+- The account sign-in window hands only web links to your browser.
+  Links to other apps, such as mail or meeting links, are ignored. If the
+  sign-in page crashes, the window now offers Retry instead of staying
+  blank.
+- A Claude account whose claude.ai reading failed could hide the limits
+  another reader still had. The row now keeps the reading that is real.
+- Large figures step to the next unit as printed: no more "1000.0K" or
+  "1000 MB", token counts reach billions, and a share just under the
+  whole reads ">99%" beside a "<1%".
+- The Network and Disk graphs keep the hover on the sample under the
+  pointer while new samples arrive.
+- The Forge tab sends fewer requests after GitHub refuses or rate-limits
+  an Actions read.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.10/Sissy-0.3.10.dmg" length="7351257" type="application/octet-stream" sparkle:edSignature="O1JpCCkLmPlbUIhGQxpg2S/RRMckLpIVrCt90NP8FTtCfUHafh8hETgwaI5lqPtpRsZfckjJP272u11twMGDDw=="/>
+        </item>
+        <item>
             <title>0.3.9</title>
             <pubDate>Fri, 16 Oct 2026 10:50:18 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -342,6 +371,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: SY9BWx2agbMxq4vq23LYfNIEZM/bxHwdwPlQ8+q+E5/POoeCW8/2xL6++JdYW0ijPX0NW5PCtVkG6vn7P0Q+AQ==
-length: 21807
+edSignature: 0kzixeRqsGwTVIXQq92bfYsyqeb+gCPFYF7riY/Y6X4e91eaWFj8jbABfssi3ZjfnAV36yWMZNLz+oZsHCPcBA==
+length: 23589
 -->
