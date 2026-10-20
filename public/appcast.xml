@@ -6,6 +6,28 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.3.11</title>
+            <pubDate>Tue, 20 Oct 2026 22:01:59 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1041</sparkle:version>
+            <sparkle:shortVersionString>0.3.11</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.3.11: A new icon set
+
+- Sissy now draws its icons from the rounded outline set of Hugeicons
+  instead of the system symbols, on the panel and in Settings. The tabs
+  say more about what they show: an agent at its code for Sessions, a
+  computer at work for Mac, a fork for Forge.
+- The Keep awake cup keeps one outline in every state. Its colour and
+  its background still tell whether the hold is on.
+- VoiceOver now names the panel's back button, the calendar's month
+  arrows, the Refresh and Accounts buttons, and the result of the
+  commit identity check ("Matches" or "Unexpected").
+- Model prices are refreshed, adding gpt-5.5-cyber-preview.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.3.11/Sissy-0.3.11.dmg" length="7597732" type="application/octet-stream" sparkle:edSignature="5kGjdOSsqXQHgpiI+IUsvtAIM91I1IuVP8FVHNdll7Wx7wK9At67d3m2nZWrb/V2/BRFANw1eGXPmFsRUERQCw=="/>
+        </item>
+        <item>
             <title>0.3.10</title>
             <pubDate>Mon, 19 Oct 2026 12:38:53 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -371,6 +393,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: 0kzixeRqsGwTVIXQq92bfYsyqeb+gCPFYF7riY/Y6X4e91eaWFj8jbABfssi3ZjfnAV36yWMZNLz+oZsHCPcBA==
-length: 23589
+edSignature: /9akV7Bsqgyjc01U+0RcO5YSnj0hnFFXASxCdCAQNWMWpbTbz5E9UZ7i2htBeoo7Q4KmZjpmirrgR24zUUAXDg==
+length: 24970
 -->
