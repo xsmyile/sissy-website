@@ -6,6 +6,38 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.4.0</title>
+            <pubDate>Wed, 04 Nov 2026 18:52:42 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1077</sparkle:version>
+            <sparkle:shortVersionString>0.4.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.4.0: Sissy reads your accounts and no longer switches them
+
+- Sissy no longer switches your Claude account. It now shows which accounts
+  your running sessions are on, in the account menu and on the provider's page.
+  To change account, use `/login` or `CLAUDE_CONFIG_DIR`.
+- On first launch Sissy deletes the Claude credentials earlier versions saved
+  for switching. Your Claude Code sign-in is not touched.
+- Plans read Ultra and Max, the names Anthropic gave them on 30 October.
+- Deleting history is now permanent: those days are not read back from the
+  session logs, even if you keep history for longer.
+- A log Sissy cannot read is retried later instead of being lost, and it no
+  longer holds up the other providers.
+- Limits stay under the right account after `codex login`, and a Codex reset
+  can no longer be spent under another account.
+- Claude's gauges survive a change in the shape of Anthropic's reply.
+- The Identities page opens from every project row, and its back button returns
+  to where you were.
+- Small storage figures no longer read 0 MB, and the account count matches the
+  menu.
+- Lower CPU use while the panel is closed.
+- Model prices are refreshed, adding gpt-6-astra-law, gpt-6-rosalind and
+  gpt-6.1-terra.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.4.0/Sissy-0.4.0.dmg" length="7671152" type="application/octet-stream" sparkle:edSignature="urUy8fCmBE+40ecTFLCjmmZMkkptSvxLyCAHf4HMCzviRBlzUDoGCtk024ZsF+PqY7smIxgVK46wakqVzcVLCg=="/>
+        </item>
+        <item>
             <title>0.3.11</title>
             <pubDate>Tue, 20 Oct 2026 22:01:59 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -393,6 +425,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: /9akV7Bsqgyjc01U+0RcO5YSnj0hnFFXASxCdCAQNWMWpbTbz5E9UZ7i2htBeoo7Q4KmZjpmirrgR24zUUAXDg==
-length: 24970
+edSignature: McqPyc/8p1/hObL0gtf1ehl/LmplAAUU0xIQPrLBmaywuJXtA2ZABCzi+9EmQoqVysNO/lsSNQWcbwaFXv7eDQ==
+length: 26940
 -->
