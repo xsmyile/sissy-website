@@ -6,6 +6,25 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.4.1</title>
+            <pubDate>Thu, 05 Nov 2026 16:40:11 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1079</sparkle:version>
+            <sparkle:shortVersionString>0.4.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.4.1: Forge numbers under each project
+
+- The Projects page now shows, under each repository, the pull or merge
+  requests merged, the issues you opened and the comments you wrote over the
+  panel's period. A repository where nothing happened shows none of them.
+- On GitHub the comments appear only when Sissy can read all of them for the
+  period, which is about a week on a busy account.
+- Throwaway repositories under /tmp no longer appear as projects or on the
+  Identities page. What they cost stays in the total, under unattributed.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.4.1/Sissy-0.4.1.dmg" length="7797842" type="application/octet-stream" sparkle:edSignature="9H30QW6tkLw0R12FPBIkECGJc/8PLyrNeMyIGjkrZn5IsKhVqvf+cx4snpcfw8R9LaTU5nRtAFTunzIN+KdHDw=="/>
+        </item>
+        <item>
             <title>0.4.0</title>
             <pubDate>Wed, 04 Nov 2026 18:52:42 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -425,6 +444,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: McqPyc/8p1/hObL0gtf1ehl/LmplAAUU0xIQPrLBmaywuJXtA2ZABCzi+9EmQoqVysNO/lsSNQWcbwaFXv7eDQ==
-length: 26940
+edSignature: bYYoLBWd4rzcs8nSswd7jL4XMk0j+6CZNHhI3hCbhuall4QrOTDZ9Wzzi8BKbjBlbPbL6Lwnq/lhjsdX2XT8Dw==
+length: 28207
 -->
