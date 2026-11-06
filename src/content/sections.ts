@@ -124,7 +124,7 @@ export const KEEP_AWAKE = {
   points: [
     {
       title: "The lid",
-      body: "On a MacBook, *Keep working with the lid closed* keeps a held Mac working with its lid shut, on battery too, down to a floor you pick: 15% unless you change it, and then closing the lid sleeps the Mac again until it is back on power. It is off until you switch it on, and the first time it says what that costs before it does.",
+      body: "On a MacBook, *Keep working with the lid closed* keeps a held Mac working with its lid shut, on battery too, down to a floor you pick: 15% unless you change it. Below it a closed Mac sleeps, and the lid sleeps it as usual until it is back on power. It is off until you switch it on, and the first time it says what that costs before it does.",
     },
     {
       title: "The screen",
