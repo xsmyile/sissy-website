@@ -1,6 +1,7 @@
 ---
 import { LIMITS } from "../content/sections";
 import { DEMO_SNAPSHOT } from "../panel/data";
+import { gaugeTitle } from "../panel/format";
 import { ActionsCrop, LimitsCrop } from "../panel/Panel";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
@@ -31,7 +32,7 @@ const expected = row.expectedFraction * 100;
       <div class="mark" style={`left: ${expected}%`}></div>
     </div>
     <p class="legend">
-      <span>{row.name} · {row.window.toLowerCase()} window</span>
+      <span>{gaugeTitle(row)} · {row.window.toLowerCase()} window</span>
       <span class="paced"><i></i>{LIMITS.paceLabel}</span>
     </p>
   </div>

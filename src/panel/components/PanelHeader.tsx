@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { headerSubtitle } from "../format";
 import type { HeaderReading } from "../types";
-import { Calendar, CupAndHeatWaves, Gearshape } from "./Glyph";
+import { Calendar03, Coffee02, Settings01 } from "./Glyph";
 import { Cat } from "./Sprite";
 
 /**
@@ -27,13 +27,13 @@ export function PanelHeader({
       </div>
       <div className="panel-controls">
         <span className="panel-glass panel-glass-quiet" data-disabled={!readsPeriod || undefined}>
-          <Calendar />
+          <Calendar03 />
         </span>
         <span className={held ? "panel-glass panel-glass-held" : "panel-glass panel-glass-quiet"}>
-          <CupAndHeatWaves />
+          <Coffee02 />
         </span>
         <span className="panel-glass">
-          <Gearshape />
+          <Settings01 />
         </span>
       </div>
     </div>

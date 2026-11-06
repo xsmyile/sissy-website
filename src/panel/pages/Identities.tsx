@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ChevronDown, ChevronRight } from "../components/Glyph";
+import { ArrowDown01, ArrowRight01 } from "../components/Glyph";
 import { IdentityMarkGlyph } from "../components/IdentityMark";
 import { PageHeader } from "../components/PageHeader";
 import { PanelGroup, Platters } from "../components/PanelGroup";
@@ -81,7 +81,7 @@ export function IdentitiesBlock({
       {rest.length > 0 && (
         <>
           <div className="panel-disclosure">
-            {showsAll ? <ChevronDown /> : <ChevronRight />}
+            {showsAll ? <ArrowDown01 /> : <ArrowRight01 />}
             {showsAll ? HIDE : identityDisclosure(rows.length)}
           </div>
           {showsAll && <IdentityRows rows={rest} focus={focus} />}

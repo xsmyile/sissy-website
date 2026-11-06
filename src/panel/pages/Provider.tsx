@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { DayBlock } from "../components/DayBlock";
-import { ChevronRight } from "../components/Glyph";
+import { ArrowRight01 } from "../components/Glyph";
 import { Identity } from "../components/Identity";
 import { PageHeader } from "../components/PageHeader";
 import { PanelGroup, Platters } from "../components/PanelGroup";
@@ -72,7 +72,7 @@ export function Provider({ page, header, open }: ProviderProps): ReactElement {
             <span className="panel-status-label">{page.status.label}</span>
             <span className="panel-caption">·</span>
             <span className="panel-caption">{page.status.checked}</span>
-            <ChevronRight className="panel-chevron" />
+            <ArrowRight01 className="panel-chevron" />
           </div>
         </PanelGroup>
       </Platters>
@@ -173,7 +173,7 @@ function EffortLine({
     <>
       <span className="panel-label">By effort</span>
       <span className="panel-caption panel-label-end">{`${reading.lead}${SEPARATOR}${reading.window}`}</span>
-      {opens && <ChevronRight className="panel-chevron" />}
+      {opens && <ArrowRight01 className="panel-chevron" />}
     </>
   );
   if (!opens || press === undefined) {

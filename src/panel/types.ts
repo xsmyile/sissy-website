@@ -48,14 +48,24 @@ export interface WindowRow {
   caption: string;
 }
 
+/**
+ * `GaugeRow`. `name` is the vendor's, and `qualifier` the account's where the
+ * vendor has more than one: under a vendor's label a row goes by the account
+ * alone, with its plan beside it. `accountCount` is what the label counts, and
+ * `resets` the line under the bar, the leading window's own countdown.
+ */
 export interface GaugeRow {
   id: string;
   provider: ProviderId;
   account: string | null;
   name: string;
+  qualifier: string | null;
+  plan: string | null;
+  accountCount: number;
   window: string;
   usedFraction: number;
   expectedFraction: number;
+  resets: string;
 }
 
 export interface AgentsLine {
@@ -74,34 +84,19 @@ export interface ProjectRow {
 }
 
 /**
- * `AccountRow` and the plan, as the provider page's identity block prints them.
- *
- * The organisation and the plan share one line and either can be the only
- * thing on it: a personal account names no organisation, and an API-key user
- * is on no plan. The picker is governed separately, by how many accounts of
- * that vendor there are.
+ * `AccountEntry` and the plan, as the provider page's identity block prints
+ * them: the name `AccountNaming` gives the account with its plan beside it, and
+ * `detail`, what that name leaves out. The picker is governed separately, by
+ * how many accounts of that vendor there are, and `runningSessions` draws the
+ * line under them, which only Claude Code's accounts count.
  */
 export interface AccountIdentity {
-  email: string;
-  organization: string | null;
+  name: string;
+  detail: string | null;
   plan: string;
   /** More than one account of this vendor, which is what draws the picker. */
   hasPicker: boolean;
-  /**
-   * `ClaudeAccount.isSignedIn`: the account the CLI is on, which is the one
-   * whose future spend lands in the day beside it. It draws the `· in CLI`
-   * badge, and only where there is more than one account to distinguish it
-   * from.
-   */
-  inCLI: boolean;
-  /**
-   * `ClaudeAccount.isSwitchable`: Sissy holds a sign-in for this account and
-   * the vendor lets it be written. It draws the `Use in CLI` button, which the
-   * app shows only on an account the CLI is not already on, so the accident it
-   * used to be is gone by construction rather than by dialog. Codex accounts
-   * are read and never signed in with, so theirs is false.
-   */
-  switchable: boolean;
+  runningSessions: number;
 }
 
 /**
@@ -450,20 +445,8 @@ export interface DiskVolumeRow {
 }
 
 /**
- * One `CleanupTarget` row, as `DiskCleanupPlatter` draws a sized cache: its
- * name, its size, and whether `Clean…` is offered, which is whenever it holds
- * anything and nothing else is under way.
- */
-export interface CleanupRow {
-  id: string;
-  name: string;
-  size: string;
-  offered: boolean;
-}
-
-/**
- * `UsagePanelSnapshot.DiskBlock` with the activity and cleanup the Disk tab
- * reads beside it. `free` is the headline, graded by `level` against the Mac's
+ * `UsagePanelSnapshot.DiskBlock` with the activity the Disk tab reads beside
+ * it. `free` is the headline, graded by `level` against the Mac's
  * RAM; `used`, `warnMark` and `criticalMark` are shares of the home volume.
  */
 export interface DiskBlock {
@@ -477,7 +460,6 @@ export interface DiskBlock {
   purgeable: string;
   activity: { read: string; write: string; rates: RateSeries };
   volumes: DiskVolumeRow[];
-  cleanup: CleanupRow[];
 }
 
 /**

@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactElement } from "react";
 import { projectFigures, projectsCount } from "../format";
 import type { ProjectRow as ProjectRowData } from "../types";
-import { ChevronRight } from "./Glyph";
+import { ArrowRight01 } from "./Glyph";
 import { PanelGroup } from "./PanelGroup";
 import { ForgeMark } from "./Sprite";
 
@@ -29,7 +29,7 @@ export function ProjectsLabel({ text, count }: { text: string; count: number }):
       {text}
       <span className="panel-count">
         {projectsCount(count)}
-        <ChevronRight className="panel-chevron" />
+        <ArrowRight01 className="panel-chevron" />
       </span>
     </div>
   );

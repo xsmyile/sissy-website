@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import type { IdentityLineState, IdentityMark } from "../types";
-import { Checkmark, ExclamationmarkTriangleFill } from "./Glyph";
+import { Alert02, Tick02 } from "./Glyph";
 
 /**
  * The identities page's marks, which the identity line borrows so the line
@@ -10,9 +10,9 @@ import { Checkmark, ExclamationmarkTriangleFill } from "./Glyph";
 export function IdentityMarkGlyph({ mark }: { mark: IdentityMark }): ReactElement {
   switch (mark) {
     case "agrees":
-      return <Checkmark className="panel-mark-agrees" />;
+      return <Tick02 className="panel-mark-agrees" />;
     case "unexpected":
-      return <ExclamationmarkTriangleFill className="panel-mark-warning" />;
+      return <Alert02 className="panel-mark-warning" />;
     case "unjudged":
       return <span className="panel-mark-unjudged">—</span>;
   }
@@ -22,9 +22,9 @@ export function IdentityMarkGlyph({ mark }: { mark: IdentityMark }): ReactElemen
 export function IdentityLineMark({ state }: { state: IdentityLineState }): ReactElement | null {
   switch (state) {
     case "findings":
-      return <ExclamationmarkTriangleFill className="panel-mark-warning" />;
+      return <Alert02 className="panel-mark-warning" />;
     case "clean":
-      return <Checkmark className="panel-mark-agrees" />;
+      return <Tick02 className="panel-mark-agrees" />;
     case "unread":
       return null;
   }

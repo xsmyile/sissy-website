@@ -8,14 +8,14 @@ paths:
 # The panel replica
 
 - **The panel replica mirrors the app, file for file, and the mirror is the
-  maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`,
+  maintenance path.** `src/panel/types.ts` mirrors `UsagePanelSnapshot.swift`
+  and the `UsagePanelSnapshot*.swift` beside it, one per tab,
   `Panel.tsx` mirrors `UsagePanelView.Page`, `pages/Overview.tsx` mirrors
   `PanelOverview.swift`, `pages/Provider.tsx` mirrors `PanelProviderPage.swift`,
   `pages/Effort.tsx` mirrors `PanelEffortPage.swift`, `pages/Sessions.tsx`
   mirrors `PanelSessions.swift`, `pages/Mac.tsx` mirrors `PanelMac.swift`,
   `pages/Forge.tsx` mirrors `PanelForge.swift` and `PanelIdentityLine`,
-  `pages/Disk.tsx` mirrors `PanelDisk.swift`, `PanelDiskActivity.swift` and
-  `PanelDiskCleanup.swift`, `pages/Network.tsx` mirrors `PanelNetwork.swift`,
+  `pages/Disk.tsx` mirrors `PanelDisk.swift` and `PanelDiskActivity.swift`, `pages/Network.tsx` mirrors `PanelNetwork.swift`,
   `components/RateSparkline.tsx` mirrors `PanelRateSparkline.swift`,
   `components/TabBar.tsx` mirrors `PanelTabs.swift`,
   `components/PanelGroup.tsx` mirrors `PanelGroup` and `PanelPlatter`,
@@ -28,7 +28,8 @@ paths:
   block both draw, `components/Actions.tsx` mirrors `PanelActions`
   and `ActionsRowView` in `PanelForge.swift`, and `ForgeSection.tsx` also
   mirrors `ForgeSectionLabel` in `PanelForge.swift`, `format.ts` mirrors the
-  `UsageFormat` functions it names, `motion.ts` mirrors
+  `UsageFormat` functions it names, across `UsageFormat*.swift` and
+  `SharedCopy.swift`, `motion.ts` mirrors
   `SissyMenuBarMotion.swift`. `src/settings/Settings.tsx` mirrors
   `ProvidersSettingsView.swift`, the first section of `ForgeSettings.swift`
   and `AwakeSettingsView.swift`, and `CredentialRow.tsx` mirrors `SettingsCredentialRow.swift`. When the app
@@ -82,7 +83,13 @@ paths:
   one the panel has a page for, and every forge connection is a row of the
   contributions block, titled by its host. Settings ▸ Awake holds what the
   header's cup says: a hold in force, so `Always`, with no limit, the screen
-  and the lid both kept.
+  and the lid both kept, the lid down to the 15% floor the app ships. Each
+  account's name and detail are what `AccountNaming.automatic` makes of it: a
+  team seat goes by its organisation, a personal plan by its person, and the
+  plan is what the app words today, so `max_20x` reads `Ultra`. The sessions a
+  Claude page's identity counts are the Sessions tab's rows on that account; a
+  Codex page counts none, because the app reads an account off a running Claude
+  Code only.
 
 - **The replica stays in macOS neutrals; the page is the brand.** The panel's
   colours are the popover material's, its font stack starts with the system
@@ -97,7 +104,8 @@ paths:
   rather than faked. A project list past three rows keeps two and folds the
   rest into one row that names no owner and no forge, and its label counts
   every project rather than the rows, which is why `projectCount` is a field.
-  The identity block draws both halves
-  of one state and never both at once: `Use in CLI` on an account the CLI is
-  not on, the `· in CLI` badge on the one it is and only where a second account
-  exists to tell it from, which is what `inCLI` and `switchable` carry.
+  The Usage tab names a vendor once over its accounts and only there: a row
+  under that label goes by its account with its plan beside it, and one vendor
+  with one account keeps its mark and no plan, which is what `qualifier` and
+  `accountCount` carry. Every row's line under the bar is its leading window's
+  reset, so a row is three lines whichever window leads.

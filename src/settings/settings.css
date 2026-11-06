@@ -230,16 +230,21 @@
   gap: calc(2 * var(--pt));
 }
 
-svg[data-glyph="plus.circle"],
-svg[data-glyph="info.circle"] {
+svg[data-glyph="UserAdd01"] {
   flex: none;
-  width: calc(12.95 * var(--pt));
+  width: calc(12.88 * var(--pt));
   height: auto;
 }
 
-svg[data-glyph="ellipsis"] {
+svg[data-glyph="InformationCircle"] {
   flex: none;
-  width: calc(11.84 * var(--pt));
+  width: calc(14.18 * var(--pt));
+  height: auto;
+}
+
+svg[data-glyph="MoreHorizontal"] {
+  flex: none;
+  width: calc(10.28 * var(--pt));
   height: auto;
 }
 

@@ -352,12 +352,12 @@ export function IdentitiesCrop({
 }
 
 /**
- * One account's identity block on its own, which is where both the picker and
- * the switch live.
+ * One account's identity block on its own, which is where the picker and the
+ * count of running sessions live.
  *
  * It takes the identity rather than the snapshot, because the block only says
- * what it is for on an account the CLI is not signed in as, and picking that
- * one is the caller's business.
+ * what it is for on an account with sessions on it, and picking that one is the
+ * caller's business.
  */
 export function IdentityCrop({
   identity,

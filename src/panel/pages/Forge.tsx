@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { ForgeSections } from "../components/ForgeSection";
-import { ChevronRight } from "../components/Glyph";
+import { ArrowRight01 } from "../components/Glyph";
 import { IdentityLineMark } from "../components/IdentityMark";
 import { PanelGroup, Platters } from "../components/PanelGroup";
 import { Row } from "../components/Row";
@@ -61,7 +61,7 @@ function IdentityLine({ line, open }: { line: IdentityLineData; open?: OpenPage 
         <span className="panel-identity-summary" data-state={line.state}>
           {line.summary}
         </span>
-        <ChevronRight className="panel-chevron" />
+        <ArrowRight01 className="panel-chevron" />
       </Row>
     </PanelGroup>
   );

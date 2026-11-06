@@ -6,13 +6,11 @@ import { ProvidersCrop } from "../settings/Settings";
 import Inline from "./Inline.astro";
 import Section from "./Section.astro";
 
-const switchable = DEMO_SNAPSHOT.providerPages.find(
-  (page) => !page.identity.inCLI && page.identity.switchable,
+const inUse = DEMO_SNAPSHOT.providerPages.find(
+  (page) => page.identity.hasPicker && page.identity.runningSessions > 0,
 );
-if (switchable === undefined) {
-  throw new Error(
-    "The fixture has no account the CLI is not signed in as, so the switch cannot be shown",
-  );
+if (inUse === undefined) {
+  throw new Error("The fixture has no account with running sessions to show in use");
 }
 ---
 
@@ -36,7 +34,7 @@ if (switchable === undefined) {
     }
   </dl>
   <div class="stage">
-    <IdentityCrop identity={switchable.identity} label={ACCOUNTS.panelLabel} />
+    <IdentityCrop identity={inUse.identity} label={ACCOUNTS.panelLabel} />
     <ProvidersCrop settings={DEMO_SETTINGS} label={ACCOUNTS.settingsLabel} />
   </div>
 </Section>

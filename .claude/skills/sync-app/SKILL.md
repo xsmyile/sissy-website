@@ -54,7 +54,7 @@ if there are more than four). Implement nothing before the answer.
 ## 4. Implement what was approved
 
 - Follow `AGENTS.md`: read the Swift, keep the fixture internally consistent,
-  copy lives in `src/content/`, new SF Symbols go through the glyph pipeline and
+  copy lives in `src/content/`, new glyphs go through `.claude/rules/glyphs.md` and
   an IoU check, never drawn by hand.
 - Add or update the mirror-pair sentence in `AGENTS.md` when a new pair appears.
 - `npm run check`, `npm run build`, then screenshot every section that changed

@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Ellipsis, PlusCircle } from "../panel/components/Glyph";
+import { MoreHorizontal, UserAdd01 } from "../panel/components/Glyph";
 import { ForgeMark } from "../panel/components/Sprite";
 import type { CredentialLead, CredentialRowData } from "./types";
 
@@ -64,7 +64,7 @@ export function CredentialRow({ row }: { row: CredentialRowData }): ReactElement
         {row.subtitle !== null && <div className="settings-subtitle">{row.subtitle}</div>}
       </div>
       <span className="settings-menu">
-        <Ellipsis />
+        <MoreHorizontal />
       </span>
     </div>
   );
@@ -74,7 +74,7 @@ export function CredentialRow({ row }: { row: CredentialRowData }): ReactElement
 export function CredentialAddRow({ title }: { title: string }): ReactElement {
   return (
     <div className="settings-row settings-add">
-      <PlusCircle />
+      <UserAdd01 />
       <span>{title}</span>
     </div>
   );
