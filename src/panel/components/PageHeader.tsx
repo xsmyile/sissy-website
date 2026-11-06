@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import { BACK } from "../page";
 import type { ProviderId } from "../types";
-import { ArrowClockwise, ChevronLeft } from "./Glyph";
+import { ArrowLeft01, Refresh01 } from "./Glyph";
 import { ProviderMark } from "./Sprite";
 
 interface PageHeaderProps {
@@ -28,7 +28,7 @@ export function PageHeader({
     <div className="panel-page-header">
       {back === undefined ? (
         <span className="panel-back">
-          <ChevronLeft />
+          <ArrowLeft01 />
         </span>
       ) : (
         <button
@@ -39,7 +39,7 @@ export function PageHeader({
           aria-label={backLabel}
           onClick={back}
         >
-          <ChevronLeft />
+          <ArrowLeft01 />
         </button>
       )}
       {provider !== undefined && <ProviderMark provider={provider} large />}
@@ -48,7 +48,7 @@ export function PageHeader({
         {subtitle !== undefined && <div className="panel-subtitle">{subtitle}</div>}
       </div>
       <span className="panel-glass panel-glass-quiet">
-        <ArrowClockwise />
+        <Refresh01 />
       </span>
     </div>
   );

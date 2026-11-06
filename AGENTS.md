@@ -59,7 +59,8 @@ repository and is the reference for everything the site draws.
   `LICENSE.md`. `src/assets/marks/` holds the vendor and forge marks the panel
   draws (Claude, Codex, GitHub, GitLab), each with `fill="currentColor"` on its
   root so the sprite's symbol takes the colour of the row it sits on.
-- `public/`: favicons and touch icons rendered from the icon, `sprite.svg`,
+- `public/`: favicons and touch icons rendered from the icon, the notice for the
+  glyphs in `THIRD-PARTY-NOTICES.md`, `sprite.svg`,
   which `scripts/build-sprite.mjs` generates from `src/assets`, and
   `appcast.xml`, the app's update feed, once the first release has written it.
 
@@ -83,11 +84,12 @@ npm run sprite    # regenerate public/sprite.svg after editing src/assets
   import and variable rules are off for them in `biome.json`. Everything else
   is on.
 
-- **Screenshots for review come from the Playwright headless shell**
-  (`~/Library/Caches/ms-playwright/chromium_headless_shell-*`), not from the
-  Playwright or DevTools MCP screenshot tools, which time out on this page, and
-  not from desktop Chrome, which will not open a window narrower than about
-  500 px.
+- **Screenshots for review come from a headless browser driven over CDP**: the
+  Playwright headless shell where it is installed
+  (`~/Library/Caches/ms-playwright/chromium_headless_shell-*`), or desktop Chrome
+  `--headless=new` with `Emulation.setDeviceMetricsOverride`, since its window
+  alone will not go narrower than about 500 px. Not the Playwright or DevTools
+  MCP screenshot tools, which time out on this page.
 
 ## Topic rules
 
@@ -104,5 +106,5 @@ are the maintenance contract, not background.
 | `.claude/rules/page-sections.md` | `src/pages/**`, `src/components/**`: what each section draws and how its crops overlap |
 | `.claude/rules/page-style.md` | `src/styles/**`, `src/components/**`: the palette, the footer, links |
 | `.claude/rules/content.md` | `src/content/**`: where copy comes from, and the money note |
-| `.claude/rules/glyphs.md` | `src/panel/components/Glyph.tsx`, `src/panel/panel.css`: the SF Symbols and how to convert one |
+| `.claude/rules/glyphs.md` | `src/panel/components/Glyph.tsx`, `src/panel/panel.css`: the app's Hugeicons symbols and how to convert one |
 | `.claude/rules/appcast.md` | `public/appcast.xml`: the signed update feed nobody edits by hand |

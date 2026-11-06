@@ -1,6 +1,6 @@
 import "./settings.css";
 import type { ReactElement, ReactNode } from "react";
-import { ChevronUpDown, InfoCircle } from "../panel/components/Glyph";
+import { ChevronUpDown, InformationCircle } from "../panel/components/Glyph";
 import { ProviderMark } from "../panel/components/Sprite";
 import { CredentialAddRow, CredentialRow } from "./CredentialRow";
 import type {
@@ -33,7 +33,7 @@ function ProviderRow({ provider }: { provider: ProviderSettings }): ReactElement
             <ProviderMark provider={provider.provider} />
           </span>
           <span className="settings-headline">{provider.name}</span>
-          <InfoCircle className="settings-info" />
+          <InformationCircle className="settings-info" />
         </div>
         <div className="settings-detail">{provider.detail}</div>
       </div>
@@ -44,8 +44,8 @@ function ProviderRow({ provider }: { provider: ProviderSettings }): ReactElement
 
 /**
  * Settings ▸ Providers, one section per vendor: its row, the accounts linked
- * under it, and `Add account…`. The status-check section under them is left
- * out, because it says nothing about accounts.
+ * under it, and `Add account…`, then how every account is named. The status
+ * check beside that row is left out, because it says nothing about accounts.
  */
 export function ProvidersCrop({
   settings,
@@ -65,6 +65,9 @@ export function ProvidersCrop({
           <CredentialAddRow title={ADD_ACCOUNT} />
         </div>
       ))}
+      <div className="settings-section">
+        <PickerRow row={settings.accountNames} />
+      </div>
     </SettingsCrop>
   );
 }
@@ -87,7 +90,7 @@ export function ForgeSettingsCrop({
         <div className="settings-row settings-forge-heading">
           <div className="settings-heading">
             <span className="settings-headline">{FORGE_LABEL}</span>
-            <InfoCircle className="settings-info" />
+            <InformationCircle className="settings-info" />
           </div>
           <div className="settings-caption">{FORGE_CAPTION}</div>
         </div>
@@ -158,6 +161,7 @@ export function AwakeSettingsCrop({
         {awake.covers.map((row) => (
           <SwitchRow key={row.title} row={row} />
         ))}
+        <PickerRow row={awake.batteryFloor} />
       </div>
     </SettingsCrop>
   );

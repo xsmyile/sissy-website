@@ -23,13 +23,33 @@ export function providersLabel(used: number, metering: number): string {
   return `By provider${SEPARATOR}${providersRecap(used, metering)}`;
 }
 
+/** `UsageFormat.agentCount`: a count with its noun, the singular only for one. */
+function counted(count: number, singular: string, plural: string): string {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+/** `GaugeRow.title`: the vendor, and the account where it has more than one. */
+export function gaugeTitle(row: GaugeRow): string {
+  return row.qualifier === null ? row.name : `${row.name}${SEPARATOR}${row.qualifier}`;
+}
+
+/** `UsageFormat.accountsCaption`. */
+export function accountsCaption(count: number): string {
+  return counted(count, "account", "accounts");
+}
+
+/** `ClaudeAccountCopy.inUseCaption`, null while no session is on the account. */
+export function inUseCaption(sessions: number): string | null {
+  if (sessions === 0) return null;
+  return `In use${SEPARATOR}${counted(sessions, "session", "sessions")}`;
+}
+
 export function gaugeReading(row: GaugeRow): string {
   return `${row.window}${SEPARATOR}${Math.round(row.usedFraction * 100)}%`;
 }
 
 export function agentsRunning(line: AgentsLine): string {
-  const noun = line.running === 1 ? "session" : "sessions";
-  return `${line.running} ${noun}${SEPARATOR}${line.footprint}`;
+  return `${counted(line.running, "session", "sessions")}${SEPARATOR}${line.footprint}`;
 }
 
 /** The one row the running sessions fold behind. */
@@ -46,7 +66,7 @@ export function cpuLoad(cores: number): string {
 }
 
 export function projectsCount(count: number): string {
-  return count === 1 ? "1 project" : `${count} projects`;
+  return counted(count, "project", "projects");
 }
 
 export function projectFigures(tokens: string, cost: string): string {
@@ -102,7 +122,7 @@ export function forgeCommentsHelp(host: ForgeHost): string {
 
 /** `identityFooter`: the count of what was read, on the page's label row. */
 export function identityFooter(checked: number): string {
-  return `${checked} ${checked === 1 ? "repository" : "repositories"} checked`;
+  return `${counted(checked, "repository", "repositories")} checked`;
 }
 
 /** `identityDisclosure`: the control that opens the rows the page did not need to show. */

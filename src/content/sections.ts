@@ -47,12 +47,12 @@ export const LIMITS = {
 } as const;
 
 /**
- * The accounts, and the one thing the app does rather than shows.
+ * The accounts, and which of them the running sessions are on.
  *
- * `Use in CLI` is quoted from `ClaudeAccountSwitchCopy` rather than worded
- * afresh: the sentence about a running session putting its own account back is
- * the part a reader cannot work out, and the app already says it before the
- * write. A site that sold the switch without it would be selling a footgun.
+ * `In use` is the README's own sentence on `CLAUDE_CONFIG_DIR`, narrowed to what
+ * the crop draws, with `claudeReadOnlyPickerHelp`'s promise that the picker
+ * changes nothing in the CLI. The naming in `One page each` is
+ * `AccountNamingCopy.caption`.
  *
  * `Link another` is the two vendors' own ⓘ in Settings ▸ Providers
  * (`ClaudeAccountLinkCopy.detail`, `CodexAccountLinkCopy.detail`) said once
@@ -66,20 +66,20 @@ export const ACCOUNTS = {
   points: [
     {
       title: "One page each",
-      body: "The picker at the top of a page moves between that vendor's accounts. The plan sits beside the address, because it is the account that is on a plan and not the CLI.",
+      body: "The picker at the top of a page moves between that vendor's accounts. Each goes by its owner or its team, with the plan beside the name, because it is the account that is on a plan and not the CLI. Settings picks the format, and renames any one of them.",
     },
     {
-      title: "Use in CLI",
-      body: "On Claude, the account you are reading is one you can hand the CLI. Sissy asks before it writes anything, keeps the account you are leaving, and says the part you cannot work out for yourself: your next `claude` starts as it, and a session that is already open will switch it back when it next refreshes its token, so quit that one first.",
+      title: "In use",
+      body: "A running Claude Code's account comes from its own config file: Sissy reads `CLAUDE_CONFIG_DIR` off the process and counts the sessions on each account. The picker changes what you read and nothing else. Claude Code stays on the account it is signed into.",
     },
     {
       title: "Link another",
       body: "Sissy reads the account each CLI is signed into for free. Linking another signs in once, in a window of its own, and reads its limits beside it. Your terminal stays on the account it is on.",
     },
   ],
-  panelLabel: "A Claude account's identity block, with the switch",
+  panelLabel: "A Claude account's identity block, with its running sessions",
   settingsLabel:
-    "Settings, Providers: two linked Claude accounts, and Add account under each vendor",
+    "Settings, Providers: two linked Claude accounts, Add account under each vendor, and how accounts are named",
 } as const;
 
 /**
@@ -124,7 +124,7 @@ export const KEEP_AWAKE = {
   points: [
     {
       title: "The lid",
-      body: "On a MacBook, *Keep working with the lid closed* keeps a held Mac working with its lid shut, on battery too. It is off until you switch it on, and the first time it says what that costs before it does.",
+      body: "On a MacBook, *Keep working with the lid closed* keeps a held Mac working with its lid shut, on battery too, down to a floor you pick: 15% unless you change it, and then closing the lid sleeps the Mac again until it is back on power. It is off until you switch it on, and the first time it says what that costs before it does.",
     },
     {
       title: "The screen",
@@ -137,7 +137,7 @@ export const KEEP_AWAKE = {
   ],
   panelLabel: "The panel header, the cup lit while a hold is in force",
   settingsLabel:
-    "Settings, Awake: Always with no limit, the screen and the lid both kept by the hold",
+    "Settings, Awake: Always with no limit, the screen and the lid both kept by the hold, the lid down to 15% battery",
 } as const;
 
 /**
@@ -155,8 +155,8 @@ export const DISK_NETWORK = {
   blocks: {
     disk: {
       title: "Disk",
-      body: "Free space graded against the Mac's RAM, marked where it turns warn and critical, read and write activity, and the developer caches you can clear, such as Xcode DerivedData or only the builds of projects no longer on the Mac, each after a confirmation.",
-      panelLabel: "The Disk tab: 184 GB free, activity, volumes and the caches taking room",
+      body: "Free space graded against the Mac's RAM, marked where it turns warn and critical, read and write activity, and every other local volume.",
+      panelLabel: "The Disk tab: 184 GB free, activity and the other volumes",
     },
     network: {
       title: "Network",
@@ -189,7 +189,7 @@ export const GIT = {
   blocks: {
     projects: {
       title: "By project",
-      body: "Where the day went, one row per repository. A worktree counts against the one it was cut from, whichever CLI did the work.",
+      body: "Where the day went, one row per repository. A worktree counts against the one it was cut from, whichever CLI did the work. Pick a span of days on the panel's calendar and the rows follow it.",
       panelLabel: "The Usage tab's By project block",
     },
     contributions: {
@@ -274,7 +274,7 @@ export const PRIVACY = {
     "One day-by-model archive under `~/Library/Application Support/Sissy/history/`: totals, repository paths, session counts and how long each day was worked. Never prompts, and never a line of your logs. Settings names the folder, deletes it on a button, and `historyRetentionDays` bounds it, with `0` recording nothing.",
   writesTitle: "What it writes elsewhere",
   writes:
-    "Off by default. *Name projects even when Sissy is off* adds one line to `~/.claude/settings.json` and one to `~/.codex/hooks.json`, and takes both out when you switch it off. *Use in CLI* writes the Claude account you picked into the slot the CLI reads its credential from.",
+    "Off by default. *Name projects even when Sissy is off* adds one line to `~/.claude/settings.json` and one to `~/.codex/hooks.json`, and takes both out when you switch it off.",
   securityLink: {
     label: "SECURITY.md has the full surface: what Sissy reads, runs and holds",
     href: `${GITHUB_URL}/blob/master/SECURITY.md`,

@@ -2,22 +2,22 @@ import { Fragment, type ReactElement } from "react";
 import { forgeCommentsHelp, forgeIssuesHelp, forgeMergedHelp, forgeSectionLabel } from "../format";
 import type { ForgeCounter, ForgeEvent, ForgeRow, Period } from "../types";
 import { PanelActions } from "./Actions";
-import { ArrowTriangleheadMerge, BubbleLeft, SmallcircleFilledCircle } from "./Glyph";
+import { CircleDot, Comment02, GitMerge } from "./Glyph";
 import { PanelGroup } from "./PanelGroup";
 import { ForgeMark } from "./Sprite";
 
 /**
- * `ProviderPalette.forgeSymbol`: the mark a counter is drawn with, which is
+ * `ProviderPalette.forgeGlyph`: the mark a counter is drawn with, which is
  * also the mark of the latest event where the event is one of its.
  */
 function CounterMark({ counter }: { counter: ForgeCounter }): ReactElement {
   switch (counter) {
     case "merged":
-      return <ArrowTriangleheadMerge />;
+      return <GitMerge />;
     case "issues":
-      return <SmallcircleFilledCircle />;
+      return <CircleDot />;
     case "comments":
-      return <BubbleLeft />;
+      return <Comment02 />;
   }
 }
 

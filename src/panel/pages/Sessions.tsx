@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { ArrowClockwise, ChevronDown, ChevronRight } from "../components/Glyph";
+import { ArrowDown01, ArrowRight01, Refresh01 } from "../components/Glyph";
 import { PanelGroup, Platters } from "../components/PanelGroup";
 import { ProviderMark } from "../components/Sprite";
 import { agentsRunning, cpuLoad, SESSIONS_DISCLOSURE, sessionsSectionLabel } from "../format";
@@ -109,7 +109,7 @@ export function SessionsNow({
         <div className="panel-label">
           Now
           <span className="panel-caption panel-label-end">{block.reading}</span>
-          <ArrowClockwise />
+          <Refresh01 />
         </div>
       }
     >
@@ -119,7 +119,7 @@ export function SessionsNow({
       {live.load && <div className="panel-caption">{live.load}</div>}
       <div className="panel-sessions-rows">
         <div className="panel-disclosure">
-          {showsAllProcesses ? <ChevronDown /> : <ChevronRight />}
+          {showsAllProcesses ? <ArrowDown01 /> : <ArrowRight01 />}
           {SESSIONS_DISCLOSURE}
         </div>
         {showsAllProcesses &&

@@ -118,7 +118,6 @@
   box-shadow: inset 0 0 0 calc(0.5 * var(--pt)) var(--panel-separator);
 }
 
-.panel-gauges,
 .panel-capacity,
 .panel-doors,
 .panel-mac,
@@ -148,98 +147,98 @@
 
 /*
  * A glyph is as wide as its symbol is at the point size the app gives it, and
- * as tall as its own viewBox then makes it. Two of these are a point apart on
- * purpose: `UsagePanelView` draws the cup at 13 and the gear at 12 so the pair
- * weighs the same.
+ * as tall as its own viewBox then makes it. Two of these are two points apart
+ * on purpose: `UsagePanelView` draws the cup at 14 and the gear at 12 so the
+ * pair weighs the same.
  */
 svg[data-glyph] {
   height: auto;
 }
 
-svg[data-glyph="chevron.right"] {
-  width: calc(4.6 * var(--pt));
+svg[data-glyph="ArrowRight01"] {
+  width: calc(4.22 * var(--pt));
 }
 
-svg[data-glyph="chevron.left"] {
-  width: calc(6.14 * var(--pt));
+svg[data-glyph="ArrowLeft01"] {
+  width: calc(5.83 * var(--pt));
+}
+
+svg[data-glyph="ArrowDown01"] {
+  width: calc(7.55 * var(--pt));
+}
+
+svg[data-glyph="Refresh01"] {
+  width: calc(10.9 * var(--pt));
 }
 
 svg[data-glyph="chevron.up.chevron.down"] {
   width: calc(6.35 * var(--pt));
 }
 
-svg[data-glyph="arrow.clockwise"] {
-  width: calc(9.66 * var(--pt));
+svg[data-glyph="UserSwitch"] {
+  width: calc(10.88 * var(--pt));
 }
 
-svg[data-glyph="person.2"] {
-  width: calc(15.05 * var(--pt));
+svg[data-glyph="Coffee02"] {
+  width: calc(15.28 * var(--pt));
 }
 
-svg[data-glyph="cup.and.heat.waves.fill"] {
-  width: calc(13.72 * var(--pt));
+svg[data-glyph="Settings01"] {
+  width: calc(12.8 * var(--pt));
 }
 
-svg[data-glyph="gearshape.fill"] {
-  width: calc(12.61 * var(--pt));
+svg[data-glyph="Calendar03"] {
+  width: calc(11.88 * var(--pt));
 }
 
-svg[data-glyph="arrow.trianglehead.merge"] {
-  width: calc(6.12 * var(--pt));
+svg[data-glyph="GitMerge"] {
+  width: calc(7.92 * var(--pt));
 }
 
-svg[data-glyph="smallcircle.filled.circle"] {
-  width: calc(10.19 * var(--pt));
+svg[data-glyph="CircleDot"] {
+  width: calc(10.9 * var(--pt));
 }
 
-svg[data-glyph="bubble.left"] {
+svg[data-glyph="Comment02"] {
+  width: calc(10.9 * var(--pt));
+}
+
+svg[data-glyph="Tick02"] {
+  width: calc(8.7 * var(--pt));
+}
+
+svg[data-glyph="Alert02"] {
+  width: calc(10.95 * var(--pt));
+}
+
+svg[data-glyph="DashboardSpeed02"] {
+  width: calc(15.28 * var(--pt));
+}
+
+svg[data-glyph="AiProgramming"] {
+  width: calc(15.25 * var(--pt));
+}
+
+svg[data-glyph="ComputerActivity"] {
+  width: calc(15.28 * var(--pt));
+}
+
+svg[data-glyph="HardDrive"] {
+  width: calc(15.28 * var(--pt));
+}
+
+svg[data-glyph="ArrowDataTransferVertical"] {
   width: calc(11.07 * var(--pt));
 }
 
-svg[data-glyph="checkmark"] {
-  width: calc(8.79 * var(--pt));
-}
-
-svg[data-glyph="exclamationmark.triangle.fill"] {
-  width: calc(10.24 * var(--pt));
-}
-
-svg[data-glyph="chevron.down"] {
-  width: calc(7.9 * var(--pt));
-}
-
-svg[data-glyph="calendar"] {
-  width: calc(12.07 * var(--pt));
-}
-
-svg[data-glyph="gauge.with.dots.needle.33percent"] {
-  width: calc(14.12 * var(--pt));
-}
-
-svg[data-glyph="terminal"] {
-  width: calc(16.18 * var(--pt));
-}
-
-svg[data-glyph="memorychip"] {
-  width: calc(14.67 * var(--pt));
-}
-
-svg[data-glyph="internaldrive"] {
-  width: calc(16.45 * var(--pt));
-}
-
-svg[data-glyph="arrow.up.arrow.down"] {
-  width: calc(16.37 * var(--pt));
-}
-
-svg[data-glyph="arrow.triangle.branch"] {
-  width: calc(12.99 * var(--pt));
+svg[data-glyph="GitFork"] {
+  width: calc(12.45 * var(--pt));
 }
 
 /* The Now label's re-count, the header's arrow drawn at 10 pt rather than 11. */
-.panel-label svg[data-glyph="arrow.clockwise"] {
+.panel-label svg[data-glyph="Refresh01"] {
   flex: none;
-  width: calc(8.78 * var(--pt));
+  width: calc(9.91 * var(--pt));
   color: var(--panel-secondary);
 }
 
@@ -296,15 +295,6 @@ svg[data-glyph="arrow.triangle.branch"] {
 .panel-glass-held {
   background: var(--panel-held);
   color: var(--panel-held-glyph);
-}
-
-/*
- * The cup's steam is what says the hold: `.hierarchical` draws its layer at
- * the secondary opacity, measured at 0.30 off the system's own render, until a
- * hold is in force and `.monochrome` draws it whole.
- */
-.panel-glass:not(.panel-glass-held) [data-layer="steam"] {
-  opacity: 0.3;
 }
 
 .panel-glass-quiet {
@@ -437,7 +427,34 @@ svg[data-glyph="arrow.triangle.branch"] {
 }
 
 .panel-gauge {
-  gap: calc(3 * var(--pt));
+  gap: calc(4 * var(--pt));
+}
+
+.panel-gauges {
+  gap: calc(14 * var(--pt));
+}
+
+.panel-vendor {
+  display: grid;
+  gap: calc(8 * var(--pt));
+}
+
+.panel-vendor-name {
+  overflow: hidden;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.panel-gauge-bar {
+  display: grid;
+  gap: calc(2 * var(--pt));
+}
+
+.panel-gauge-reset {
+  font-size: var(--panel-caption);
+  white-space: nowrap;
+  color: var(--panel-secondary);
 }
 
 .panel-line {
@@ -769,8 +786,13 @@ svg[data-glyph="arrow.triangle.branch"] {
 /* Provider page */
 
 .panel-identity {
+  display: grid;
+  gap: calc(10 * var(--pt));
+}
+
+.panel-identity-account {
   display: flex;
-  align-items: flex-start;
+  align-items: first baseline;
   gap: calc(8 * var(--pt));
 }
 
@@ -781,38 +803,41 @@ svg[data-glyph="arrow.triangle.branch"] {
   min-width: 0;
 }
 
-.panel-email {
+.panel-account-name {
+  display: flex;
+  align-items: center;
+  gap: calc(6 * var(--pt));
+  min-width: 0;
+}
+
+.panel-account-title {
   overflow: hidden;
   font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.panel-organisation {
-  display: flex;
-  align-items: center;
-  gap: calc(6 * var(--pt));
+.panel-account-detail,
+.panel-account-caption {
   font-size: var(--panel-headline-meta);
   color: var(--panel-secondary);
 }
 
+.panel-account-detail {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .panel-badge {
-  padding: calc(1 * var(--pt)) calc(5 * var(--pt));
+  flex: none;
+  padding: calc(1 * var(--pt)) calc(6 * var(--pt));
   border-radius: 999px;
   background: var(--panel-track);
   font-size: var(--panel-caption);
   font-weight: 500;
   white-space: nowrap;
-}
-
-.panel-use-in-cli {
-  flex: none;
-  align-self: flex-start;
-  padding: calc(2 * var(--pt)) calc(7 * var(--pt));
-  border-radius: calc(5 * var(--pt));
-  background: var(--panel-glass);
-  font-size: var(--panel-headline-meta);
-  white-space: nowrap;
+  color: var(--panel-secondary);
 }
 
 .panel-picker {
@@ -820,7 +845,6 @@ svg[data-glyph="arrow.triangle.branch"] {
   flex: none;
   align-items: center;
   gap: calc(3 * var(--pt));
-  padding-top: calc(2 * var(--pt));
 }
 
 .panel-picker svg:last-child {
@@ -1537,12 +1561,6 @@ svg[data-glyph="arrow.triangle.branch"] {
 .panel-disk-volume {
   display: grid;
   gap: calc(4 * var(--pt));
-}
-
-.panel-clean {
-  flex: none;
-  margin-top: 0;
-  font-size: var(--panel-headline-meta);
 }
 
 .panel-network {

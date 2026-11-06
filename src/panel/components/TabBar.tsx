@@ -2,13 +2,13 @@ import type { CSSProperties, ReactElement } from "react";
 import { type SelectTab, tabTarget } from "../page";
 import type { PanelTab, TabEntry } from "../types";
 import {
-  ArrowTriangleBranch,
-  ArrowUpArrowDown,
-  GaugeWithDotsNeedle33,
+  AiProgramming,
+  ArrowDataTransferVertical,
+  ComputerActivity,
+  DashboardSpeed02,
+  GitFork,
   type GlyphProps,
-  Internaldrive,
-  Memorychip,
-  Terminal,
+  HardDrive,
 } from "./Glyph";
 
 /** `PanelTab.title`: the name a tab answers to on the hover and to a screen reader. */
@@ -21,14 +21,14 @@ export const TAB_TITLES: Record<PanelTab, string> = {
   forge: "Forge",
 };
 
-/** `PanelTab.symbol`, each at the bar's 14 pt medium. */
+/** `PanelTab.glyph`, each at the bar's 14 pt. */
 const TAB_SYMBOLS: Record<PanelTab, (props: GlyphProps) => ReactElement> = {
-  usage: GaugeWithDotsNeedle33,
-  sessions: Terminal,
-  mac: Memorychip,
-  disk: Internaldrive,
-  network: ArrowUpArrowDown,
-  forge: ArrowTriangleBranch,
+  usage: DashboardSpeed02,
+  sessions: AiProgramming,
+  mac: ComputerActivity,
+  disk: HardDrive,
+  network: ArrowDataTransferVertical,
+  forge: GitFork,
 };
 
 /**

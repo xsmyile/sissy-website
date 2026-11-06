@@ -18,10 +18,9 @@ paths:
   the artwork her face, so the site says *"The silhouette is drawn from her."*,
   and so does the README since it took the same edit. Where the
   README says nothing, the app's own copy is the source rather than a sentence
-  invented here: `Accounts` takes the `Use in CLI` warning from
-  `ClaudeAccountSwitchCopy`, because a session already running putting its own
-  account back is the part a reader cannot work out, and a site that sold the
-  switch without it would be selling a footgun. Code and emphasis do not nest
+  invented here: `Accounts` takes what the picker does from its own tooltip,
+  `claudeReadOnlyPickerHelp`, and how accounts are named from
+  `AccountNamingCopy`. Code and emphasis do not nest
   in this markup, and `inline.ts` fails the build rather than printing the
   delimiters.
 

@@ -6,15 +6,11 @@ import type { DiskBlock, MacLevel } from "../types";
 
 /** `DiskActivityPlatter.scaleFloor`: 1 MB/s, below which a disk reads as quiet. */
 const DISK_FLOOR = 1_000_000;
-/** `DiskCleanupCopy.section` and `DiskCleanupCopy.clean`. */
-const CLEANUP_SECTION = "Taking room";
-const CLEAN = "Clean…";
 
 /**
  * `PanelDisk`, the Disk tab: the home volume's free space graded against the
  * Mac's RAM, with the two grades marked on its bar; the activity of the last
- * two minutes; the other volumes; and the developer caches that can be
- * cleared. `Clean…` is drawn and inert, because clearing a cache is a write.
+ * two minutes; and the other volumes.
  */
 export function Disk({ block }: { block: DiskBlock }): ReactElement {
   return (
@@ -32,7 +28,7 @@ export function Disk({ block }: { block: DiskBlock }): ReactElement {
         </div>
         <div className="panel-divider" />
         <div className="panel-line">
-          <span className="panel-mac-label">Purgeable</span>
+          <span className="panel-mac-label">macOS can free</span>
           <span className="panel-mac-value">{block.purgeable}</span>
         </div>
       </PanelGroup>
@@ -61,18 +57,6 @@ export function Disk({ block }: { block: DiskBlock }): ReactElement {
           ))}
         </PanelGroup>
       )}
-      <PanelGroup
-        className="panel-mac-rows"
-        label={<div className="panel-label">{CLEANUP_SECTION}</div>}
-      >
-        {block.cleanup.map((row) => (
-          <div className="panel-line" key={row.id}>
-            <span className="panel-mac-label">{row.name}</span>
-            <span className="panel-mac-value">{row.size}</span>
-            {row.offered && <span className="panel-small-button panel-clean">{CLEAN}</span>}
-          </div>
-        ))}
-      </PanelGroup>
     </Platters>
   );
 }

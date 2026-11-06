@@ -71,9 +71,9 @@ paths:
   rows, the commit identity line on the Forge tab,
   the `By effort` row where it is a door, and the back control, and nothing
   else — the period, the picker, refresh, settings, the projects label,
-  `Show all`, the sessions' `By repository` fold, `Copy the fix`, Codex's
-  `Use…` and the Disk tab's `Clean…` stay drawn and dead, because spending a
-  reset or clearing a cache is a write and not a route. The Disk and Network
+  `Show all`, the sessions' `By repository` fold, `Copy the fix` and Codex's
+  `Use…` stay drawn and dead, because spending a
+  reset is a write and not a route. The Disk and Network
   pages are drawn as the app opens them, on the background log's last two
   minutes, and do not sample: a fixture has no link to read, and the
   sparklines' hover is not mirrored. The tab and the page are two

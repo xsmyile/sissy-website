@@ -106,15 +106,16 @@ const IDENTITIES: IdentityRow[] = [
  * why `group935/tranzit` is checked without a row under By project. The Forge
  * tab's line names the one that disagrees, which is also what tints that
  * tab's symbol. Every account's gauge reads the window `binding` would pick for
- * its page.
+ * its page, and its reset line is that window's own. The Sessions tab's five
+ * Claude sessions are the two identity blocks' counts: sissy twice and billy on
+ * xSmyile, origins and buried on Group 935. Its two Codex sessions count on no
+ * account, because the app reads an account off a running Claude Code only.
  *
  * The Mac reads normal, so its tab carries no badge, and its heaviest apps
  * leave the sessions out, as `MacAppGrouping` does. The Mac is a 12-core one
  * with 36 GB, so the disk grades warn under 72 GB free and critical under 36,
  * which is where the marks sit on a 995 GB home volume; its 184 GB free is
- * normal, so the Disk tab carries no badge either. The builds of removed
- * projects are DerivedData's own folders narrowed to the projects that are
- * gone, so their 15 GB is inside DerivedData's 18. It booted six days and four
+ * normal, so the Disk tab carries no badge either. It booted six days and four
  * hours before the fixture's Monday 21 Sep, on Sep 15, which is what the
  * network's totals are since. Each rate series is the background log's
  * five-second points over the two minutes the page opens on, and each figure
@@ -163,28 +164,40 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       id: "claude-xsmyile",
       provider: "claude-code",
       account: "xsmyile",
-      name: "Claude · xSmyile",
+      name: "Claude",
+      qualifier: "xSmyile",
+      plan: "Ultra",
+      accountCount: 2,
       window: "Weekly",
       usedFraction: 0.69,
       expectedFraction: 0.52,
+      resets: "resets in 3d 8h",
     },
     {
       id: "claude-group935",
       provider: "claude-code",
       account: "group935",
-      name: "Claude · Group 935",
+      name: "Claude",
+      qualifier: "Group 935",
+      plan: "Team Premium",
+      accountCount: 2,
       window: "Weekly",
       usedFraction: 0.16,
       expectedFraction: 0.31,
+      resets: "resets in 4d 19h",
     },
     {
       id: "codex",
       provider: "codex",
       account: null,
       name: "Codex",
+      qualifier: null,
+      plan: "Pro",
+      accountCount: 1,
       window: "Session",
       usedFraction: 0.94,
       expectedFraction: 0.61,
+      resets: "resets in 1h 57m",
     },
   ],
   projects: [SISSY, BILLY, FOLDED],
@@ -263,12 +276,11 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       account: "xsmyile",
       name: "Claude",
       identity: {
-        email: "smyile@example.com",
-        organization: "xSmyile",
-        plan: "Max 20x",
+        name: "xSmyile",
+        detail: "smyile@example.com",
+        plan: "Ultra",
         hasPicker: true,
-        inCLI: true,
-        switchable: true,
+        runningSessions: 3,
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
@@ -397,12 +409,11 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       account: "group935",
       name: "Claude",
       identity: {
-        email: "billy@group935.example",
-        organization: "Group 935",
+        name: "Group 935",
+        detail: "billy@group935.example",
         plan: "Team Premium",
         hasPicker: true,
-        inCLI: false,
-        switchable: true,
+        runningSessions: 2,
       },
       limitsCaption: "Read 14:31",
       binding: "weekly",
@@ -521,12 +532,11 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       account: null,
       name: "Codex",
       identity: {
-        email: "smyile@example.com",
-        organization: null,
+        name: "smyile@example.com",
+        detail: null,
         plan: "Pro",
         hasPicker: false,
-        inCLI: false,
-        switchable: false,
+        runningSessions: 0,
       },
       limitsCaption: "Read 14:29",
       binding: "session",
@@ -1089,13 +1099,6 @@ export const DEMO_SNAPSHOT: PanelSnapshot = {
       { id: "t7-shield", name: "T7 Shield", free: "612 GB free of 1.0 TB", used: 0.388 },
       { id: "backups", name: "Backups", free: "1.1 TB free of 2.0 TB", used: 0.45 },
     ],
-    cleanup: [
-      { id: "derivedData", name: "Xcode DerivedData", size: "18 GB", offered: true },
-      { id: "removedProjects", name: "Builds of removed projects", size: "15 GB", offered: true },
-      { id: "npm", name: "npm cache", size: "3.1 GB", offered: true },
-      { id: "uv", name: "uv cache", size: "1.2 GB", offered: true },
-      { id: "deviceSupport", name: "iOS device support", size: "9.7 GB", offered: true },
-    ],
   },
   network: {
     down: "↓ 1.8 MB/s",
@@ -1133,9 +1136,9 @@ const FORGE_ADDRESS: Record<ForgeHost, string> = { github: "github.com", gitlab:
 const LINKED_CLAUDE = ["xsmyile", "group935"] as const;
 
 /**
- * `LinkedAccountRowSnapshot` for one of the fixture's pages: titled by the
- * address, since the fixture names no person, with the organisation under it
- * and the plan at the end of the title line, where the panel puts it too.
+ * `LinkedAccountRowSnapshot` for one of the fixture's pages: titled by the name
+ * the panel gives the account, with what that name leaves out under it and the
+ * plan at the end of the title line, where the panel puts it too.
  */
 function linkedAccount(provider: ProviderId, account: string): CredentialRowData {
   const page = DEMO_SNAPSHOT.providerPages.find(
@@ -1144,13 +1147,13 @@ function linkedAccount(provider: ProviderId, account: string): CredentialRowData
   if (page === undefined) {
     throw new Error(`Settings links "${provider}:${account}", which the fixture has no page for`);
   }
-  const { email, organization, plan } = page.identity;
+  const { name, detail, plan } = page.identity;
   return {
     id: `${provider}:${account}`,
-    title: email,
+    title: name,
     badge: plan,
-    subtitle: organization,
-    lead: { kind: "monogram", name: organization ?? email, provider },
+    subtitle: detail,
+    lead: { kind: "monogram", name, provider },
   };
 }
 
@@ -1179,6 +1182,11 @@ export const DEMO_SETTINGS: SettingsSnapshot = {
       accounts: [],
     },
   ],
+  accountNames: {
+    title: "Account names",
+    caption: "How the panel names each account. Rename one from its ⋯ menu.",
+    value: "Automatic",
+  },
   forge: {
     connections: DEMO_SNAPSHOT.forge.map((row) => ({
       id: row.id,
@@ -1213,5 +1221,10 @@ export const DEMO_SETTINGS: SettingsSnapshot = {
         on: true,
       },
     ],
+    batteryFloor: {
+      title: "On battery, stop the closed-lid hold below",
+      caption: "Then closing the lid sleeps the Mac again, until it is back on power.",
+      value: "15%",
+    },
   },
 };

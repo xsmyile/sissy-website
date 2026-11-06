@@ -54,7 +54,8 @@ export interface SwitchRowData {
 
 /**
  * Settings ▸ Awake, `AwakeSettingsView`: the mode and how long `Always`
- * holds, then what a hold covers. The captions are the ones the app words
+ * holds, then what a hold covers and the battery floor under the lid's switch,
+ * which is `lidBatteryFloor`'s default. The captions are the ones the app words
  * for the state each control is in.
  */
 export interface AwakeSettings {
@@ -62,10 +63,12 @@ export interface AwakeSettings {
   ceiling: PickerRowData;
   coversTitle: string;
   covers: SwitchRowData[];
+  batteryFloor: PickerRowData;
 }
 
 export interface SettingsSnapshot {
   providers: ProviderSettings[];
+  accountNames: PickerRowData;
   forge: ForgeSettings;
   awake: AwakeSettings;
 }
