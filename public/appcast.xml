@@ -6,6 +6,26 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.4.2</title>
+            <pubDate>Wed, 11 Nov 2026 15:01:02 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1081</sparkle:version>
+            <sparkle:shortVersionString>0.4.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.4.2: every Claude reset, Team accounts included
+
+- A Claude account's page now lists each kind of reset it holds on its own
+  line, so a Fable reset shows beside the full one instead of vanishing.
+  Resets of the same kind are counted together, the way claude.ai shows
+  them (`Fable reset · 2`).
+- Each line has its own Use… button, and the confirmation says what that
+  reset clears, including what a Fable reset gives back of the weekly limit.
+- Accounts linked through claude.ai, such as Team seats, now show their
+  resets too. They are spent on claude.ai for now, which the page says.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.4.2/Sissy-0.4.2.dmg" length="7825061" type="application/octet-stream" sparkle:edSignature="npKv6dGqH5qAv13V5xL8LSkEiWJHAv6TeYewQNXiCBedb3t8J3WZnUF5KRys3wmmtJRQXJ6+G/MuyRQw1HjRAg=="/>
+        </item>
+        <item>
             <title>0.4.1</title>
             <pubDate>Thu, 05 Nov 2026 16:40:11 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -444,6 +464,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: bYYoLBWd4rzcs8nSswd7jL4XMk0j+6CZNHhI3hCbhuall4QrOTDZ9Wzzi8BKbjBlbPbL6Lwnq/lhjsdX2XT8Dw==
-length: 28207
+edSignature: tmcQjHkhBuROJjDoHkjW+mwKIgyFdq9vaJm19CnRyjkZ8Ermazhi91h96bKSwxIsuEDeS32vK1bsXqtejNo0Dg==
+length: 29529
 -->
