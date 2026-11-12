@@ -6,6 +6,22 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.4.3</title>
+            <pubDate>Thu, 12 Nov 2026 18:14:37 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1082</sparkle:version>
+            <sparkle:shortVersionString>0.4.3</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.4.3: Settings open in front, ready to use
+
+- Opening Settings from the panel brings the window to the front, active,
+  with its switches in your accent colour. The first time after a launch it
+  used to open grey, sometimes behind the app you were in, and stay that way
+  until you clicked Sissy in the Dock.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.4.3/Sissy-0.4.3.dmg" length="7825974" type="application/octet-stream" sparkle:edSignature="90wylPf8NIwE0XSzj7hsPKTpBiokkG0EvHd6wYkBl+s3X1mZJGfSkfVYCSueiB51P4A6nG3ZNO70Yx09Q8GUDQ=="/>
+        </item>
+        <item>
             <title>0.4.2</title>
             <pubDate>Wed, 11 Nov 2026 15:01:02 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -464,6 +480,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: tmcQjHkhBuROJjDoHkjW+mwKIgyFdq9vaJm19CnRyjkZ8Ermazhi91h96bKSwxIsuEDeS32vK1bsXqtejNo0Dg==
-length: 29529
+edSignature: XlfxUGGpgHNo59JPLr4tQGtIJEC16/sI9WV8QNJMbXSDiCL8vGraZbdfg96Qe7JhtuNP2EuTs6ZKO0rRlC7AAQ==
+length: 30566
 -->
