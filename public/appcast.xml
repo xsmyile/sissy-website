@@ -6,6 +6,24 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>Sissy</title>
         <item>
+            <title>0.4.4</title>
+            <pubDate>Fri, 13 Nov 2026 11:34:15 +0000</pubDate>
+            <link>https://sissy.smyile.com</link>
+            <sparkle:version>1084</sparkle:version>
+            <sparkle:shortVersionString>0.4.4</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[v0.4.4: sharp header buttons on any display
+
+- The calendar, keep-awake, Settings and refresh buttons now draw their
+  icons dead centre on a standard (non-Retina) display too. They used to sit
+  a pixel off to one side.
+- A Claude account's menu and page now say how many sessions are open
+  (`Davide · 1 session open`) instead of calling the account "in use". The
+  count is of running Claude Code sessions, idle ones included.
+]]></description>
+            <enclosure url="https://github.com/xsmyile/sissy/releases/download/v0.4.4/Sissy-0.4.4.dmg" length="7830012" type="application/octet-stream" sparkle:edSignature="yiXMZmHGgUkmkHk8YmHAyWLmqW7Zms3sGDHJvKnBgFqFN57+pHvPMPZUGyqPRde2Y2cJp6krvGs6ElDveQwjDA=="/>
+        </item>
+        <item>
             <title>0.4.3</title>
             <pubDate>Thu, 12 Nov 2026 18:14:37 +0000</pubDate>
             <link>https://sissy.smyile.com</link>
@@ -480,6 +498,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: XlfxUGGpgHNo59JPLr4tQGtIJEC16/sI9WV8QNJMbXSDiCL8vGraZbdfg96Qe7JhtuNP2EuTs6ZKO0rRlC7AAQ==
-length: 30566
+edSignature: Zk5L6UsytS7jXwTJoYOPTtRDRXdv0UtKHfNZWXsrLvI3VGs2Gdm6StRS+stN0XXhzwNZ8LsCcDfXv4yZMo5RAQ==
+length: 31722
 -->
